@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,10 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower } from "lucide-react";
+import { ShoppingCart, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, Loader2 } from "lucide-react";
+import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import templateMellom1 from "@/assets/template-mellom-1.jpg";
 import templateStor1 from "@/assets/template-stor-1.jpg";
 
@@ -20,52 +23,124 @@ const symbols = [
   { id: "flower", name: "Blomst", icon: Flower },
 ];
 
-const sizeOptions = [
-  { value: "mellom", label: "Mellom (30x40 cm)", price: 3990 },
-  { value: "stor", label: "Stor (40x50 cm)", price: 5490 },
-];
-
-const nameCountOptions = [
-  { value: "1", label: "1 person" },
-  { value: "2", label: "2 personer" },
-];
-
-// Template images based on size and name count
 const getTemplateImage = (size: string) => {
-  return size === "stor" ? templateStor1 : templateMellom1;
+  return size === "Stor" ? templateStor1 : templateMellom1;
 };
 
 export default function Komponer() {
-  const [size, setSize] = useState("mellom");
-  const [nameCount, setNameCount] = useState("1");
+  const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState("Mellom");
+  const [selectedNameCount, setSelectedNameCount] = useState("1");
   const [name1, setName1] = useState("");
   const [dates1, setDates1] = useState("");
   const [name2, setName2] = useState("");
   const [dates2, setDates2] = useState("");
   const [etterskrift, setEtterskrift] = useState("");
   const [selectedSymbol, setSelectedSymbol] = useState("tree");
+  
+  const addItem = useCartStore(state => state.addItem);
 
-  const price = useMemo(() => {
-    const basePrice = sizeOptions.find(s => s.value === size)?.price || 3990;
-    const extraName = nameCount === "2" ? 500 : 0;
-    return basePrice + extraName;
-  }, [size, nameCount]);
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await fetchProducts(10);
+        setProducts(data);
+      } catch (error) {
+        console.error("Error loading products:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  const product = products[0]; // We only have one product
+
+  const selectedVariant = useMemo(() => {
+    if (!product) return null;
+    
+    return product.node.variants.edges.find(v => {
+      const sizeOption = v.node.selectedOptions.find(o => o.name === "Størrelse");
+      const nameCountOption = v.node.selectedOptions.find(o => o.name === "Antall navn");
+      return sizeOption?.value === selectedSize && nameCountOption?.value === selectedNameCount;
+    })?.node;
+  }, [product, selectedSize, selectedNameCount]);
+
+  const price = selectedVariant ? parseFloat(selectedVariant.price.amount) : 3990;
+  const currencyCode = selectedVariant?.price.currencyCode || "NOK";
+
+  const formatPrice = (amount: number) => {
+    return new Intl.NumberFormat('nb-NO', {
+      style: 'currency',
+      currency: currencyCode,
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
 
   const handleAddToCart = () => {
-    const lineItems = {
-      size: sizeOptions.find(s => s.value === size)?.label,
-      nameCount,
-      name1,
-      dates1,
-      ...(nameCount === "2" && { name2, dates2 }),
-      etterskrift,
-      symbol: symbols.find(s => s.id === selectedSymbol)?.name,
+    if (!product || !selectedVariant) {
+      toast.error("Kunne ikke legge til i handlekurv");
+      return;
+    }
+
+    const lineItemProperties: Record<string, string> = {
+      "Navn 1": name1 || "Ikke angitt",
+      "Datoer 1": dates1 || "Ikke angitt",
+      "Symbol": symbols.find(s => s.id === selectedSymbol)?.name || "Livets tre",
     };
-    console.log("Adding to cart:", lineItems);
-    alert("Produkt lagt i handlekurv! (Shopify-integrasjon kommer snart)");
+
+    if (etterskrift) {
+      lineItemProperties["Etterskrift"] = etterskrift;
+    }
+
+    if (selectedNameCount === "2") {
+      lineItemProperties["Navn 2"] = name2 || "Ikke angitt";
+      lineItemProperties["Datoer 2"] = dates2 || "Ikke angitt";
+    }
+
+    addItem({
+      product,
+      variantId: selectedVariant.id,
+      variantTitle: selectedVariant.title,
+      price: selectedVariant.price,
+      quantity: 1,
+      selectedOptions: selectedVariant.selectedOptions,
+      lineItemProperties,
+    });
+
+    toast.success("Lagt i handlekurv!", {
+      description: `${product.node.title} - ${selectedVariant.title}`,
+    });
   };
 
   const SymbolIcon = symbols.find(s => s.id === selectedSymbol)?.icon || TreeDeciduous;
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!product) {
+    return (
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="font-display text-2xl font-bold mb-4">Ingen produkter funnet</h2>
+            <p className="text-muted-foreground">Produkter lastes inn...</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  const sizeOptions = product.node.options.find(o => o.name === "Størrelse")?.values || ["Mellom", "Stor"];
+  const nameCountOptions = product.node.options.find(o => o.name === "Antall navn")?.values || ["1", "2"];
 
   return (
     <Layout>
@@ -87,7 +162,7 @@ export default function Komponer() {
                 <h2 className="font-display text-2xl font-semibold mb-6">Forhåndsvisning</h2>
                 <div className="relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[3/4] max-w-md mx-auto">
                   <img
-                    src={getTemplateImage(size)}
+                    src={getTemplateImage(selectedSize)}
                     alt="Gravplate mal"
                     className="w-full h-full object-cover"
                   />
@@ -109,7 +184,7 @@ export default function Komponer() {
                         </p>
                       </div>
 
-                      {nameCount === "2" && (
+                      {selectedNameCount === "2" && (
                         <div className="pt-4 border-t border-primary/20">
                           <p className="font-display text-2xl md:text-3xl text-primary font-semibold">
                             {name2 || "Navn Navnesen"}
@@ -122,11 +197,9 @@ export default function Komponer() {
                     </div>
 
                     {/* Etterskrift */}
-                    {(etterskrift || true) && (
-                      <p className="mt-8 text-primary/60 italic text-sm max-w-[80%]">
-                        "{etterskrift || "I kjærlig minne"}"
-                      </p>
-                    )}
+                    <p className="mt-8 text-primary/60 italic text-sm max-w-[80%]">
+                      "{etterskrift || "I kjærlig minne"}"
+                    </p>
                   </div>
                 </div>
               </div>
@@ -137,44 +210,49 @@ export default function Komponer() {
               {/* Size */}
               <div className="space-y-4">
                 <Label className="text-lg font-semibold">Størrelse</Label>
-                <RadioGroup value={size} onValueChange={setSize} className="grid grid-cols-2 gap-4">
-                  {sizeOptions.map((option) => (
-                    <label
-                      key={option.value}
-                      className={`flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                        size === option.value
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/30"
-                      }`}
-                    >
-                      <RadioGroupItem value={option.value} className="sr-only" />
-                      <span className="font-semibold">{option.label}</span>
-                      <span className="text-muted-foreground text-sm mt-1">
-                        {option.price.toLocaleString("nb-NO")} kr
-                      </span>
-                    </label>
-                  ))}
+                <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="grid grid-cols-2 gap-4">
+                  {sizeOptions.map((size) => {
+                    const variant = product.node.variants.edges.find(v => 
+                      v.node.selectedOptions.some(o => o.name === "Størrelse" && o.value === size) &&
+                      v.node.selectedOptions.some(o => o.name === "Antall navn" && o.value === "1")
+                    )?.node;
+                    const variantPrice = variant ? parseFloat(variant.price.amount) : 0;
+                    
+                    return (
+                      <label
+                        key={size}
+                        className={`flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                          selectedSize === size
+                            ? "border-primary bg-primary/5"
+                            : "border-border hover:border-primary/30"
+                        }`}
+                      >
+                        <RadioGroupItem value={size} className="sr-only" />
+                        <span className="font-semibold">{size}</span>
+                        <span className="text-muted-foreground text-sm mt-1">
+                          fra {formatPrice(variantPrice)}
+                        </span>
+                      </label>
+                    );
+                  })}
                 </RadioGroup>
               </div>
 
               {/* Name Count */}
               <div className="space-y-4">
                 <Label className="text-lg font-semibold">Antall navn</Label>
-                <Select value={nameCount} onValueChange={setNameCount}>
+                <Select value={selectedNameCount} onValueChange={setSelectedNameCount}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {nameCountOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                    {nameCountOptions.map((count) => (
+                      <SelectItem key={count} value={count}>
+                        {count} {parseInt(count) === 1 ? "person" : "personer"}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {nameCount === "2" && (
-                  <p className="text-sm text-muted-foreground">+500 kr for ekstra navn</p>
-                )}
               </div>
 
               {/* Person 1 */}
@@ -203,7 +281,7 @@ export default function Komponer() {
               </div>
 
               {/* Person 2 */}
-              {nameCount === "2" && (
+              {selectedNameCount === "2" && (
                 <div className="space-y-4 p-6 bg-muted rounded-xl">
                   <h3 className="font-semibold">Person 2</h3>
                   <div className="grid gap-4">
@@ -275,7 +353,7 @@ export default function Komponer() {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-muted-foreground">Totalpris:</span>
                   <span className="text-3xl font-bold text-primary">
-                    {price.toLocaleString("nb-NO")} kr
+                    {formatPrice(price)}
                   </span>
                 </div>
                 <Button
@@ -283,6 +361,7 @@ export default function Komponer() {
                   size="xl"
                   className="w-full"
                   onClick={handleAddToCart}
+                  disabled={!selectedVariant}
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Legg i handlekurv

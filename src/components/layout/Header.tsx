@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CartDrawer } from "@/components/CartDrawer";
 import logo from "@/assets/livstreet-logo.png";
 
 const navLinks = [
@@ -42,10 +43,11 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA Button */}
+        {/* CTA Button & Cart */}
         <div className="hidden lg:flex items-center gap-4">
+          <CartDrawer />
           <Button variant="hero" size="lg" asChild>
-            <Link to="/bestill">Bestill nå</Link>
+            <Link to="/komponer">Bestill nå</Link>
           </Button>
         </div>
 
