@@ -6,39 +6,49 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, Loader2 } from "lucide-react";
+import { ShoppingCart, Type, MoveVertical, Loader2 } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import templateMellom1 from "@/assets/template-mellom-1.jpg";
-import templateStor1 from "@/assets/template-stor-1.jpg";
 import platePreview from "@/assets/plate-preview.png";
 
 const symbols = [
-  { id: "tree", name: "Livets tre", icon: TreeDeciduous },
-  { id: "cross", name: "Kors", icon: Cross },
-  { id: "heart", name: "Hjerte", icon: Heart },
-  { id: "dove", name: "Due", icon: Bird },
-  { id: "sun", name: "Sol", icon: Sun },
-  { id: "anchor", name: "Anker", icon: Anchor },
-  { id: "flower", name: "Blomst", icon: Flower },
+  { id: "tree", name: "Livets tre", symbol: "🌳" },
+  { id: "cross", name: "Kors", symbol: "✝" },
+  { id: "heart", name: "Hjerte", symbol: "❤" },
+  { id: "dove", name: "Due", symbol: "🕊" },
+  { id: "sun", name: "Sol", symbol: "☀" },
+  { id: "anchor", name: "Anker", symbol: "⚓" },
+  { id: "flower", name: "Blomst", symbol: "🌸" },
 ];
-
-const getTemplateImage = (size: string) => {
-  return size === "Stor" ? templateStor1 : templateMellom1;
-};
 
 export default function Komponer() {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState("Mellom");
   const [selectedNameCount, setSelectedNameCount] = useState("1");
-  const [name1, setName1] = useState("");
-  const [dates1, setDates1] = useState("");
-  const [name2, setName2] = useState("");
-  const [dates2, setDates2] = useState("");
-  const [etterskrift, setEtterskrift] = useState("");
+  const [name1, setName1] = useState("Karen Marie Hansen");
+  const [dates1, setDates1] = useState("12.07.1940");
+  const [name2, setName2] = useState("Søren Peter Hansen");
+  const [dates2, setDates2] = useState("14.09.1942");
+  const [etterskrift, setEtterskrift] = useState("I kjærlig minne");
   const [selectedSymbol, setSelectedSymbol] = useState("tree");
+  
+  // Text sizes (as percentage of base)
+  const [symbolSize, setSymbolSize] = useState(100);
+  const [name1Size, setName1Size] = useState(100);
+  const [dates1Size, setDates1Size] = useState(100);
+  const [name2Size, setName2Size] = useState(100);
+  const [dates2Size, setDates2Size] = useState(100);
+  const [etterskriftSize, setEtterskriftSize] = useState(100);
+  
+  // Positions (as percentage from top)
+  const [symbolPos, setSymbolPos] = useState(15);
+  const [name1Pos, setName1Pos] = useState(35);
+  const [dates1Pos, setDates1Pos] = useState(42);
+  const [name2Pos, setName2Pos] = useState(52);
+  const [dates2Pos, setDates2Pos] = useState(59);
+  const [etterskriftPos, setEtterskriftPos] = useState(75);
   
   const addItem = useCartStore(state => state.addItem);
 
@@ -56,7 +66,7 @@ export default function Komponer() {
     loadProducts();
   }, []);
 
-  const product = products[0]; // We only have one product
+  const product = products[0];
 
   const selectedVariant = useMemo(() => {
     if (!product) return null;
@@ -115,7 +125,7 @@ export default function Komponer() {
     });
   };
 
-  const SymbolIcon = symbols.find(s => s.id === selectedSymbol)?.icon || TreeDeciduous;
+  const currentSymbol = symbols.find(s => s.id === selectedSymbol)?.symbol || "🌳";
 
   if (loading) {
     return (
@@ -145,73 +155,120 @@ export default function Komponer() {
 
   return (
     <Layout>
-      <section className="py-12 bg-background">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+      <div className="min-h-screen bg-background py-8 md:py-16">
+        <div className="container max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
               Komponer din gravplate
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Design din personlige minneplate med vårt enkle verktøy. Se forhåndsvisning i sanntid.
+            <p className="text-muted-foreground">
+              Juster tekststørrelse og plassering - dette er kun veiledende
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8">
             {/* Preview */}
             <div className="order-2 lg:order-1">
-              <div className="sticky top-24">
-                <h2 className="font-display text-2xl font-semibold mb-6">Forhåndsvisning</h2>
-                <div className="relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[4/3] max-w-lg mx-auto">
+              <div className="sticky top-4">
+                <h2 className="font-display text-xl font-semibold text-foreground mb-4">Forhåndsvisning</h2>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[3/4] max-w-md mx-auto">
                   <img
                     src={platePreview}
                     alt="Gravplate mal"
                     className="w-full h-full object-cover"
                   />
-                  {/* Overlay with text */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                    {/* Symbol */}
-                    <div className="mb-4 text-foreground/80">
-                      <SymbolIcon className="h-10 w-10 mx-auto" strokeWidth={1} />
-                    </div>
+                  
+                  {/* Symbol */}
+                  <div 
+                    className="absolute left-1/2 -translate-x-1/2 transition-transform"
+                    style={{ 
+                      top: `${symbolPos}%`,
+                      fontSize: `${symbolSize * 0.4}px`
+                    }}
+                  >
+                    <span className="text-foreground/80 select-none">{currentSymbol}</span>
+                  </div>
 
-                    {/* Names */}
-                    <div className="space-y-2">
-                      <div>
-                        <p className="font-gravminne font-bold text-2xl md:text-3xl text-foreground">
-                          {name1 || "Karen Marie Hansen"}
-                        </p>
-                        <p className="font-cinzel text-foreground/80 text-sm mt-1">
-                          ★ {dates1 || "12. 07. 1940"} ✝ 2024
-                        </p>
-                      </div>
-
-                      {selectedNameCount === "2" && (
-                        <div className="pt-2">
-                          <p className="font-gravminne font-bold text-2xl md:text-3xl text-foreground">
-                            {name2 || "Søren Peter Hansen"}
-                          </p>
-                          <p className="font-cinzel text-foreground/80 text-sm mt-1">
-                            ★ {dates2 || "14. 09. 1942"} ✝ 2024
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Etterskrift */}
-                    <p className="mt-4 text-foreground/70 font-script text-lg max-w-[80%]">
-                      {etterskrift || "Skriv etterskrift her"}
+                  {/* Name 1 */}
+                  <div 
+                    className="absolute left-1/2 -translate-x-1/2 w-full px-4 text-center"
+                    style={{ top: `${name1Pos}%` }}
+                  >
+                    <p 
+                      className="font-gravminne font-bold text-foreground select-none"
+                      style={{ fontSize: `${name1Size * 0.24}px` }}
+                    >
+                      {name1 || "Navn"}
                     </p>
                   </div>
+
+                  {/* Dates 1 */}
+                  <div 
+                    className="absolute left-1/2 -translate-x-1/2 w-full px-4 text-center"
+                    style={{ top: `${dates1Pos}%` }}
+                  >
+                    <p 
+                      className="font-cinzel text-foreground/80 select-none"
+                      style={{ fontSize: `${dates1Size * 0.14}px` }}
+                    >
+                      ★ {dates1 || "Dato"} ✝
+                    </p>
+                  </div>
+
+                  {/* Name 2 */}
+                  {selectedNameCount === "2" && (
+                    <>
+                      <div 
+                        className="absolute left-1/2 -translate-x-1/2 w-full px-4 text-center"
+                        style={{ top: `${name2Pos}%` }}
+                      >
+                        <p 
+                          className="font-gravminne font-bold text-foreground select-none"
+                          style={{ fontSize: `${name2Size * 0.24}px` }}
+                        >
+                          {name2 || "Navn"}
+                        </p>
+                      </div>
+                      <div 
+                        className="absolute left-1/2 -translate-x-1/2 w-full px-4 text-center"
+                        style={{ top: `${dates2Pos}%` }}
+                      >
+                        <p 
+                          className="font-cinzel text-foreground/80 select-none"
+                          style={{ fontSize: `${dates2Size * 0.14}px` }}
+                        >
+                          ★ {dates2 || "Dato"} ✝
+                        </p>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Etterskrift */}
+                  {etterskrift && (
+                    <div 
+                      className="absolute left-1/2 -translate-x-1/2 w-full px-8 text-center"
+                      style={{ top: `${etterskriftPos}%` }}
+                    >
+                      <p 
+                        className="font-script text-foreground/80 select-none"
+                        style={{ fontSize: `${etterskriftSize * 0.18}px` }}
+                      >
+                        {etterskrift}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Form */}
-            <div className="order-1 lg:order-2 space-y-8">
-              {/* Size */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold">Størrelse</Label>
-                <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="grid grid-cols-2 gap-4">
+            {/* Controls */}
+            <div className="order-1 lg:order-2 space-y-6">
+              {/* Size Selection */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Størrelse
+                </Label>
+                <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="grid grid-cols-2 gap-3">
                   {sizeOptions.map((size) => {
                     const variant = product.node.variants.edges.find(v => 
                       v.node.selectedOptions.some(o => o.name === "Størrelse" && o.value === size) &&
@@ -222,15 +279,15 @@ export default function Komponer() {
                     return (
                       <label
                         key={size}
-                        className={`flex flex-col p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        className={`flex flex-col p-4 rounded-lg border-2 cursor-pointer transition-all ${
                           selectedSize === size
                             ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/30"
+                            : "border-border hover:border-primary/50"
                         }`}
                       >
                         <RadioGroupItem value={size} className="sr-only" />
-                        <span className="font-semibold">{size}</span>
-                        <span className="text-muted-foreground text-sm mt-1">
+                        <span className="font-semibold text-foreground">{size}</span>
+                        <span className="text-sm text-muted-foreground">
                           fra {formatPrice(variantPrice)}
                         </span>
                       </label>
@@ -240,8 +297,10 @@ export default function Komponer() {
               </div>
 
               {/* Name Count */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold">Antall navn</Label>
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Antall navn
+                </Label>
                 <Select value={selectedNameCount} onValueChange={setSelectedNameCount}>
                   <SelectTrigger>
                     <SelectValue />
@@ -256,122 +315,247 @@ export default function Komponer() {
                 </Select>
               </div>
 
-              {/* Person 1 */}
-              <div className="space-y-4 p-6 bg-muted rounded-xl">
-                <h3 className="font-semibold">Person 1</h3>
-                <div className="grid gap-4">
+              {/* Symbol Selection */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Velg symbol
+                </Label>
+                <div className="grid grid-cols-4 gap-2">
+                  {symbols.map((symbol) => (
+                    <button
+                      key={symbol.id}
+                      onClick={() => setSelectedSymbol(symbol.id)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        selectedSymbol === symbol.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                      title={symbol.name}
+                    >
+                      <div className="text-3xl">{symbol.symbol}</div>
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-4 space-y-3">
                   <div>
-                    <Label htmlFor="name1">Navn</Label>
-                    <Input
-                      id="name1"
-                      placeholder="Fornavn Etternavn"
-                      value={name1}
-                      onChange={(e) => setName1(e.target.value)}
+                    <label className="text-xs text-muted-foreground flex items-center gap-2">
+                      <Type className="w-4 h-4" />
+                      Størrelse: {symbolSize}%
+                    </label>
+                    <input
+                      type="range"
+                      min="50"
+                      max="200"
+                      value={symbolSize}
+                      onChange={(e) => setSymbolSize(Number(e.target.value))}
+                      className="w-full accent-primary"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="dates1">Datoer</Label>
+                    <label className="text-xs text-muted-foreground flex items-center gap-2">
+                      <MoveVertical className="w-4 h-4" />
+                      Plassering: {symbolPos}%
+                    </label>
+                    <input
+                      type="range"
+                      min="5"
+                      max="30"
+                      value={symbolPos}
+                      onChange={(e) => setSymbolPos(Number(e.target.value))}
+                      className="w-full accent-primary"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Person 1 */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="font-semibold text-foreground mb-4">Person 1</h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Navn</Label>
                     <Input
-                      id="dates1"
-                      placeholder="f.eks. 01.01.1940 - 31.12.2024"
+                      type="text"
+                      value={name1}
+                      onChange={(e) => setName1(e.target.value)}
+                      placeholder="Fornavn Etternavn"
+                    />
+                    <div className="mt-3 space-y-2">
+                      <label className="text-xs text-muted-foreground">Størrelse: {name1Size}%</label>
+                      <input
+                        type="range"
+                        min="60"
+                        max="140"
+                        value={name1Size}
+                        onChange={(e) => setName1Size(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                      <label className="text-xs text-muted-foreground">Plassering: {name1Pos}%</label>
+                      <input
+                        type="range"
+                        min="25"
+                        max="45"
+                        value={name1Pos}
+                        onChange={(e) => setName1Pos(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
+                    <Input
+                      type="text"
                       value={dates1}
                       onChange={(e) => setDates1(e.target.value)}
+                      placeholder="dd.mm.åååå"
                     />
+                    <div className="mt-3 space-y-2">
+                      <label className="text-xs text-muted-foreground">Størrelse: {dates1Size}%</label>
+                      <input
+                        type="range"
+                        min="50"
+                        max="120"
+                        value={dates1Size}
+                        onChange={(e) => setDates1Size(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                      <label className="text-xs text-muted-foreground">Plassering: {dates1Pos}%</label>
+                      <input
+                        type="range"
+                        min="35"
+                        max="50"
+                        value={dates1Pos}
+                        onChange={(e) => setDates1Pos(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Person 2 */}
               {selectedNameCount === "2" && (
-                <div className="space-y-4 p-6 bg-muted rounded-xl">
-                  <h3 className="font-semibold">Person 2</h3>
-                  <div className="grid gap-4">
+                <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                  <h3 className="font-semibold text-foreground mb-4">Person 2</h3>
+                  <div className="space-y-4">
                     <div>
-                      <Label htmlFor="name2">Navn</Label>
+                      <Label className="text-sm text-muted-foreground mb-1">Navn</Label>
                       <Input
-                        id="name2"
-                        placeholder="Fornavn Etternavn"
+                        type="text"
                         value={name2}
                         onChange={(e) => setName2(e.target.value)}
+                        placeholder="Fornavn Etternavn"
                       />
+                      <div className="mt-3 space-y-2">
+                        <label className="text-xs text-muted-foreground">Størrelse: {name2Size}%</label>
+                        <input
+                          type="range"
+                          min="60"
+                          max="140"
+                          value={name2Size}
+                          onChange={(e) => setName2Size(Number(e.target.value))}
+                          className="w-full accent-primary"
+                        />
+                        <label className="text-xs text-muted-foreground">Plassering: {name2Pos}%</label>
+                        <input
+                          type="range"
+                          min="48"
+                          max="65"
+                          value={name2Pos}
+                          onChange={(e) => setName2Pos(Number(e.target.value))}
+                          className="w-full accent-primary"
+                        />
+                      </div>
                     </div>
                     <div>
-                      <Label htmlFor="dates2">Datoer</Label>
+                      <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
                       <Input
-                        id="dates2"
-                        placeholder="f.eks. 01.01.1942 - 31.12.2024"
+                        type="text"
                         value={dates2}
                         onChange={(e) => setDates2(e.target.value)}
+                        placeholder="dd.mm.åååå"
                       />
+                      <div className="mt-3 space-y-2">
+                        <label className="text-xs text-muted-foreground">Størrelse: {dates2Size}%</label>
+                        <input
+                          type="range"
+                          min="50"
+                          max="120"
+                          value={dates2Size}
+                          onChange={(e) => setDates2Size(Number(e.target.value))}
+                          className="w-full accent-primary"
+                        />
+                        <label className="text-xs text-muted-foreground">Plassering: {dates2Pos}%</label>
+                        <input
+                          type="range"
+                          min="55"
+                          max="70"
+                          value={dates2Pos}
+                          onChange={(e) => setDates2Pos(Number(e.target.value))}
+                          className="w-full accent-primary"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
               {/* Etterskrift */}
-              <div className="space-y-4">
-                <Label htmlFor="etterskrift" className="text-lg font-semibold">
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-2">
                   Etterskrift (valgfritt)
                 </Label>
                 <Textarea
-                  id="etterskrift"
-                  placeholder="I kjærlig minne, Alltid i våre hjerter..."
                   value={etterskrift}
                   onChange={(e) => setEtterskrift(e.target.value)}
-                  rows={3}
+                  rows={2}
+                  placeholder="I kjærlig minne..."
                 />
-              </div>
-
-              {/* Symbol */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold">Velg symbol</Label>
-                <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
-                  {symbols.map((symbol) => {
-                    const Icon = symbol.icon;
-                    return (
-                      <button
-                        key={symbol.id}
-                        onClick={() => setSelectedSymbol(symbol.id)}
-                        className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
-                          selectedSymbol === symbol.id
-                            ? "border-primary bg-primary/10"
-                            : "border-border hover:border-primary/30"
-                        }`}
-                        title={symbol.name}
-                      >
-                        <Icon className="h-8 w-8" strokeWidth={1.5} />
-                        <span className="text-xs mt-2 truncate w-full text-center">
-                          {symbol.name}
-                        </span>
-                      </button>
-                    );
-                  })}
+                <div className="mt-3 space-y-2">
+                  <label className="text-xs text-muted-foreground">Størrelse: {etterskriftSize}%</label>
+                  <input
+                    type="range"
+                    min="50"
+                    max="120"
+                    value={etterskriftSize}
+                    onChange={(e) => setEtterskriftSize(Number(e.target.value))}
+                    className="w-full accent-primary"
+                  />
+                  <label className="text-xs text-muted-foreground">Plassering: {etterskriftPos}%</label>
+                  <input
+                    type="range"
+                    min="70"
+                    max="90"
+                    value={etterskriftPos}
+                    onChange={(e) => setEtterskriftPos(Number(e.target.value))}
+                    className="w-full accent-primary"
+                  />
                 </div>
               </div>
 
-              {/* Price & Add to Cart */}
-              <div className="sticky bottom-0 bg-background pt-6 pb-4 border-t border-border">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-muted-foreground">Totalpris:</span>
-                  <span className="text-3xl font-bold text-primary">
-                    {formatPrice(price)}
-                  </span>
+              {/* Price & Submit */}
+              <div className="bg-primary text-primary-foreground p-6 rounded-xl shadow-xl">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg">Totalpris:</span>
+                  <span className="text-3xl font-bold">{formatPrice(price)}</span>
                 </div>
-                <Button
-                  variant="hero"
-                  size="xl"
-                  className="w-full"
+                <Button 
                   onClick={handleAddToCart}
+                  variant="secondary"
+                  className="w-full py-6 text-lg font-semibold"
                   disabled={!selectedVariant}
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Legg i handlekurv
                 </Button>
+                <p className="text-xs text-primary-foreground/70 mt-3 text-center">
+                  Endelig design tilpasses av oss før produksjon
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </Layout>
   );
 }
