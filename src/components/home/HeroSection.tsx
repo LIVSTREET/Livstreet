@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
+import gravplateHero from "@/assets/gravplate-hero.png";
+
 export function HeroSection() {
   return <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img alt="Gravplate i tre" className="w-full h-full object-cover" src="/lovable-uploads/a085ae19-1921-47c4-93f4-d107d1df05fd.webp" />
+        <img alt="Gravplate i eik på kirkegård" className="w-full h-full object-cover" src={gravplateHero} />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40" />
       </div>
 

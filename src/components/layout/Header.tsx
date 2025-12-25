@@ -29,17 +29,25 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-secondary ${
-                location.pathname === link.href
-                  ? "text-primary bg-secondary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
+            <div key={link.href} className="relative group">
+              <Link
+                to={link.href}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-secondary ${
+                  location.pathname === link.href
+                    ? "text-primary bg-secondary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+              {link.href === "/om-oss" && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-64 p-3 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <p className="text-xs text-muted-foreground text-center">
+                    Bæredyktige gravplater i tre – et vakkert og miljøvennlig alternativ for å hedre dine kjære.
+                  </p>
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
