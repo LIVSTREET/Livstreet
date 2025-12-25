@@ -61,35 +61,27 @@ export default function OmOss() {
         </div>
       </section>
 
-      {/* Alternative Names */}
-      <section className="py-16 bg-secondary">
+      {/* Testimonials */}
+      <section className="py-24 bg-secondary">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-muted-foreground text-lg mb-6">
-              Vi kaller dem gravplater, men de omtales også som:
-            </p>
-            <ul className="grid sm:grid-cols-2 gap-3 text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary"></span>
-                tregravstein
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary"></span>
-                minneplater i tre
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary"></span>
-                bærekraftige gravminner
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary"></span>
-                alternative gravsteiner
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary"></span>
-                miljøvennlige minneplater
-              </li>
-            </ul>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-16">
+            Hva våre kunder sier
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Testimonial 1 */}
+            <div className="bg-background rounded-2xl p-8 shadow-sm">
+              <blockquote className="text-muted-foreground leading-relaxed italic mb-6">
+                "Det var tungt å måtte ta stilling til gravminne, men vi kjente med en gang at tre var riktig – han var jo en stolt tømrer. Da vi tilfeldigvis så et innslag om Livstræet på TV samme kveld, føltes det nesten som et tegn. Våre ønsker ble fulgt, og resultatet ser utrolig fint og helt riktig ut."
+              </blockquote>
+              <p className="font-medium text-foreground">– Claus' familie</p>
+            </div>
+            {/* Testimonial 2 */}
+            <div className="bg-background rounded-2xl p-8 shadow-sm">
+              <blockquote className="text-muted-foreground leading-relaxed italic mb-6">
+                "Mamma elsket hagen, blomster og alt som vokster. Derfor ble en gravplate i tre et naturlig valg – den passer så godt til et gravsted fylt med blomster. Vi fikk god hjelp, flere valgmuligheter og fantastisk service. Platen ble levert og satt opp, og den er virkelig vakker. Men vi skulle helst hatt mamma her."
+              </blockquote>
+              <p className="font-medium text-foreground">– Ditte</p>
+            </div>
           </div>
         </div>
       </section>
