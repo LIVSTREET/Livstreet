@@ -12,6 +12,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import templateMellom1 from "@/assets/template-mellom-1.jpg";
 import templateStor1 from "@/assets/template-stor-1.jpg";
+import platePreview from "@/assets/plate-preview.png";
 
 const symbols = [
   { id: "tree", name: "Livets tre", icon: TreeDeciduous },
@@ -162,7 +163,7 @@ export default function Komponer() {
                 <h2 className="font-display text-2xl font-semibold mb-6">Forhåndsvisning</h2>
                 <div className="relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[4/3] max-w-lg mx-auto">
                   <img
-                    src={getTemplateImage(selectedSize)}
+                    src={platePreview}
                     alt="Gravplate mal"
                     className="w-full h-full object-cover"
                   />
@@ -176,20 +177,20 @@ export default function Komponer() {
                     {/* Names */}
                     <div className="space-y-2">
                       <div>
-                        <p className="font-script text-2xl md:text-3xl text-foreground">
+                        <p className="font-gravminne font-bold text-2xl md:text-3xl text-foreground">
                           {name1 || "Karen Marie Hansen"}
                         </p>
-                        <p className="text-foreground/80 text-sm mt-1">
+                        <p className="font-cinzel text-foreground/80 text-sm mt-1">
                           ★ {dates1 || "12. 07. 1940"} ✝ 2024
                         </p>
                       </div>
 
                       {selectedNameCount === "2" && (
                         <div className="pt-2">
-                          <p className="font-script text-2xl md:text-3xl text-foreground">
+                          <p className="font-gravminne font-bold text-2xl md:text-3xl text-foreground">
                             {name2 || "Søren Peter Hansen"}
                           </p>
-                          <p className="text-foreground/80 text-sm mt-1">
+                          <p className="font-cinzel text-foreground/80 text-sm mt-1">
                             ★ {dates2 || "14. 09. 1942"} ✝ 2024
                           </p>
                         </div>

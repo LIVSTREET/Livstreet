@@ -17,6 +17,8 @@ export default {
         display: ["Playfair Display", "serif"],
         body: ["Inter", "sans-serif"],
         script: ["Great Vibes", "cursive"],
+        gravminne: ["Trajan Pro", "Times New Roman", "serif"],
+        cinzel: ["Cinzel", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
