@@ -1,0 +1,102 @@
+import { Layout } from "@/components/layout/Layout";
+import { Link } from "react-router-dom";
+import article1 from "@/assets/article-1.jpg";
+import article2 from "@/assets/article-2.jpg";
+import article3 from "@/assets/article-3.jpg";
+import article4 from "@/assets/article-4.jpg";
+
+const articles = [
+  {
+    id: 1,
+    image: article1,
+    category: "Veiledning",
+    title: "Hvordan velge riktig gravstein",
+    excerpt: "En guide til å finne den perfekte måten å hedre din kjære på. Vi tar deg gjennom alle valgene du må ta.",
+    date: "15. desember 2024",
+    slug: "velge-gravstein",
+  },
+  {
+    id: 2,
+    image: article2,
+    category: "Bærekraft",
+    title: "Miljøvennlige alternativer til tradisjonelle gravsteiner",
+    excerpt: "Hvorfor trebaserte gravplater er et godt valg for naturen og fremtidige generasjoner.",
+    date: "10. desember 2024",
+    slug: "miljovennlig",
+  },
+  {
+    id: 3,
+    image: article3,
+    category: "Symboler",
+    title: "Betydningen av ulike symboler på gravminner",
+    excerpt: "Lær om tradisjoner og symbolikk i gravminnedesign – fra livets tre til kristne symboler.",
+    date: "5. desember 2024",
+    slug: "symboler",
+  },
+  {
+    id: 4,
+    image: article4,
+    category: "Vedlikehold",
+    title: "Stell av treplater gjennom året",
+    excerpt: "Tips for å bevare gravplatens skjønnhet i alle årstider, fra vinter til sommer.",
+    date: "1. desember 2024",
+    slug: "vedlikehold",
+  },
+];
+
+export default function Informasjon() {
+  return (
+    <Layout>
+      {/* Hero */}
+      <section className="py-20 bg-secondary">
+        <div className="container text-center">
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            Nyttig informasjon
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Artikler, veiledninger og tips for å hjelpe deg med valg og vedlikehold av gravminner.
+          </p>
+        </div>
+      </section>
+
+      {/* Articles */}
+      <section className="py-20 bg-background">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {articles.map((article) => (
+              <Link
+                key={article.id}
+                to={`/informasjon/${article.slug}`}
+                className="group"
+              >
+                <article className="bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-xs font-medium text-accent uppercase tracking-wider px-3 py-1 bg-accent/10 rounded-full">
+                        {article.category}
+                      </span>
+                      <span className="text-sm text-muted-foreground">{article.date}</span>
+                    </div>
+                    <h2 className="font-display text-2xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h2>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+}
