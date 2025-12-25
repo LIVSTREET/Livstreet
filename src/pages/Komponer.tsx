@@ -171,11 +171,11 @@ export default function Komponer() {
             <div className="order-2 lg:order-1">
               <div className="sticky top-4">
                 <h2 className="font-display text-xl font-semibold text-foreground mb-4">Forhåndsvisning</h2>
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[3/4] max-w-md mx-auto">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[4/3] max-w-lg mx-auto">
                   <img
                     src={platePreview}
                     alt="Gravplate mal"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-card"
                   />
                   
                   {/* Symbol */}
