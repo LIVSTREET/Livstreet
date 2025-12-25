@@ -2,20 +2,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Palette, Type, Eye } from "lucide-react";
 import plateImg from "@/assets/plate-preview.png";
-
 export function ConfiguratorTeaser() {
-  return (
-    <section className="py-20 bg-muted">
+  return <section className="py-20 bg-muted">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Preview */}
           <div className="relative">
             <div className="aspect-[4/3] max-w-lg mx-auto rounded-2xl overflow-hidden shadow-2xl bg-card">
-              <img
-                src={plateImg}
-                alt="Gravplate i tre"
-                className="w-full h-full object-contain bg-muted/50"
-              />
+              <img alt="Gravplate i tre" src="/lovable-uploads/67e8a1e6-c5c1-4773-8572-1e76a92ca1d9.png" className="w-full h-full object-contain bg-muted/50 rounded-sm shadow-none" />
             </div>
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
           </div>
@@ -74,6 +68,5 @@ export function ConfiguratorTeaser() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
