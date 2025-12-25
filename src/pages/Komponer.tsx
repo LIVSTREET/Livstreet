@@ -160,45 +160,45 @@ export default function Komponer() {
             <div className="order-2 lg:order-1">
               <div className="sticky top-24">
                 <h2 className="font-display text-2xl font-semibold mb-6">Forhåndsvisning</h2>
-                <div className="relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[3/4] max-w-md mx-auto">
+                <div className="relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[4/3] max-w-lg mx-auto">
                   <img
                     src={getTemplateImage(selectedSize)}
                     alt="Gravplate mal"
                     className="w-full h-full object-cover"
                   />
                   {/* Overlay with text */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
                     {/* Symbol */}
-                    <div className="mb-6 text-primary/70">
-                      <SymbolIcon className="h-16 w-16 mx-auto" strokeWidth={1} />
+                    <div className="mb-4 text-foreground/80">
+                      <SymbolIcon className="h-10 w-10 mx-auto" strokeWidth={1} />
                     </div>
 
                     {/* Names */}
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                       <div>
-                        <p className="font-display text-2xl md:text-3xl text-primary font-semibold">
-                          {name1 || "Navn Navnesen"}
+                        <p className="font-script text-2xl md:text-3xl text-foreground">
+                          {name1 || "Karen Marie Hansen"}
                         </p>
-                        <p className="text-primary/70 text-lg mt-1">
-                          {dates1 || "1940 - 2024"}
+                        <p className="text-foreground/80 text-sm mt-1">
+                          ★ {dates1 || "12. 07. 1940"} ✝ 2024
                         </p>
                       </div>
 
                       {selectedNameCount === "2" && (
-                        <div className="pt-4 border-t border-primary/20">
-                          <p className="font-display text-2xl md:text-3xl text-primary font-semibold">
-                            {name2 || "Navn Navnesen"}
+                        <div className="pt-2">
+                          <p className="font-script text-2xl md:text-3xl text-foreground">
+                            {name2 || "Søren Peter Hansen"}
                           </p>
-                          <p className="text-primary/70 text-lg mt-1">
-                            {dates2 || "1942 - 2024"}
+                          <p className="text-foreground/80 text-sm mt-1">
+                            ★ {dates2 || "14. 09. 1942"} ✝ 2024
                           </p>
                         </div>
                       )}
                     </div>
 
                     {/* Etterskrift */}
-                    <p className="mt-8 text-primary/60 italic text-sm max-w-[80%]">
-                      "{etterskrift || "I kjærlig minne"}"
+                    <p className="mt-4 text-foreground/70 font-script text-lg max-w-[80%]">
+                      {etterskrift || "Skriv etterskrift her"}
                     </p>
                   </div>
                 </div>
