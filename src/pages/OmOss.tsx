@@ -1,8 +1,15 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import gravplateHero from "@/assets/gravplate-hero.png";
+import oakCraftsmanship from "@/assets/oak-craftsmanship.png";
 import foundersImg from "@/assets/founders.png";
+import { Heart, Leaf, Hammer } from "lucide-react";
+
+const values = [
+  { icon: Heart, title: "Verdige minner" },
+  { icon: Leaf, title: "Naturlige valg" },
+  { icon: Hammer, title: "Ekte håndverk" },
+];
 
 export default function OmOss() {
   return (
@@ -13,6 +20,15 @@ export default function OmOss() {
           <h1 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-4">
             Om oss
           </h1>
+          {/* Values */}
+          <div className="flex flex-wrap justify-center gap-8 mt-8">
+            {values.map((value) => (
+              <div key={value.title} className="flex items-center gap-2 text-primary-foreground/90">
+                <value.icon className="h-5 w-5" />
+                <span className="font-medium">{value.title}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -36,8 +52,8 @@ export default function OmOss() {
             </div>
             <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
               <img
-                src={gravplateHero}
-                alt="Gravplate i eik på kirkegård"
+                src={oakCraftsmanship}
+                alt="Eiketre og håndverksverktøy"
                 className="w-full h-full object-cover"
               />
             </div>
