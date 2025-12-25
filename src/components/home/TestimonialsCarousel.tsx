@@ -7,23 +7,20 @@ const testimonials = [
   {
     id: 1,
     image: testimonial1,
-    quote: "En vakker og verdig måte å hedre min bestemor på. Kvaliteten er fantastisk, og det føles riktig å velge et miljøvennlig alternativ.",
-    author: "Anne Kristine H.",
-    location: "Bergen",
+    quote: "Den helt perfekte og så vakkert utformede minneplaten til min far 🙏🏻 De største og varmeste anbefalinger herfra. Helt fantastisk service og resultat – helt i min fars ånd. Tusen takk.",
+    author: "Jette",
   },
   {
     id: 2,
     image: testimonial2,
-    quote: "Fra bestilling til montering var alt profesjonelt og omsorgsfullt. Livstreet forstår verdien av et minne.",
-    author: "Erik M.",
-    location: "Oslo",
+    quote: "De beste anbefalinger herfra til et alternativ til en gravstein. Takk for den fine gravplaten dere har laget, levert og montert i forbindelse med vår fars bortgang. Fantastisk arbeid og en svært vakker gravplate. Rask og effektiv oppfølging. Det er også veldig fint at man selv kan lage forslag på nettsiden deres, og deretter få profesjonelle innspill fra dere. Våre foreldre har sett arbeidet deres på TV Midtvest, og er begge enige om at når den dagen kommer, skal det være en gravplate fra dere. Tusen takk.",
+    author: "Lone",
   },
   {
     id: 3,
     image: testimonial1,
-    quote: "Gravplaten er enda vakrere enn vi forventet. Håndverket er utrolig, og treet gir en varm følelse på gravstedet.",
-    author: "Marit og Knut L.",
-    location: "Trondheim",
+    quote: "Dagen før vår far og bror, Claus, sovnet inn på hospice, snakket vi som familie om de tingene vi uunngåelig måtte ta stilling til – blant annet gravminne. Det var tungt, men vi fikk en plutselig tanke om at noe i tre ville passe langt bedre, siden Claus var en stolt og dyktig tømrer og snekker. Men hvordan skulle det la seg gjøre? Det helt utrolige var at det samme kvelden kom et innslag om 'Livstræet' på TV – nesten som om tanken var blitt hørt. Det var akkurat den løsningen som var perfekt for vår situasjon. Vi bestilte en minneplate, våre ønsker ble ivaretatt, og nå gleder vi oss til å se det ferdige resultatet, som allerede på bildet ser utrolig vakkert og helt riktig ut.",
+    author: "Claus' familie",
   },
 ];
 
@@ -66,7 +63,6 @@ export function TestimonialsCarousel() {
               </blockquote>
               <div className="pt-4">
                 <p className="font-semibold text-foreground">{testimonials[current].author}</p>
-                <p className="text-muted-foreground">{testimonials[current].location}</p>
               </div>
             </div>
           </div>
