@@ -6,20 +6,20 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, Type, MoveVertical, Loader2 } from "lucide-react";
+import { ShoppingCart, Type, MoveVertical, Loader2, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, LucideIcon } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import platePreview from "@/assets/plate-preview.png";
 
-const symbols = [
-  { id: "tree", name: "Livets tre", symbol: "🌳" },
-  { id: "cross", name: "Kors", symbol: "✝" },
-  { id: "heart", name: "Hjerte", symbol: "❤" },
-  { id: "dove", name: "Due", symbol: "🕊" },
-  { id: "sun", name: "Sol", symbol: "☀" },
-  { id: "anchor", name: "Anker", symbol: "⚓" },
-  { id: "flower", name: "Blomst", symbol: "🌸" },
+const symbols: { id: string; name: string; icon: LucideIcon }[] = [
+  { id: "tree", name: "Livets tre", icon: TreeDeciduous },
+  { id: "cross", name: "Kors", icon: Cross },
+  { id: "heart", name: "Hjerte", icon: Heart },
+  { id: "dove", name: "Due", icon: Bird },
+  { id: "sun", name: "Sol", icon: Sun },
+  { id: "anchor", name: "Anker", icon: Anchor },
+  { id: "flower", name: "Blomst", icon: Flower },
 ];
 
 export default function Komponer() {
@@ -125,7 +125,7 @@ export default function Komponer() {
     });
   };
 
-  const currentSymbol = symbols.find(s => s.id === selectedSymbol)?.symbol || "🌳";
+  const SymbolIcon = symbols.find(s => s.id === selectedSymbol)?.icon || TreeDeciduous;
 
   if (loading) {
     return (
@@ -180,13 +180,13 @@ export default function Komponer() {
                   
                   {/* Symbol */}
                   <div 
-                    className="absolute left-1/2 -translate-x-1/2 transition-transform"
-                    style={{ 
-                      top: `${symbolPos}%`,
-                      fontSize: `${symbolSize * 0.4}px`
-                    }}
+                    className="absolute left-1/2 -translate-x-1/2 transition-transform text-foreground/80"
+                    style={{ top: `${symbolPos}%` }}
                   >
-                    <span className="text-foreground/80 select-none">{currentSymbol}</span>
+                    <SymbolIcon 
+                      style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
+                      strokeWidth={1} 
+                    />
                   </div>
 
                   {/* Name 1 */}
@@ -250,7 +250,7 @@ export default function Komponer() {
                       style={{ top: `${etterskriftPos}%` }}
                     >
                       <p 
-                        className="font-script text-foreground/80 select-none"
+                        className="font-gravminne italic text-foreground/80 select-none"
                         style={{ fontSize: `${etterskriftSize * 0.18}px` }}
                       >
                         {etterskrift}
@@ -321,20 +321,23 @@ export default function Komponer() {
                   Velg symbol
                 </Label>
                 <div className="grid grid-cols-4 gap-2">
-                  {symbols.map((symbol) => (
-                    <button
-                      key={symbol.id}
-                      onClick={() => setSelectedSymbol(symbol.id)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        selectedSymbol === symbol.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                      title={symbol.name}
-                    >
-                      <div className="text-3xl">{symbol.symbol}</div>
-                    </button>
-                  ))}
+                  {symbols.map((symbol) => {
+                    const Icon = symbol.icon;
+                    return (
+                      <button
+                        key={symbol.id}
+                        onClick={() => setSelectedSymbol(symbol.id)}
+                        className={`p-3 rounded-lg border-2 transition-all flex items-center justify-center ${
+                          selectedSymbol === symbol.id
+                            ? "border-primary bg-primary/5"
+                            : "border-border hover:border-primary/50"
+                        }`}
+                        title={symbol.name}
+                      >
+                        <Icon className="h-8 w-8" strokeWidth={1.5} />
+                      </button>
+                    );
+                  })}
                 </div>
                 <div className="mt-4 space-y-3">
                   <div>
@@ -384,8 +387,8 @@ export default function Komponer() {
                       <label className="text-xs text-muted-foreground">Størrelse: {name1Size}%</label>
                       <input
                         type="range"
-                        min="60"
-                        max="140"
+                        min="50"
+                        max="200"
                         value={name1Size}
                         onChange={(e) => setName1Size(Number(e.target.value))}
                         className="w-full accent-primary"
@@ -393,8 +396,8 @@ export default function Komponer() {
                       <label className="text-xs text-muted-foreground">Plassering: {name1Pos}%</label>
                       <input
                         type="range"
-                        min="25"
-                        max="45"
+                        min="10"
+                        max="80"
                         value={name1Pos}
                         onChange={(e) => setName1Pos(Number(e.target.value))}
                         className="w-full accent-primary"
@@ -414,7 +417,7 @@ export default function Komponer() {
                       <input
                         type="range"
                         min="50"
-                        max="120"
+                        max="200"
                         value={dates1Size}
                         onChange={(e) => setDates1Size(Number(e.target.value))}
                         className="w-full accent-primary"
@@ -422,8 +425,8 @@ export default function Komponer() {
                       <label className="text-xs text-muted-foreground">Plassering: {dates1Pos}%</label>
                       <input
                         type="range"
-                        min="35"
-                        max="50"
+                        min="10"
+                        max="85"
                         value={dates1Pos}
                         onChange={(e) => setDates1Pos(Number(e.target.value))}
                         className="w-full accent-primary"
@@ -450,8 +453,8 @@ export default function Komponer() {
                         <label className="text-xs text-muted-foreground">Størrelse: {name2Size}%</label>
                         <input
                           type="range"
-                          min="60"
-                          max="140"
+                          min="50"
+                          max="200"
                           value={name2Size}
                           onChange={(e) => setName2Size(Number(e.target.value))}
                           className="w-full accent-primary"
@@ -459,8 +462,8 @@ export default function Komponer() {
                         <label className="text-xs text-muted-foreground">Plassering: {name2Pos}%</label>
                         <input
                           type="range"
-                          min="48"
-                          max="65"
+                          min="10"
+                          max="80"
                           value={name2Pos}
                           onChange={(e) => setName2Pos(Number(e.target.value))}
                           className="w-full accent-primary"
@@ -480,7 +483,7 @@ export default function Komponer() {
                         <input
                           type="range"
                           min="50"
-                          max="120"
+                          max="200"
                           value={dates2Size}
                           onChange={(e) => setDates2Size(Number(e.target.value))}
                           className="w-full accent-primary"
@@ -488,8 +491,8 @@ export default function Komponer() {
                         <label className="text-xs text-muted-foreground">Plassering: {dates2Pos}%</label>
                         <input
                           type="range"
-                          min="55"
-                          max="70"
+                          min="10"
+                          max="85"
                           value={dates2Pos}
                           onChange={(e) => setDates2Pos(Number(e.target.value))}
                           className="w-full accent-primary"
@@ -516,7 +519,7 @@ export default function Komponer() {
                   <input
                     type="range"
                     min="50"
-                    max="120"
+                    max="200"
                     value={etterskriftSize}
                     onChange={(e) => setEtterskriftSize(Number(e.target.value))}
                     className="w-full accent-primary"
@@ -524,7 +527,7 @@ export default function Komponer() {
                   <label className="text-xs text-muted-foreground">Plassering: {etterskriftPos}%</label>
                   <input
                     type="range"
-                    min="70"
+                    min="10"
                     max="90"
                     value={etterskriftPos}
                     onChange={(e) => setEtterskriftPos(Number(e.target.value))}
