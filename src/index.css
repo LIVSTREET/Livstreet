@@ -2,95 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Livstreet Design System - Earthy, Natural, Memorial Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cream/Warm White Background */
+    --background: 40 33% 96%;
+    --foreground: 25 30% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card - Slightly warmer */
+    --card: 40 40% 98%;
+    --card-foreground: 25 30% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover */
+    --popover: 40 40% 98%;
+    --popover-foreground: 25 30% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Deep Earthy Brown */
+    --primary: 25 45% 25%;
+    --primary-foreground: 40 33% 96%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Warm Sand/Beige */
+    --secondary: 35 30% 88%;
+    --secondary-foreground: 25 45% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Light Cream */
+    --muted: 35 25% 92%;
+    --muted-foreground: 25 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Sage Green (Nature) */
+    --accent: 120 15% 40%;
+    --accent-foreground: 40 33% 96%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive */
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 33% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders - Warm Gray */
+    --border: 30 20% 85%;
+    --input: 30 20% 85%;
+    --ring: 25 45% 25%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar */
+    --sidebar-background: 25 35% 20%;
+    --sidebar-foreground: 40 30% 92%;
+    --sidebar-primary: 35 40% 75%;
+    --sidebar-primary-foreground: 25 35% 15%;
+    --sidebar-accent: 25 30% 28%;
+    --sidebar-accent-foreground: 40 30% 92%;
+    --sidebar-border: 25 25% 30%;
+    --sidebar-ring: 35 40% 60%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom tokens for Livstreet */
+    --wood: 30 50% 45%;
+    --wood-light: 35 45% 70%;
+    --wood-dark: 25 55% 25%;
+    --forest: 140 25% 35%;
+    --forest-light: 140 20% 50%;
+    --moss: 100 20% 45%;
+    --cream: 40 40% 95%;
+    --warm-white: 40 25% 98%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 25 35% 10%;
+    --foreground: 40 30% 92%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 25 30% 14%;
+    --card-foreground: 40 30% 92%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 25 30% 14%;
+    --popover-foreground: 40 30% 92%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 35 40% 75%;
+    --primary-foreground: 25 35% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 25 25% 22%;
+    --secondary-foreground: 40 30% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 25 20% 20%;
+    --muted-foreground: 35 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 120 20% 35%;
+    --accent-foreground: 40 30% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 55% 40%;
+    --destructive-foreground: 40 30% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 25 20% 22%;
+    --input: 25 20% 22%;
+    --ring: 35 40% 60%;
+
+    --sidebar-background: 25 35% 8%;
+    --sidebar-foreground: 40 30% 90%;
+    --sidebar-primary: 35 40% 70%;
+    --sidebar-primary-foreground: 25 35% 10%;
+    --sidebar-accent: 25 25% 15%;
+    --sidebar-accent-foreground: 40 30% 90%;
+    --sidebar-border: 25 20% 18%;
+    --sidebar-ring: 35 40% 55%;
+
+    --wood: 30 45% 55%;
+    --wood-light: 35 40% 65%;
+    --wood-dark: 25 50% 35%;
+    --forest: 140 20% 45%;
+    --forest-light: 140 15% 55%;
+    --moss: 100 15% 50%;
+    --cream: 40 25% 20%;
+    --warm-white: 40 20% 15%;
   }
 }
 
@@ -100,6 +123,33 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+
+  .bg-wood-gradient {
+    background: linear-gradient(135deg, hsl(var(--wood-light)) 0%, hsl(var(--wood)) 50%, hsl(var(--wood-dark)) 100%);
+  }
+
+  .bg-nature-gradient {
+    background: linear-gradient(180deg, hsl(var(--forest-light)) 0%, hsl(var(--forest)) 100%);
   }
 }
