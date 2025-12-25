@@ -2,24 +2,25 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import testimonial1 from "@/assets/testimonial-1.jpg";
 import testimonial2 from "@/assets/testimonial-2.jpg";
+import testimonial3 from "@/assets/testimonial-3.jpg";
 
 const testimonials = [
   {
     id: 1,
     image: testimonial1,
-    quote: "Den helt perfekte og så vakkert utformede minneplaten til min far 🙏🏻 De største og varmeste anbefalinger herfra. Helt fantastisk service og resultat – helt i min fars ånd. Tusen takk.",
+    quote: "Den helt perfekte og vakkert utformede minneplaten til min far 🙏🏻 Fantastisk service og resultat – helt i hans ånd.",
     author: "Jette",
   },
   {
     id: 2,
     image: testimonial2,
-    quote: "De beste anbefalinger herfra til et alternativ til en gravstein. Takk for den fine gravplaten dere har laget, levert og montert i forbindelse med vår fars bortgang. Fantastisk arbeid og en svært vakker gravplate. Rask og effektiv oppfølging. Det er også veldig fint at man selv kan lage forslag på nettsiden deres, og deretter få profesjonelle innspill fra dere. Våre foreldre har sett arbeidet deres på TV Midtvest, og er begge enige om at når den dagen kommer, skal det være en gravplate fra dere. Tusen takk.",
+    quote: "Et vakkert alternativ til gravstein. Fantastisk arbeid, rask oppfølging og en svært flott gravplate. Anbefales på det varmeste.",
     author: "Lone",
   },
   {
     id: 3,
-    image: testimonial1,
-    quote: "Dagen før vår far og bror, Claus, sovnet inn på hospice, snakket vi som familie om de tingene vi uunngåelig måtte ta stilling til – blant annet gravminne. Det var tungt, men vi fikk en plutselig tanke om at noe i tre ville passe langt bedre, siden Claus var en stolt og dyktig tømrer og snekker. Men hvordan skulle det la seg gjøre? Det helt utrolige var at det samme kvelden kom et innslag om 'Livstræet' på TV – nesten som om tanken var blitt hørt. Det var akkurat den løsningen som var perfekt for vår situasjon. Vi bestilte en minneplate, våre ønsker ble ivaretatt, og nå gleder vi oss til å se det ferdige resultatet, som allerede på bildet ser utrolig vakkert og helt riktig ut.",
+    image: testimonial3,
+    quote: "Da vi ønsket noe personlig og ekte, ble Livstræet den perfekte løsningen. Våre ønsker ble ivaretatt, og resultatet føles helt riktig.",
     author: "Claus' familie",
   },
 ];
@@ -47,11 +48,11 @@ export function TestimonialsCarousel() {
         <div className="relative max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Image */}
-            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
               <img
                 src={testimonials[current].image}
-                alt="Testimonial"
-                className="w-full h-full object-cover transition-opacity duration-500"
+                alt="Gravplate fra Livstreet"
+                className="w-full h-full object-contain bg-muted transition-opacity duration-500"
               />
             </div>
 
