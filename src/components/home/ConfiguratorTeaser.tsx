@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Palette, Type, Eye } from "lucide-react";
-import templateImg from "@/assets/template-mellom-1.jpg";
+import plateImg from "@/assets/plate-preview.png";
 
 export function ConfiguratorTeaser() {
   return (
@@ -10,21 +10,12 @@ export function ConfiguratorTeaser() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Preview */}
           <div className="relative">
-            <div className="aspect-[3/4] max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl bg-card">
+            <div className="aspect-[4/3] max-w-lg mx-auto rounded-2xl overflow-hidden shadow-2xl bg-card">
               <img
-                src={templateImg}
-                alt="Gravplate mal"
-                className="w-full h-full object-cover"
+                src={plateImg}
+                alt="Gravplate i tre"
+                className="w-full h-full object-contain bg-muted/50"
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-2 p-8">
-                  <p className="font-display text-2xl text-primary/60">Navn Navnesen</p>
-                  <p className="text-primary/50">1940 - 2024</p>
-                  <p className="text-sm text-primary/40 mt-4 italic">
-                    "I kjærlig minne"
-                  </p>
-                </div>
-              </div>
             </div>
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
           </div>
