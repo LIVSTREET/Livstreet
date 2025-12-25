@@ -9,7 +9,7 @@ export function ConfiguratorTeaser() {
           {/* Preview */}
           <div className="relative">
             <div className="aspect-[4/3] max-w-lg mx-auto rounded-2xl overflow-hidden shadow-2xl bg-card">
-              <img alt="Gravplate i tre" src="/lovable-uploads/67e8a1e6-c5c1-4773-8572-1e76a92ca1d9.png" className="w-full h-full object-contain bg-muted/50 rounded-sm shadow-none" />
+              <img alt="Gravplate i tre" src={plateImg} className="w-full h-full object-cover rounded-sm" />
             </div>
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
           </div>
