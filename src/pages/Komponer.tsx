@@ -16,6 +16,7 @@ import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
 
 const symbols: { id: string; name: string; icon: LucideIcon | null; image?: string }[] = [
+  { id: "none", name: "Ingen symbol", icon: null },
   { id: "tree", name: "Livets tre", icon: TreeDeciduous },
   { id: "cross", name: "Kors", icon: Cross },
   { id: "heart", name: "Hjerte", icon: Heart },
@@ -40,10 +41,12 @@ export default function Komponer() {
   const [selectedSize, setSelectedSize] = useState("Mellom");
   const [selectedNameCount, setSelectedNameCount] = useState("1");
   const [name1, setName1] = useState("Karen Marie Hansen");
-  const [dates1, setDates1] = useState("12.07.1940");
+  const [birthDate1, setBirthDate1] = useState("12.07 1932");
+  const [deathDate1, setDeathDate1] = useState("04.10 2024");
   const [name2, setName2] = useState("Søren Peter Hansen");
-  const [dates2, setDates2] = useState("14.09.1942");
-  const [etterskrift, setEtterskrift] = useState("I kjærlig minne");
+  const [birthDate2, setBirthDate2] = useState("14.09 1942");
+  const [deathDate2, setDeathDate2] = useState("01.01 2024");
+  const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
   const [selectedSymbol, setSelectedSymbol] = useState("tree");
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
   
@@ -164,17 +167,18 @@ export default function Komponer() {
       elements: {
         symbol: { pos: symbolPos, size: symbolSize },
         name1: { text: name1, pos: name1Pos, size: name1Size },
-        dates1: { text: dates1, pos: dates1Pos, size: dates1Size },
+        dates1: { text: `★${birthDate1} †${deathDate1}`, pos: dates1Pos, size: dates1Size },
         name2: { text: name2, pos: name2Pos, size: name2Size },
-        dates2: { text: dates2, pos: dates2Pos, size: dates2Size },
+        dates2: { text: `★${birthDate2} †${deathDate2}`, pos: dates2Pos, size: dates2Size },
         etterskrift: { text: etterskrift, pos: etterskriftPos, size: etterskriftSize },
       }
     };
 
     const lineItemProperties: Record<string, string> = {
       "Navn 1": name1 || "Ikke angitt",
-      "Datoer 1": dates1 || "Ikke angitt",
-      "Symbol": symbols.find(s => s.id === selectedSymbol)?.name || "Livets tre",
+      "Fødselsdato 1": birthDate1 || "Ikke angitt",
+      "Dødsdato 1": deathDate1 || "Ikke angitt",
+      "Symbol": symbols.find(s => s.id === selectedSymbol)?.name || "Ingen",
       "Ramme": frames.find(f => f.id === selectedFrame)?.label || "Ornamental",
       "Design Data": JSON.stringify(designData),
     };
@@ -185,7 +189,8 @@ export default function Komponer() {
 
     if (selectedNameCount === "2") {
       lineItemProperties["Navn 2"] = name2 || "Ikke angitt";
-      lineItemProperties["Datoer 2"] = dates2 || "Ikke angitt";
+      lineItemProperties["Fødselsdato 2"] = birthDate2 || "Ikke angitt";
+      lineItemProperties["Dødsdato 2"] = deathDate2 || "Ikke angitt";
     }
 
     addItem({
@@ -274,11 +279,11 @@ export default function Komponer() {
                       alt="Ramme"
                       className="absolute inset-0 w-full h-full pointer-events-none z-10"
                       style={{ 
-                        objectFit: 'cover',
+                        objectFit: selectedFrame === 'simple' ? 'contain' : 'cover',
                         objectPosition: 'center',
                         filter: 'brightness(0)',
                         imageRendering: 'auto',
-                        transform: 'translateZ(0)',
+                        transform: selectedFrame === 'simple' ? 'scale(0.92)' : 'translateZ(0)',
                         backfaceVisibility: 'hidden',
                       }}
                       draggable={false}
@@ -286,35 +291,37 @@ export default function Komponer() {
                   )}
                   
                   {/* Symbol */}
-                  <div 
-                    className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === 'symbol' ? 'scale-110 z-20' : 'z-15'}`}
-                    style={{ 
-                      left: `${symbolPos.x}%`, 
-                      top: `${symbolPos.y}%`,
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                    onMouseDown={(e) => handleMouseDown("symbol", e)}
-                    onTouchStart={(e) => handleMouseDown("symbol", e)}
-                  >
-                    {selectedSymbolData?.image ? (
-                      <img 
-                        src={selectedSymbolData.image} 
-                        alt={selectedSymbolData.name}
-                        style={{ 
-                          width: `${symbolSize * 0.6}px`, 
-                          height: `${symbolSize * 0.45}px`,
-                          objectFit: 'contain',
-                          filter: 'brightness(0)',
-                        }} 
-                        draggable={false}
-                      />
-                    ) : SymbolIcon ? (
-                      <SymbolIcon 
-                        style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
-                        strokeWidth={1} 
-                      />
-                    ) : null}
-                  </div>
+                  {selectedSymbol !== "none" && (
+                    <div 
+                      className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === 'symbol' ? 'scale-110 z-20' : 'z-15'}`}
+                      style={{ 
+                        left: `${symbolPos.x}%`, 
+                        top: `${symbolPos.y}%`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      onMouseDown={(e) => handleMouseDown("symbol", e)}
+                      onTouchStart={(e) => handleMouseDown("symbol", e)}
+                    >
+                      {selectedSymbolData?.image ? (
+                        <img 
+                          src={selectedSymbolData.image} 
+                          alt={selectedSymbolData.name}
+                          style={{ 
+                            width: `${symbolSize * 0.6}px`, 
+                            height: `${symbolSize * 0.45}px`,
+                            objectFit: 'contain',
+                            filter: 'brightness(0)',
+                          }} 
+                          draggable={false}
+                        />
+                      ) : SymbolIcon ? (
+                        <SymbolIcon 
+                          style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
+                          strokeWidth={1} 
+                        />
+                      ) : null}
+                    </div>
+                  )}
 
                   {/* Name 1 */}
                   <div 
@@ -351,14 +358,14 @@ export default function Komponer() {
                     onTouchStart={(e) => handleMouseDown("dates1", e)}
                   >
                     <p 
-                      className="font-cinzel text-foreground/80 whitespace-nowrap"
+                      className="font-cinzel text-foreground whitespace-nowrap"
                       style={{ 
-                        fontSize: `${dates1Size * 0.14}px`,
+                        fontSize: `${dates1Size * 0.16}px`,
                         textRendering: 'geometricPrecision',
                         WebkitFontSmoothing: 'antialiased',
                       }}
                     >
-                      ★ {dates1 || "Dato"} ✝
+                      ★{birthDate1 || "00.00 0000"} †{deathDate1 || "00.00 0000"}
                     </p>
                   </div>
 
@@ -397,10 +404,14 @@ export default function Komponer() {
                         onTouchStart={(e) => handleMouseDown("dates2", e)}
                       >
                         <p 
-                          className="font-cinzel text-foreground/80 whitespace-nowrap"
-                          style={{ fontSize: `${dates2Size * 0.14}px` }}
+                          className="font-cinzel text-foreground whitespace-nowrap"
+                          style={{ 
+                            fontSize: `${dates2Size * 0.16}px`,
+                            textRendering: 'geometricPrecision',
+                            WebkitFontSmoothing: 'antialiased',
+                          }}
                         >
-                          ★ {dates2 || "Dato"} ✝
+                          ★{birthDate2 || "00.00 0000"} †{deathDate2 || "00.00 0000"}
                         </p>
                       </div>
                     </>
@@ -588,12 +599,21 @@ export default function Komponer() {
                     <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
                     <Input
                       type="text"
-                      value={dates1}
-                      onChange={(e) => setDates1(e.target.value)}
-                      placeholder="dd.mm.åååå"
+                      value={birthDate1}
+                      onChange={(e) => setBirthDate1(e.target.value)}
+                      placeholder="dd.mm åååå"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Dødsdato</Label>
+                    <Input
+                      type="text"
+                      value={deathDate1}
+                      onChange={(e) => setDeathDate1(e.target.value)}
+                      placeholder="dd.mm åååå"
                     />
                     <div className="mt-3">
-                      <label className="text-xs text-muted-foreground">Størrelse: {dates1Size}%</label>
+                      <label className="text-xs text-muted-foreground">Dato-størrelse: {dates1Size}%</label>
                       <input
                         type="range"
                         min="50"
@@ -636,12 +656,21 @@ export default function Komponer() {
                       <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
                       <Input
                         type="text"
-                        value={dates2}
-                        onChange={(e) => setDates2(e.target.value)}
-                        placeholder="dd.mm.åååå"
+                        value={birthDate2}
+                        onChange={(e) => setBirthDate2(e.target.value)}
+                        placeholder="dd.mm åååå"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm text-muted-foreground mb-1">Dødsdato</Label>
+                      <Input
+                        type="text"
+                        value={deathDate2}
+                        onChange={(e) => setDeathDate2(e.target.value)}
+                        placeholder="dd.mm åååå"
                       />
                       <div className="mt-3">
-                        <label className="text-xs text-muted-foreground">Størrelse: {dates2Size}%</label>
+                        <label className="text-xs text-muted-foreground">Dato-størrelse: {dates2Size}%</label>
                         <input
                           type="range"
                           min="50"
