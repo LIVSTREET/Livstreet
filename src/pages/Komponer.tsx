@@ -287,13 +287,8 @@ export default function Komponer() {
                     <img
                       src={selectedFrameImage}
                       alt="Ramme"
-                      className="absolute pointer-events-none z-10"
+                      className="absolute inset-0 w-full h-full pointer-events-none z-10"
                       style={{ 
-                        top: '50%',
-                        left: '50%',
-                        width: '92%',
-                        height: '92%',
-                        transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
                         filter: 'brightness(0)',
                       }}
