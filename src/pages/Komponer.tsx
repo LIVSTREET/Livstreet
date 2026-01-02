@@ -15,7 +15,7 @@ import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
 
-const symbols: { id: string; name: string; icon: LucideIcon }[] = [
+const symbols: { id: string; name: string; icon: LucideIcon | null; image?: string }[] = [
   { id: "tree", name: "Livets tre", icon: TreeDeciduous },
   { id: "cross", name: "Kors", icon: Cross },
   { id: "heart", name: "Hjerte", icon: Heart },
@@ -23,12 +23,12 @@ const symbols: { id: string; name: string; icon: LucideIcon }[] = [
   { id: "sun", name: "Sol", icon: Sun },
   { id: "anchor", name: "Anker", icon: Anchor },
   { id: "flower", name: "Blomst", icon: Flower },
+  { id: "roses", name: "Roseramme", icon: null, image: frameRoses },
 ];
 
 const frames = [
   { id: "ornamental", label: "Ornamental", image: frameOrnamental },
   { id: "simple", label: "Enkel buet", image: frameSimple },
-  { id: "roses", label: "Roseramme", image: frameRoses },
   { id: "none", label: "Ingen ramme", image: null },
 ] as const;
 
@@ -203,7 +203,8 @@ export default function Komponer() {
     });
   };
 
-  const SymbolIcon = symbols.find(s => s.id === selectedSymbol)?.icon || TreeDeciduous;
+  const selectedSymbolData = symbols.find(s => s.id === selectedSymbol);
+  const SymbolIcon = selectedSymbolData?.icon || null;
   const selectedFrameImage = frames.find(f => f.id === selectedFrame)?.image;
 
   if (loading) {
@@ -275,6 +276,7 @@ export default function Komponer() {
                       style={{ 
                         objectFit: 'cover',
                         objectPosition: 'center',
+                        filter: 'brightness(0)',
                         imageRendering: 'auto',
                         transform: 'translateZ(0)',
                         backfaceVisibility: 'hidden',
@@ -285,7 +287,7 @@ export default function Komponer() {
                   
                   {/* Symbol */}
                   <div 
-                    className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === 'symbol' ? 'scale-110 z-10' : ''}`}
+                    className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === 'symbol' ? 'scale-110 z-20' : 'z-15'}`}
                     style={{ 
                       left: `${symbolPos.x}%`, 
                       top: `${symbolPos.y}%`,
@@ -294,10 +296,24 @@ export default function Komponer() {
                     onMouseDown={(e) => handleMouseDown("symbol", e)}
                     onTouchStart={(e) => handleMouseDown("symbol", e)}
                   >
-                    <SymbolIcon 
-                      style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
-                      strokeWidth={1} 
-                    />
+                    {selectedSymbolData?.image ? (
+                      <img 
+                        src={selectedSymbolData.image} 
+                        alt={selectedSymbolData.name}
+                        style={{ 
+                          width: `${symbolSize * 0.6}px`, 
+                          height: `${symbolSize * 0.45}px`,
+                          objectFit: 'contain',
+                          filter: 'brightness(0)',
+                        }} 
+                        draggable={false}
+                      />
+                    ) : SymbolIcon ? (
+                      <SymbolIcon 
+                        style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
+                        strokeWidth={1} 
+                      />
+                    ) : null}
                   </div>
 
                   {/* Name 1 */}
@@ -313,7 +329,11 @@ export default function Komponer() {
                   >
                     <p 
                       className="font-gravminne font-bold text-foreground whitespace-nowrap"
-                      style={{ fontSize: `${name1Size * 0.24}px` }}
+                      style={{ 
+                        fontSize: `${name1Size * 0.24}px`,
+                        textRendering: 'geometricPrecision',
+                        WebkitFontSmoothing: 'antialiased',
+                      }}
                     >
                       {name1 || "Navn"}
                     </p>
@@ -332,7 +352,11 @@ export default function Komponer() {
                   >
                     <p 
                       className="font-cinzel text-foreground/80 whitespace-nowrap"
-                      style={{ fontSize: `${dates1Size * 0.14}px` }}
+                      style={{ 
+                        fontSize: `${dates1Size * 0.14}px`,
+                        textRendering: 'geometricPrecision',
+                        WebkitFontSmoothing: 'antialiased',
+                      }}
                     >
                       ★ {dates1 || "Dato"} ✝
                     </p>
@@ -353,7 +377,11 @@ export default function Komponer() {
                       >
                         <p 
                           className="font-gravminne font-bold text-foreground whitespace-nowrap"
-                          style={{ fontSize: `${name2Size * 0.24}px` }}
+                          style={{ 
+                            fontSize: `${name2Size * 0.24}px`,
+                            textRendering: 'geometricPrecision',
+                            WebkitFontSmoothing: 'antialiased',
+                          }}
                         >
                           {name2 || "Navn"}
                         </p>
@@ -507,7 +535,11 @@ export default function Komponer() {
                         }`}
                         title={symbol.name}
                       >
-                        <Icon className="h-8 w-8" strokeWidth={1.5} />
+                        {symbol.image ? (
+                          <img src={symbol.image} alt={symbol.name} className="h-8 w-8 object-contain" style={{ filter: 'brightness(0)' }} />
+                        ) : Icon ? (
+                          <Icon className="h-8 w-8" strokeWidth={1.5} />
+                        ) : null}
                       </button>
                     );
                   })}
