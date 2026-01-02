@@ -275,7 +275,6 @@ export default function Komponer() {
                       style={{ 
                         objectFit: 'cover',
                         objectPosition: 'center',
-                        filter: 'brightness(0)',
                         imageRendering: 'auto',
                         transform: 'translateZ(0)',
                         backfaceVisibility: 'hidden',
