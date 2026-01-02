@@ -295,6 +295,7 @@ export default function Komponer() {
                         height: '110%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
+                        mixBlendMode: 'multiply',
                       }}
                       draggable={false}
                     />
