@@ -271,8 +271,15 @@ export default function Komponer() {
                     <img
                       src={selectedFrameImage}
                       alt="Ramme"
-                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                      style={{ filter: 'brightness(0)' }}
+                      className="absolute inset-0 w-full h-full pointer-events-none z-10"
+                      style={{ 
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        filter: 'brightness(0)',
+                        imageRendering: 'auto',
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden',
+                      }}
                       draggable={false}
                     />
                   )}
