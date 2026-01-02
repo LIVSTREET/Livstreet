@@ -289,13 +289,13 @@ export default function Komponer() {
                       alt="Ramme"
                       className="absolute pointer-events-none z-10"
                       style={{ 
-                        top: '50%',
+                        top: '52%',
                         left: '50%',
-                        width: '110%',
-                        height: '105%',
+                        width: '118%',
+                        height: '100%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
-                        opacity: 0.85,
+                        filter: 'brightness(0)',
                       }}
                       draggable={false}
                     />
