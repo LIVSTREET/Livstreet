@@ -289,10 +289,10 @@ export default function Komponer() {
                       alt="Ramme"
                       className="absolute pointer-events-none z-10"
                       style={{ 
-                        top: '-2%',
-                        left: '-2%',
-                        width: '104%',
-                        height: '104%',
+                        top: '-5%',
+                        left: '-5%',
+                        width: '110%',
+                        height: '110%',
                         objectFit: 'contain',
                         objectPosition: 'center',
                         filter: 'brightness(0)',
