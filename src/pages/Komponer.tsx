@@ -291,8 +291,8 @@ export default function Komponer() {
                       style={{ 
                         top: '50%',
                         left: '50%',
-                        width: '120%',
-                        height: '120%',
+                        width: '150%',
+                        height: '150%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'contain',
                         objectPosition: 'center',
