@@ -10,7 +10,7 @@ import { ShoppingCart, Type, Loader2, TreeDeciduous, Cross, Heart, Bird, Sun, An
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import platePreview from "@/assets/plate-preview.png";
+import platePreview from "@/assets/plate-preview.jpg";
 import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
@@ -272,6 +272,7 @@ export default function Komponer() {
                       src={selectedFrameImage}
                       alt="Ramme"
                       className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                      style={{ filter: 'brightness(0)' }}
                       draggable={false}
                     />
                   )}
