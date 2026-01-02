@@ -291,11 +291,10 @@ export default function Komponer() {
                       style={{ 
                         top: '50%',
                         left: '50%',
-                        width: '180%',
-                        height: '180%',
+                        width: '92%',
+                        height: '92%',
                         transform: 'translate(-50%, -50%)',
-                        objectFit: 'contain',
-                        objectPosition: 'center',
+                        objectFit: 'fill',
                         filter: 'brightness(0)',
                       }}
                       draggable={false}
