@@ -289,9 +289,9 @@ export default function Komponer() {
                       alt="Ramme"
                       className="absolute pointer-events-none z-10"
                       style={{ 
-                        top: '50%',
+                        top: '54%',
                         left: '50%',
-                        width: '125%',
+                        width: '135%',
                         height: '110%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
