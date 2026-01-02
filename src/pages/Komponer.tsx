@@ -295,8 +295,6 @@ export default function Komponer() {
                         height: '110%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
-                        filter: 'brightness(0)',
-                        opacity: 0.7,
                       }}
                       draggable={false}
                     />
