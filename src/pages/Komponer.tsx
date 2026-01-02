@@ -289,11 +289,10 @@ export default function Komponer() {
                       alt="Ramme"
                       className="absolute inset-0 w-full h-full pointer-events-none z-10"
                       style={{ 
-                        objectFit: selectedFrame === 'simple' ? 'contain' : 'cover',
+                        objectFit: 'contain',
                         objectPosition: 'center',
                         filter: 'brightness(0)',
                         imageRendering: 'auto',
-                        transform: selectedFrame === 'simple' ? 'scale(0.92)' : 'translateZ(0)',
                         backfaceVisibility: 'hidden',
                       }}
                       draggable={false}
