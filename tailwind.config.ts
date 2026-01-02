@@ -19,6 +19,10 @@ export default {
         script: ["Great Vibes", "cursive"],
         gravminne: ["Trajan Pro", "Times New Roman", "serif"],
         cinzel: ["Cinzel", "serif"],
+        "great-vibes": ["Great Vibes", "cursive"],
+        "alex-brush": ["Alex Brush", "cursive"],
+        "allura": ["Allura", "cursive"],
+        "edwardian": ["Edwardian Script ITC", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -35,6 +35,15 @@ const frames = [
 
 type FrameType = typeof frames[number]["id"];
 
+const fonts = [
+  { id: "great-vibes", label: "Great Vibes", className: "font-great-vibes" },
+  { id: "alex-brush", label: "Alex Brush", className: "font-alex-brush" },
+  { id: "allura", label: "Allura", className: "font-allura" },
+  { id: "edwardian", label: "Edwardian Script", className: "font-edwardian" },
+] as const;
+
+type FontType = typeof fonts[number]["id"];
+
 export default function Komponer() {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,6 +58,7 @@ export default function Komponer() {
   const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
   const [selectedSymbol, setSelectedSymbol] = useState("tree");
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
+  const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
   
   // Text sizes (as percentage of base)
   const [symbolSize, setSymbolSize] = useState(100);
@@ -335,7 +345,7 @@ export default function Komponer() {
                     onTouchStart={(e) => handleMouseDown("name1", e)}
                   >
                     <p 
-                      className="font-gravminne font-bold text-foreground whitespace-nowrap"
+                      className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
                       style={{ 
                         fontSize: `${name1Size * 0.24}px`,
                         textRendering: 'geometricPrecision',
@@ -383,7 +393,7 @@ export default function Komponer() {
                         onTouchStart={(e) => handleMouseDown("name2", e)}
                       >
                         <p 
-                          className="font-gravminne font-bold text-foreground whitespace-nowrap"
+                          className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
                           style={{ 
                             fontSize: `${name2Size * 0.24}px`,
                             textRendering: 'geometricPrecision',
@@ -430,7 +440,7 @@ export default function Komponer() {
                       onTouchStart={(e) => handleMouseDown("etterskrift", e)}
                     >
                       <p 
-                        className="font-gravminne italic text-foreground/80 whitespace-nowrap"
+                        className={`${fonts.find(f => f.id === selectedFont)?.className} italic text-foreground/80 whitespace-nowrap`}
                         style={{ fontSize: `${etterskriftSize * 0.18}px` }}
                       >
                         {etterskrift}
@@ -527,7 +537,28 @@ export default function Komponer() {
                 </div>
               </div>
 
-              {/* Symbol Selection */}
+              {/* Font Selection */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Velg skrifttype
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {fonts.map((font) => (
+                    <button
+                      key={font.id}
+                      onClick={() => setSelectedFont(font.id)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        selectedFont === font.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      <span className={`${font.className} text-lg text-foreground`}>{font.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
                   Velg symbol
