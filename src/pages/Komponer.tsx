@@ -58,7 +58,7 @@ export default function Komponer() {
   const [birthDate2, setBirthDate2] = useState("14.09 1942");
   const [deathDate2, setDeathDate2] = useState("01.01 2024");
   const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
-  const [selectedSymbol, setSelectedSymbol] = useState("tree");
+  const [selectedSymbol, setSelectedSymbol] = useState("none");
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
   const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
   
