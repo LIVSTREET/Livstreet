@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -100,7 +100,7 @@ export default function Kontakt() {
               
               <div className="space-y-6">
                 <a
-                  href="mailto:post@livstreet.no"
+                  href="mailto:livstreet.store@gmail.com"
                   className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border hover:border-primary/30 transition-all"
                 >
                   <div className="p-3 bg-primary/10 rounded-lg">
@@ -108,12 +108,12 @@ export default function Kontakt() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">E-post</h3>
-                    <p className="text-muted-foreground">post@livstreet.no</p>
+                    <p className="text-muted-foreground">livstreet.store@gmail.com</p>
                   </div>
                 </a>
 
                 <a
-                  href="tel:+4712345678"
+                  href="tel:+4745251280"
                   className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border hover:border-primary/30 transition-all"
                 >
                   <div className="p-3 bg-primary/10 rounded-lg">
@@ -121,23 +121,10 @@ export default function Kontakt() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Telefon</h3>
-                    <p className="text-muted-foreground">+47 123 45 678</p>
+                    <p className="text-muted-foreground">+47 452 51 280</p>
                     <p className="text-sm text-muted-foreground">Man-fre 09:00-16:00</p>
                   </div>
                 </a>
-
-                <button
-                  onClick={() => toast.info("Live chat kommer snart!")}
-                  className="w-full flex items-start gap-4 p-6 bg-card rounded-xl border border-border hover:border-accent/30 transition-all text-left"
-                >
-                  <div className="p-3 bg-accent/20 rounded-lg">
-                    <MessageCircle className="h-6 w-6 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Live Chat</h3>
-                    <p className="text-muted-foreground">Start en samtale nå</p>
-                  </div>
-                </button>
 
                 <div className="flex items-start gap-4 p-6 bg-muted rounded-xl">
                   <div className="p-3 bg-primary/10 rounded-lg">

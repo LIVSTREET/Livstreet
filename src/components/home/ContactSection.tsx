@@ -1,5 +1,4 @@
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export function ContactSection() {
   return (
@@ -15,10 +14,10 @@ export function ContactSection() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {/* Email */}
             <a
-              href="mailto:post@livstreet.no"
+              href="mailto:livstreet.store@gmail.com"
               className="group p-8 bg-card rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center"
             >
               <div className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -28,12 +27,12 @@ export function ContactSection() {
               <p className="text-muted-foreground mb-4">
                 Send oss en melding når som helst
               </p>
-              <span className="text-primary font-medium">post@livstreet.no</span>
+              <span className="text-primary font-medium">livstreet.store@gmail.com</span>
             </a>
 
             {/* Phone */}
             <a
-              href="tel:+4712345678"
+              href="tel:+4745251280"
               className="group p-8 bg-card rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center"
             >
               <div className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -43,23 +42,8 @@ export function ContactSection() {
               <p className="text-muted-foreground mb-4">
                 Man-fre 09:00-16:00
               </p>
-              <span className="text-primary font-medium">+47 123 45 678</span>
+              <span className="text-primary font-medium">+47 452 51 280</span>
             </a>
-
-            {/* Live Chat */}
-            <button
-              className="group p-8 bg-card rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center w-full"
-              onClick={() => alert("Live chat kommer snart!")}
-            >
-              <div className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-accent/20 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
-                <MessageCircle className="h-6 w-6" />
-              </div>
-              <h3 className="font-display text-xl font-semibold mb-2">Live Chat</h3>
-              <p className="text-muted-foreground mb-4">
-                Chat med oss nå
-              </p>
-              <span className="text-accent font-medium">Start samtale</span>
-            </button>
           </div>
 
           {/* Location */}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Mail, Phone, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 import logo from "@/assets/livstreet-logo.png";
 
 export function Footer() {
@@ -34,16 +34,10 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Legal & Account */}
+          {/* Legal */}
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Mer</h4>
             <nav className="flex flex-col gap-2">
-              <Link to="/logg-inn" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                Logg inn
-              </Link>
-              <Link to="/partner" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                Partner
-              </Link>
               <Link to="/personvern" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Personvernerklæring
               </Link>
@@ -57,18 +51,14 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Kontakt oss</h4>
             <div className="space-y-3">
-              <a href="mailto:post@livstreet.no" className="flex items-center gap-3 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="mailto:livstreet.store@gmail.com" className="flex items-center gap-3 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Mail className="h-4 w-4" />
-                post@livstreet.no
+                livstreet.store@gmail.com
               </a>
-              <a href="tel:+4712345678" className="flex items-center gap-3 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="tel:+4745251280" className="flex items-center gap-3 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Phone className="h-4 w-4" />
-                +47 123 45 678
+                +47 452 51 280
               </a>
-              <button className="flex items-center gap-3 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                <MessageCircle className="h-4 w-4" />
-                Start live chat
-              </button>
             </div>
 
             {/* Social */}
