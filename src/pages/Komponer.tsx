@@ -179,9 +179,9 @@ export default function Komponer() {
       elements: {
         symbol: { pos: symbolPos, size: symbolSize },
         name1: { text: name1, pos: name1Pos, size: name1Size },
-        dates1: { text: `★${birthDate1} †${deathDate1}`, pos: dates1Pos, size: dates1Size },
+        dates1: { text: `${birthDate1} – ${deathDate1}`, pos: dates1Pos, size: dates1Size },
         name2: { text: name2, pos: name2Pos, size: name2Size },
-        dates2: { text: `★${birthDate2} †${deathDate2}`, pos: dates2Pos, size: dates2Size },
+        dates2: { text: `${birthDate2} – ${deathDate2}`, pos: dates2Pos, size: dates2Size },
         etterskrift: { text: etterskrift, pos: etterskriftPos, size: etterskriftSize },
       }
     };
@@ -293,8 +293,8 @@ export default function Komponer() {
                       style={{ 
                         top: '54%',
                         left: '50%',
-                        width: '135%',
-                        height: '110%',
+                        width: selectedFrame === 'simple' ? '150%' : '135%',
+                        height: selectedFrame === 'simple' ? '120%' : '110%',
                         transform: 'translate(-50%, -50%)',
                         objectFit: 'fill',
                         mixBlendMode: 'multiply',
@@ -378,7 +378,7 @@ export default function Komponer() {
                         WebkitFontSmoothing: 'antialiased',
                       }}
                     >
-                      ★{birthDate1 || "00.00 0000"} †{deathDate1 || "00.00 0000"}
+                      {birthDate1 || "00.00 0000"} – {deathDate1 || "00.00 0000"}
                     </p>
                   </div>
 
@@ -424,7 +424,7 @@ export default function Komponer() {
                             WebkitFontSmoothing: 'antialiased',
                           }}
                         >
-                          ★{birthDate2 || "00.00 0000"} †{deathDate2 || "00.00 0000"}
+                          {birthDate2 || "00.00 0000"} – {deathDate2 || "00.00 0000"}
                         </p>
                       </div>
                     </>
