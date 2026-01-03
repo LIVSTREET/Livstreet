@@ -14,6 +14,7 @@ import platePreview from "@/assets/plate-preview.jpg";
 import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
+import frameSimpleOrnamental from "@/assets/frame-simple-ornamental.png";
 
 const symbols: { id: string; name: string; icon: LucideIcon | null; image?: string }[] = [
   { id: "none", name: "Ingen symbol", icon: null },
@@ -30,6 +31,7 @@ const symbols: { id: string; name: string; icon: LucideIcon | null; image?: stri
 const frames = [
   { id: "ornamental", label: "Ornamental", image: frameOrnamental },
   { id: "simple", label: "Enkel buet", image: frameSimple },
+  { id: "simple-ornamental", label: "Enkel ornamental", image: frameSimpleOrnamental },
   { id: "none", label: "Ingen ramme", image: null },
 ] as const;
 
