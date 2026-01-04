@@ -11,6 +11,7 @@ import OmOss from "./pages/OmOss";
 import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
 import Personvern from "./pages/Personvern";
+import Kjopsvilkar from "./pages/Kjopsvilkar";
 import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/bestill" element={<Bestill />} />
           <Route path="/personvern" element={<Personvern />} />
+          <Route path="/kjopsvilkar" element={<Kjopsvilkar />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
