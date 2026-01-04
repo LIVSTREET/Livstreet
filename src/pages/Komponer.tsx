@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ShoppingCart, Type, Loader2, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, LucideIcon, Square } from "lucide-react";
+import { Mail, Type, Loader2, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, LucideIcon, Square } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -167,9 +167,9 @@ export default function Komponer() {
     setDragging(null);
   };
 
-  const handleAddToCart = () => {
+  const handleSendInquiry = () => {
     if (!product || !selectedVariant) {
-      toast.error("Kunne ikke legge til i handlekurv");
+      toast.error("Kunne ikke sende forespørsel");
       return;
     }
 
@@ -215,8 +215,8 @@ export default function Komponer() {
       lineItemProperties,
     });
 
-    toast.success("Lagt i handlekurv!", {
-      description: `${product.node.title} - ${selectedVariant.title}`,
+    toast.success("Din forespørsel er sendt", {
+      description: "Vi kontakter deg snart for å fullføre bestillingen",
     });
   };
 
@@ -746,20 +746,20 @@ export default function Komponer() {
               {/* Price & Submit */}
               <div className="bg-primary text-primary-foreground p-6 rounded-xl shadow-xl">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-lg">Totalpris:</span>
+                  <span className="text-lg">Veiledende pris:</span>
                   <span className="text-3xl font-bold">{formatPrice(price)}</span>
                 </div>
                 <Button 
-                  onClick={handleAddToCart}
+                  onClick={handleSendInquiry}
                   variant="secondary"
                   className="w-full py-6 text-lg font-semibold"
                   disabled={!selectedVariant}
                 >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Legg i handlekurv
+                  <Mail className="h-5 w-5 mr-2" />
+                  Send forespørsel
                 </Button>
                 <p className="text-xs text-primary-foreground/70 mt-3 text-center">
-                  Endelig design tilpasses av oss før produksjon
+                  Vi kontakter deg for å fullføre bestillingen
                 </p>
               </div>
             </div>

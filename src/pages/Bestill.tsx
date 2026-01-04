@@ -79,7 +79,7 @@ export default function Bestill() {
                   </ul>
                   <Button variant="hero" size="lg" className="w-full" asChild>
                     <Link to="/komponer">
-                      Komponer nå
+                      Start forespørsel
                       <ArrowRight className="h-4 w-4 md:h-5 md:w-5 ml-2" />
                     </Link>
                   </Button>

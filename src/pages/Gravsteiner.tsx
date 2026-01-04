@@ -63,7 +63,7 @@ export default function Gravsteiner() {
                     <div className="flex items-center justify-between">
                       <span className="text-lg md:text-xl font-semibold text-primary">{product.price}</span>
                       <Button variant="hero" asChild>
-                        <Link to="/komponer">Komponer</Link>
+                        <Link to="/komponer">Send forespørsel</Link>
                       </Button>
                     </div>
                   </div>
