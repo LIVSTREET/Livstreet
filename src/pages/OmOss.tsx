@@ -38,16 +38,16 @@ export default function OmOss() {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center max-w-6xl mx-auto">
             <div className="space-y-4 md:space-y-6 text-muted-foreground leading-relaxed text-sm md:text-base">
               <p>
-                Hos Livstreet lager vi bærekraftige gravplater i massivt, FSC-sertifisert eik – 
+                Hos Livstreet formidler vi bærekraftige gravplater i massivt, FSC-sertifisert eik – 
                 som et varmt og verdig alternativ til den tradisjonelle gravsteinen i granitt. 
-                Produktene våre er håndlaget i Danmark og utformet for å hedre minnet på en 
+                Produktene våre er designet og produsert i Danmark, og utformet for å hedre minnet på en 
                 personlig, vakker og miljøvennlig måte.
               </p>
               <p>
                 I en tid hvor stadig flere ønsker å ta bevisste og bærekraftige valg – også ved 
                 livets slutt – tilbyr vi et gravminne laget av naturlig tre. I motsetning til 
                 tunge granittsteiner som ofte importeres langveisfra, er våre gravplater 
-                lokalproduserte i Norden, lette å håndtere og laget med omtanke for miljøet.
+                produsert i Danmark, lette å håndtere og laget med omtanke for miljøet.
               </p>
             </div>
             <div className="aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-xl">
@@ -119,9 +119,9 @@ export default function OmOss() {
             />
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Et lite team med stor lidenskap</h2>
             <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
-              Dan og Steffen Frederiksen startet Livstræet med et ønske om å lage gravplater i tre – 
-              et naturlig og bærekraftig alternativ til granitt. Ideen er født i Danmark og videreføres 
-              nå i Norge, med samme fokus på håndverk, kvalitet og verdighet.
+              Dan og Steffen Frederiksen startet Livstræet i Danmark med et ønske om å lage gravplater i tre – 
+              et naturlig og bærekraftig alternativ til granitt. Designet og produksjonen skjer i Danmark, 
+              og vi formidler produktene i Norge med samme fokus på håndverk, kvalitet og verdighet.
             </p>
             <Button variant="hero" size="lg" asChild>
               <Link to="/kontakt">Ta kontakt med oss</Link>

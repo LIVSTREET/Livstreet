@@ -9,7 +9,7 @@ const steps = [
   {
     icon: Palette,
     title: "2. Vi lager",
-    description: "Våre håndverkere lager platen i norsk eik med lasergravering og naturlig finish.",
+    description: "Platen produseres i Danmark i eik med lasergravering og naturlig finish.",
   },
   {
     icon: Truck,

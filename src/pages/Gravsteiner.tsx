@@ -9,7 +9,7 @@ const products = [
   {
     id: 1,
     name: "Gravplate Mellom",
-    description: "Perfekt for enkeltpersoner. 30x40 cm i norsk eik.",
+    description: "Perfekt for enkeltpersoner. 30x40 cm i eik.",
     price: "fra 3 990 kr",
     image: templateMellom,
     size: "30x40 cm",
@@ -17,7 +17,7 @@ const products = [
   {
     id: 2,
     name: "Gravplate Stor",
-    description: "Større plate for en eller to personer. 40x50 cm i norsk eik.",
+    description: "Større plate for en eller to personer. 40x50 cm i eik.",
     price: "fra 5 490 kr",
     image: templateStor,
     size: "40x50 cm",
@@ -37,7 +37,7 @@ export default function Gravsteiner() {
             Våre gravplater i tre
           </h1>
           <p className="text-base md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-            Håndlagde minneplater i norsk eik – et bæredyktig og vakkert alternativ til tradisjonelle gravsteiner.
+            Håndlagde minneplater i eik – dansk design og produksjon formidlet i Norge.
           </p>
         </div>
       </section>
@@ -92,9 +92,9 @@ export default function Gravsteiner() {
               <p className="text-muted-foreground text-xs md:text-base hidden md:block">Hver plate har sin egen trestruktur og personlighet.</p>
             </div>
             <div className="text-center p-2 md:p-6">
-              <div className="text-2xl md:text-4xl mb-2 md:mb-4">🇳🇴</div>
-              <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-2">Norsk håndverk</h3>
-              <p className="text-muted-foreground text-xs md:text-base hidden md:block">Laget med stolthet i Norge av dyktige håndverkere.</p>
+              <div className="text-2xl md:text-4xl mb-2 md:mb-4">🇩🇰</div>
+              <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-2">Dansk design og produksjon</h3>
+              <p className="text-muted-foreground text-xs md:text-base hidden md:block">Designet og produsert i Danmark, formidlet i Norge med fokus på håndverk og kvalitet.</p>
             </div>
           </div>
         </div>
