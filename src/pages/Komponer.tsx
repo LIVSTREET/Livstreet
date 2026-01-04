@@ -137,9 +137,9 @@ export default function Komponer() {
     const x = ((clientX - rect.left) / rect.width) * 100;
     const y = ((clientY - rect.top) / rect.height) * 100;
     
-    // Clamp to bounds (5% - 95%)
-    const clampedX = Math.max(5, Math.min(95, x));
-    const clampedY = Math.max(5, Math.min(95, y));
+    // Clamp to bounds (15% - 85%) to keep elements inside frame
+    const clampedX = Math.max(15, Math.min(85, x));
+    const clampedY = Math.max(12, Math.min(88, y));
     
     switch (dragging) {
       case "symbol":
@@ -265,12 +265,12 @@ export default function Komponer() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Preview */}
-            <div className="order-2 lg:order-1">
-              <div className="sticky top-4">
-                <h2 className="font-display text-xl font-semibold text-foreground mb-4">Forhåndsvisning</h2>
+            <div className="order-1 lg:order-1">
+              <div className="sticky top-0 lg:top-4 z-10 bg-background pb-4 pt-2 lg:pt-0">
+                <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
-                  className="relative rounded-2xl overflow-hidden shadow-2xl border border-border aspect-[4/3] max-w-lg mx-auto cursor-move select-none"
+                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-card"
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
                   onMouseLeave={handleMouseUp}
@@ -280,7 +280,7 @@ export default function Komponer() {
                   <img
                     src={platePreview}
                     alt="Gravplate mal"
-                    className="w-full h-full object-contain bg-card pointer-events-none"
+                    className="w-full h-full object-contain pointer-events-none"
                     draggable={false}
                   />
                   
