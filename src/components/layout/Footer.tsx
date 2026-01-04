@@ -41,7 +41,7 @@ export function Footer() {
               <Link to="/personvern" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Personvernerklæring
               </Link>
-              <Link to="/vilkar" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <Link to="/kjopsvilkar" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Kjøpsvilkår
               </Link>
             </nav>
