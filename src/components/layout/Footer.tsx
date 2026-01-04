@@ -63,10 +63,10 @@ export function Footer() {
 
             {/* Social */}
             <div className="flex items-center gap-3 md:gap-4 pt-2 md:pt-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-1.5 md:p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61586135337128" target="_blank" rel="noopener noreferrer" className="p-1.5 md:p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors">
                 <Facebook className="h-4 w-4 md:h-5 md:w-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-1.5 md:p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors">
+              <a href="https://www.instagram.com/livstreetgravplate/" target="_blank" rel="noopener noreferrer" className="p-1.5 md:p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors">
                 <Instagram className="h-4 w-4 md:h-5 md:w-5" />
               </a>
             </div>
