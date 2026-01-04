@@ -263,14 +263,14 @@ export default function Komponer() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
             {/* Preview */}
-            <div className="order-1 lg:order-1">
-              <div className="sticky top-0 lg:top-4 z-10 bg-background pb-4 pt-2 lg:pt-0">
+            <div className="lg:order-1">
+              <div className="sticky top-20 z-10 bg-background/95 backdrop-blur-sm pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 lg:bg-transparent lg:backdrop-blur-none">
                 <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
-                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-card"
+                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-xs sm:max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-card"
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
                   onMouseLeave={handleMouseUp}
