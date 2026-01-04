@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { X, Volume2 } from "lucide-react";
 
 export function VideoSection() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,28 +18,28 @@ export function VideoSection() {
         </div>
 
         <div 
-          className="relative aspect-video max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
+          className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
           onClick={() => setIsOpen(true)}
         >
-          {/* Unmuted preview video */}
-          <iframe
-            src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479"
-            className="w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            title="Produksjonsvideo 1"
-          />
+          {/* Muted autoplay looping preview video - 4:3 aspect ratio to match video */}
+          <div className="relative" style={{ paddingBottom: '75%' }}>
+            <iframe
+              src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1"
+              className="absolute inset-0 w-full h-full"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Produksjonsvideo 1"
+            />
+          </div>
           
-          {/* Overlay with play button for fullscreen */}
-          <div className="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          {/* Overlay with sound icon */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
             <div className="text-center text-primary-foreground">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary-foreground/20 backdrop-blur flex items-center justify-center">
-                <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-black/40 backdrop-blur flex items-center justify-center">
+                <Volume2 className="w-8 h-8" />
               </div>
-              <p className="text-lg font-medium">Klikk for fullskjerm</p>
+              <p className="text-lg font-medium drop-shadow-lg">Klikk for lyd</p>
             </div>
           </div>
         </div>
@@ -54,10 +54,10 @@ export function VideoSection() {
           >
             <X className="w-6 h-6" />
           </button>
-          <div className="aspect-video w-full">
+          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
             <iframe
-              src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1"
-              className="w-full h-full"
+              src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1"
+              className="absolute inset-0 w-full h-full"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
