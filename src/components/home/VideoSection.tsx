@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 
 export function VideoSection() {
   const [isOpen, setIsOpen] = useState(false);
-  const vimeoId = "1151281409";
 
   return (
     <section className="py-20 bg-background">
