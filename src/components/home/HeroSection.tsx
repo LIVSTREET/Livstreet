@@ -13,7 +13,7 @@ export function HeroSection() {
       <div className="container relative z-10 py-10 md:py-20 px-4">
         <div className="max-w-2xl space-y-4 md:space-y-8 animate-fade-in">
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
-            Et bæredyktig minne i naturlig tre
+            Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
           <p className="text-base md:text-xl text-primary-foreground/90 leading-relaxed">Hver plate er unik – laget med kjærlighet og respekt for naturen.</p>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2 md:pt-4">
