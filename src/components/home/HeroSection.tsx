@@ -6,7 +6,7 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img alt="Gravplate i eik på kirkegård" className="w-full h-full object-cover" src={gravplateHero} />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40 opacity-70" />
       </div>
 
       {/* Content */}
@@ -15,7 +15,7 @@ export function HeroSection() {
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
             Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
-          <h2 className="text-base md:text-xl text-primary-foreground/90 leading-relaxed font-normal">
+          <h2 className="text-base md:text-xl text-primary-foreground/90 leading-relaxed font-normal font-serif">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
           </h2>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2 md:pt-4">
