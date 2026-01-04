@@ -109,36 +109,18 @@ export default function OmOss() {
         </div>
       </section>
 
-      {/* Norwegian Representative */}
+      {/* Team / Founders */}
       <section className="py-10 md:py-20 bg-secondary">
         <div className="container text-center px-4">
           <div className="max-w-3xl mx-auto">
-            <img
-              src={pederImg}
-              alt="Peder August Halvorsen"
-              className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-top shadow-lg"
-            />
-            <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Din kontakt i Norge</h2>
-            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
-              Jeg heter Peder August Halvorsen, og som nevø av Dan formidler jeg Livstræets gravplater 
-              til Norge. Jeg er her for å hjelpe deg gjennom hele prosessen – fra valg av plate til levering.
-            </p>
-            <Button variant="hero" size="lg" asChild>
-              <Link to="/kontakt">Ta kontakt</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Team / Founders */}
-      <section className="py-10 md:py-20 bg-background">
-        <div className="container text-center px-4">
-          <div className="max-w-3xl mx-auto">
-            <img
-              src={foundersImg}
-              alt="Dan og Steffen Frederiksen"
-              className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-top shadow-lg"
-            />
+            <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 md:mb-6">
+              <img
+                src={foundersImg}
+                alt="Dan og Steffen Frederiksen"
+                className="w-full h-full rounded-full object-cover object-top shadow-lg"
+              />
+              <div className="absolute inset-0 rounded-full bg-primary/20" />
+            </div>
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Håndverk fra Danmark – formidlet i Norge</h2>
             <p className="text-muted-foreground text-sm md:text-lg">
               Dan og Steffen Frederiksen startet Livstreet i Danmark med et ønske om å lage gravplater i tre – 
@@ -146,6 +128,27 @@ export default function OmOss() {
               videreføres nå i Norge gjennom Livstreet, hvor vi formidler disse unike produktene til norske 
               kunder med samme fokus på verdighet og miljøvennlige valg.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Norwegian Representative */}
+      <section className="py-10 md:py-20 bg-background">
+        <div className="container text-center px-4">
+          <div className="max-w-3xl mx-auto">
+            <img
+              src={pederImg}
+              alt="Peder August Halvorsen"
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-center shadow-lg"
+            />
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Din kontakt i Norge</h2>
+            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
+              Jeg heter Peder August Halvorsen, og som nevø av Dan formidler jeg Livstreets gravplater 
+              til Norge. Jeg er her for å hjelpe deg gjennom hele prosessen – fra valg av plate til levering.
+            </p>
+            <Button variant="hero" size="lg" asChild>
+              <Link to="/kontakt">Ta kontakt</Link>
+            </Button>
           </div>
         </div>
       </section>

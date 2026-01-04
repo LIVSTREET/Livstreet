@@ -22,7 +22,7 @@ export function Header() {
       <div className="container flex h-20 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Livstreet - Bæredyktig Minne" className="h-12 w-auto" />
+          <img src={logo} alt="Livstreet - Bæredyktig Minne" className="h-16 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
