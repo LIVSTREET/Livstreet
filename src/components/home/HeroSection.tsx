@@ -13,7 +13,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="container relative z-10 py-10 md:py-20 px-4">
         <div className="max-w-2xl space-y-4 md:space-y-8 animate-fade-in">
-          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
+          <h1 className="font-cinzel text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight tracking-wide">
             Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
           <p className="text-base md:text-xl text-primary-foreground/90 leading-relaxed">
