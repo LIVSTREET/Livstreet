@@ -511,6 +511,62 @@ export default function Komponer() {
                 </Select>
               </div>
 
+              {/* Person 1 */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="font-semibold text-foreground mb-4">Person 1</h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Navn</Label>
+                    <Input
+                      type="text"
+                      value={name1}
+                      onChange={(e) => setName1(e.target.value)}
+                      placeholder="Fornavn Etternavn"
+                    />
+                    <div className="mt-3">
+                      <label className="text-xs text-muted-foreground">Størrelse: {name1Size}%</label>
+                      <input
+                        type="range"
+                        min="50"
+                        max="200"
+                        value={name1Size}
+                        onChange={(e) => setName1Size(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
+                    <Input
+                      type="text"
+                      value={birthDate1}
+                      onChange={(e) => setBirthDate1(e.target.value)}
+                      placeholder="dd.mm åååå"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-sm text-muted-foreground mb-1">Dødsdato</Label>
+                    <Input
+                      type="text"
+                      value={deathDate1}
+                      onChange={(e) => setDeathDate1(e.target.value)}
+                      placeholder="dd.mm åååå"
+                    />
+                    <div className="mt-3">
+                      <label className="text-xs text-muted-foreground">Dato-størrelse: {dates1Size}%</label>
+                      <input
+                        type="range"
+                        min="50"
+                        max="200"
+                        value={dates1Size}
+                        onChange={(e) => setDates1Size(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Frame Selection */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
@@ -602,62 +658,6 @@ export default function Komponer() {
                     onChange={(e) => setSymbolSize(Number(e.target.value))}
                     className="w-full accent-primary"
                   />
-                </div>
-              </div>
-
-              {/* Person 1 */}
-              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <h3 className="font-semibold text-foreground mb-4">Person 1</h3>
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-sm text-muted-foreground mb-1">Navn</Label>
-                    <Input
-                      type="text"
-                      value={name1}
-                      onChange={(e) => setName1(e.target.value)}
-                      placeholder="Fornavn Etternavn"
-                    />
-                    <div className="mt-3">
-                      <label className="text-xs text-muted-foreground">Størrelse: {name1Size}%</label>
-                      <input
-                        type="range"
-                        min="50"
-                        max="200"
-                        value={name1Size}
-                        onChange={(e) => setName1Size(Number(e.target.value))}
-                        className="w-full accent-primary"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label className="text-sm text-muted-foreground mb-1">Fødselsdato</Label>
-                    <Input
-                      type="text"
-                      value={birthDate1}
-                      onChange={(e) => setBirthDate1(e.target.value)}
-                      placeholder="dd.mm åååå"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-sm text-muted-foreground mb-1">Dødsdato</Label>
-                    <Input
-                      type="text"
-                      value={deathDate1}
-                      onChange={(e) => setDeathDate1(e.target.value)}
-                      placeholder="dd.mm åååå"
-                    />
-                    <div className="mt-3">
-                      <label className="text-xs text-muted-foreground">Dato-størrelse: {dates1Size}%</label>
-                      <input
-                        type="range"
-                        min="50"
-                        max="200"
-                        value={dates1Size}
-                        onChange={(e) => setDates1Size(Number(e.target.value))}
-                        className="w-full accent-primary"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
 
