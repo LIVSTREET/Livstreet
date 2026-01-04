@@ -1,8 +1,6 @@
 import { Mail, Phone, MapPin } from "lucide-react";
-
 export function ContactSection() {
-  return (
-    <section className="py-10 md:py-20 bg-background">
+  return <section className="py-10 md:py-20 bg-background">
       <div className="container px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-6 md:mb-12">
@@ -16,10 +14,7 @@ export function ContactSection() {
 
           <div className="grid md:grid-cols-2 gap-3 md:gap-6">
             {/* Email */}
-            <a
-              href="mailto:livstreet.store@gmail.com"
-              className="group p-4 md:p-8 bg-card rounded-xl md:rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center"
-            >
+            <a href="mailto:livstreet.store@gmail.com" className="group p-4 md:p-8 bg-card rounded-xl md:rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center">
               <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 mb-2 md:mb-4 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <Mail className="h-5 w-5 md:h-6 md:w-6" />
               </div>
@@ -31,10 +26,7 @@ export function ContactSection() {
             </a>
 
             {/* Phone */}
-            <a
-              href="tel:+4745251280"
-              className="group p-4 md:p-8 bg-card rounded-xl md:rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center"
-            >
+            <a href="tel:+4745251280" className="group p-4 md:p-8 bg-card rounded-xl md:rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all text-center">
               <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 mb-2 md:mb-4 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <Phone className="h-5 w-5 md:h-6 md:w-6" />
               </div>
@@ -49,12 +41,10 @@ export function ContactSection() {
           {/* Location */}
           <div className="mt-4 md:mt-8 p-4 md:p-6 bg-muted rounded-lg md:rounded-xl flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-center md:text-left">
             <MapPin className="h-5 w-5 md:h-6 md:w-6 text-primary shrink-0" />
-            <p className="text-muted-foreground text-sm md:text-base">
-              <strong className="text-foreground">Livstreet AS</strong> · Verkstedveien 1, 0150 Oslo, Norge
+            <p className="text-muted-foreground text-sm md:text-base">​Oslo, Norge<strong className="text-foreground">​ </strong> Oslo, Norge
             </p>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
