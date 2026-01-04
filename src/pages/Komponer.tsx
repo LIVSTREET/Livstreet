@@ -567,30 +567,6 @@ export default function Komponer() {
                 </div>
               </div>
 
-              {/* Etterskrift */}
-              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <Label className="block text-sm font-semibold text-foreground mb-2">
-                  Etterskrift (valgfritt)
-                </Label>
-                <Textarea
-                  value={etterskrift}
-                  onChange={(e) => setEtterskrift(e.target.value)}
-                  rows={2}
-                  placeholder="I kjærlig minne..."
-                />
-                <div className="mt-3">
-                  <label className="text-xs text-muted-foreground">Størrelse: {etterskriftSize}%</label>
-                  <input
-                    type="range"
-                    min="50"
-                    max="200"
-                    value={etterskriftSize}
-                    onChange={(e) => setEtterskriftSize(Number(e.target.value))}
-                    className="w-full accent-primary"
-                  />
-                </div>
-              </div>
-
               {/* Person 2 */}
               {selectedNameCount === "2" && (
                 <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
@@ -648,6 +624,30 @@ export default function Komponer() {
                   </div>
                 </div>
               )}
+
+              {/* Etterskrift */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-2">
+                  Etterskrift (valgfritt)
+                </Label>
+                <Textarea
+                  value={etterskrift}
+                  onChange={(e) => setEtterskrift(e.target.value)}
+                  rows={2}
+                  placeholder="I kjærlig minne..."
+                />
+                <div className="mt-3">
+                  <label className="text-xs text-muted-foreground">Størrelse: {etterskriftSize}%</label>
+                  <input
+                    type="range"
+                    min="50"
+                    max="200"
+                    value={etterskriftSize}
+                    onChange={(e) => setEtterskriftSize(Number(e.target.value))}
+                    className="w-full accent-primary"
+                  />
+                </div>
+              </div>
 
               {/* Font Selection */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
