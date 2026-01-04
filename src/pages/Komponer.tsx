@@ -567,73 +567,25 @@ export default function Komponer() {
                 </div>
               </div>
 
-              {/* Frame Selection */}
+              {/* Etterskrift */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <Label className="block text-sm font-semibold text-foreground mb-3">
-                  Velg ramme
+                <Label className="block text-sm font-semibold text-foreground mb-2">
+                  Etterskrift (valgfritt)
                 </Label>
-                <div className="grid grid-cols-2 gap-3">
-                  {frames.map((frame) => (
-                    <button
-                      key={frame.id}
-                      onClick={() => setSelectedFrame(frame.id)}
-                      className={`p-3 rounded-lg border-2 transition-all flex flex-col items-center gap-2 ${
-                        selectedFrame === frame.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                    >
-                      {frame.image ? (
-                        <img src={frame.image} alt={frame.label} className="w-16 h-12 object-contain" />
-                      ) : (
-                        <div className="w-16 h-12 flex items-center justify-center bg-muted rounded">
-                          <Square className="w-6 h-6 text-muted-foreground" strokeWidth={1} />
-                        </div>
-                      )}
-                      <span className="text-sm font-medium text-foreground">{frame.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <Label className="block text-sm font-semibold text-foreground mb-3">
-                  Velg symbol
-                </Label>
-                <div className="grid grid-cols-4 gap-2">
-                  {symbols.map((symbol) => {
-                    const Icon = symbol.icon;
-                    return (
-                      <button
-                        key={symbol.id}
-                        onClick={() => setSelectedSymbol(symbol.id)}
-                        className={`p-3 rounded-lg border-2 transition-all flex items-center justify-center ${
-                          selectedSymbol === symbol.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                        title={symbol.name}
-                      >
-                        {symbol.image ? (
-                          <img src={symbol.image} alt={symbol.name} className="h-8 w-8 object-contain" style={{ filter: 'brightness(0)' }} />
-                        ) : Icon ? (
-                          <Icon className="h-8 w-8" strokeWidth={1.5} />
-                        ) : null}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="mt-4">
-                  <label className="text-xs text-muted-foreground flex items-center gap-2">
-                    <Type className="w-4 h-4" />
-                    Størrelse: {symbolSize}%
-                  </label>
+                <Textarea
+                  value={etterskrift}
+                  onChange={(e) => setEtterskrift(e.target.value)}
+                  rows={2}
+                  placeholder="I kjærlig minne..."
+                />
+                <div className="mt-3">
+                  <label className="text-xs text-muted-foreground">Størrelse: {etterskriftSize}%</label>
                   <input
                     type="range"
                     min="50"
                     max="200"
-                    value={symbolSize}
-                    onChange={(e) => setSymbolSize(Number(e.target.value))}
+                    value={etterskriftSize}
+                    onChange={(e) => setEtterskriftSize(Number(e.target.value))}
                     className="w-full accent-primary"
                   />
                 </div>
@@ -719,25 +671,74 @@ export default function Komponer() {
                 </div>
               </div>
 
-              {/* Etterskrift */}
+              {/* Frame Selection */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <Label className="block text-sm font-semibold text-foreground mb-2">
-                  Etterskrift (valgfritt)
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Velg ramme
                 </Label>
-                <Textarea
-                  value={etterskrift}
-                  onChange={(e) => setEtterskrift(e.target.value)}
-                  rows={2}
-                  placeholder="I kjærlig minne..."
-                />
-                <div className="mt-3">
-                  <label className="text-xs text-muted-foreground">Størrelse: {etterskriftSize}%</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {frames.map((frame) => (
+                    <button
+                      key={frame.id}
+                      onClick={() => setSelectedFrame(frame.id)}
+                      className={`p-3 rounded-lg border-2 transition-all flex flex-col items-center gap-2 ${
+                        selectedFrame === frame.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      {frame.image ? (
+                        <img src={frame.image} alt={frame.label} className="w-16 h-12 object-contain" />
+                      ) : (
+                        <div className="w-16 h-12 flex items-center justify-center bg-muted rounded">
+                          <Square className="w-6 h-6 text-muted-foreground" strokeWidth={1} />
+                        </div>
+                      )}
+                      <span className="text-sm font-medium text-foreground">{frame.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Symbol Selection */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Velg symbol
+                </Label>
+                <div className="grid grid-cols-4 gap-2">
+                  {symbols.map((symbol) => {
+                    const Icon = symbol.icon;
+                    return (
+                      <button
+                        key={symbol.id}
+                        onClick={() => setSelectedSymbol(symbol.id)}
+                        className={`p-3 rounded-lg border-2 transition-all flex items-center justify-center ${
+                          selectedSymbol === symbol.id
+                            ? "border-primary bg-primary/5"
+                            : "border-border hover:border-primary/50"
+                        }`}
+                        title={symbol.name}
+                      >
+                        {symbol.image ? (
+                          <img src={symbol.image} alt={symbol.name} className="h-8 w-8 object-contain" style={{ filter: 'brightness(0)' }} />
+                        ) : Icon ? (
+                          <Icon className="h-8 w-8" strokeWidth={1.5} />
+                        ) : null}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="mt-4">
+                  <label className="text-xs text-muted-foreground flex items-center gap-2">
+                    <Type className="w-4 h-4" />
+                    Størrelse: {symbolSize}%
+                  </label>
                   <input
                     type="range"
                     min="50"
                     max="200"
-                    value={etterskriftSize}
-                    onChange={(e) => setEtterskriftSize(Number(e.target.value))}
+                    value={symbolSize}
+                    onChange={(e) => setSymbolSize(Number(e.target.value))}
                     className="w-full accent-primary"
                   />
                 </div>
