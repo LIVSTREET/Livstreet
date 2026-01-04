@@ -15,17 +15,17 @@ export default function OmOss() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="py-20 bg-primary">
-        <div className="container text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-4">
+      <section className="py-10 md:py-20 bg-primary">
+        <div className="container text-center px-4">
+          <h1 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground mb-2 md:mb-4">
             Om oss
           </h1>
           {/* Values */}
-          <div className="flex flex-wrap justify-center gap-8 mt-8">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-4 md:mt-8">
             {values.map((value) => (
               <div key={value.title} className="flex items-center gap-2 text-primary-foreground/90">
-                <value.icon className="h-5 w-5" />
-                <span className="font-medium">{value.title}</span>
+                <value.icon className="h-4 w-4 md:h-5 md:w-5" />
+                <span className="font-medium text-sm md:text-base">{value.title}</span>
               </div>
             ))}
           </div>
@@ -33,10 +33,10 @@ export default function OmOss() {
       </section>
 
       {/* Main Content with Image */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
+      <section className="py-10 md:py-20 bg-background">
+        <div className="container px-4">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center max-w-6xl mx-auto">
+            <div className="space-y-4 md:space-y-6 text-muted-foreground leading-relaxed text-sm md:text-base">
               <p>
                 Hos Livstreet lager vi bærekraftige gravplater i massivt, FSC-sertifisert eik – 
                 som et varmt og verdig alternativ til den tradisjonelle gravsteinen i granitt. 
@@ -50,7 +50,7 @@ export default function OmOss() {
                 lokalproduserte i Norden, lette å håndtere og laget med omtanke for miljøet.
               </p>
             </div>
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+            <div className="aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-xl">
               <img
                 src={oakCraftsmanship}
                 alt="Eiketre og håndverksverktøy"
@@ -62,34 +62,34 @@ export default function OmOss() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-secondary">
-        <div className="container">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-16">
+      <section className="py-12 md:py-24 bg-secondary">
+        <div className="container px-4">
+          <h2 className="font-display text-2xl md:text-4xl font-bold text-center mb-8 md:mb-16">
             Hva våre kunder sier
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
             {/* Testimonial 1 */}
-            <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <blockquote className="text-muted-foreground leading-relaxed italic mb-6">
+            <div className="bg-background rounded-xl md:rounded-2xl p-4 md:p-8 shadow-sm">
+              <blockquote className="text-muted-foreground leading-relaxed italic mb-3 md:mb-6 text-sm md:text-base">
                 "Det var tungt å måtte ta stilling til gravminne, men vi kjente med en gang at tre var riktig – han var jo en stolt tømrer. Da vi tilfeldigvis så et innslag om Livstræet på TV samme kveld, føltes det nesten som et tegn. Våre ønsker ble fulgt, og resultatet ser utrolig fint og helt riktig ut."
               </blockquote>
-              <p className="font-medium text-foreground">– Claus' familie</p>
+              <p className="font-medium text-foreground text-sm md:text-base">– Claus' familie</p>
             </div>
             {/* Testimonial 2 */}
-            <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <blockquote className="text-muted-foreground leading-relaxed italic mb-6">
+            <div className="bg-background rounded-xl md:rounded-2xl p-4 md:p-8 shadow-sm">
+              <blockquote className="text-muted-foreground leading-relaxed italic mb-3 md:mb-6 text-sm md:text-base">
                 "Mamma elsket hagen, blomster og alt som vokster. Derfor ble en gravplate i tre et naturlig valg – den passer så godt til et gravsted fylt med blomster. Vi fikk god hjelp, flere valgmuligheter og fantastisk service. Platen ble levert og satt opp, og den er virkelig vakker. Men vi skulle helst hatt mamma her."
               </blockquote>
-              <p className="font-medium text-foreground">– Ditte</p>
+              <p className="font-medium text-foreground text-sm md:text-base">– Ditte</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="max-w-4xl mx-auto space-y-6 text-muted-foreground leading-relaxed">
+      <section className="py-10 md:py-20 bg-background">
+        <div className="container px-4">
+          <div className="max-w-4xl mx-auto space-y-4 md:space-y-6 text-muted-foreground leading-relaxed text-sm md:text-base">
             <p>
               Vår misjon er å gi pårørende muligheten til å velge et verdig, personlig og 
               klimavennlig gravminne – uten å gå på kompromiss med kvalitet, uttrykk eller holdbarhet.
@@ -109,16 +109,16 @@ export default function OmOss() {
       </section>
 
       {/* Team / Founders */}
-      <section className="py-20 bg-secondary">
-        <div className="container text-center">
+      <section className="py-10 md:py-20 bg-secondary">
+        <div className="container text-center px-4">
           <div className="max-w-3xl mx-auto">
             <img
               src={foundersImg}
               alt="Dan og Steffen Frederiksen"
-              className="w-32 h-32 rounded-full mx-auto mb-6 object-cover object-top shadow-lg"
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-top shadow-lg"
             />
-            <h2 className="font-display text-3xl font-bold mb-4">Et lite team med stor lidenskap</h2>
-            <p className="text-muted-foreground text-lg mb-8">
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Et lite team med stor lidenskap</h2>
+            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
               Dan og Steffen Frederiksen startet Livstræet med et ønske om å lage gravplater i tre – 
               et naturlig og bærekraftig alternativ til granitt. Ideen er født i Danmark og videreføres 
               nå i Norge, med samme fokus på håndverk, kvalitet og verdighet.
