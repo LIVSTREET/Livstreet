@@ -19,6 +19,7 @@ export default {
         script: ["Great Vibes", "cursive"],
         gravminne: ["Trajan Pro", "Times New Roman", "serif"],
         cinzel: ["Cinzel", "serif"],
+        "cormorant-sc": ["Cormorant SC", "serif"],
         "great-vibes": ["Great Vibes", "cursive"],
         "alex-brush": ["Alex Brush", "cursive"],
         "allura": ["Allura", "cursive"],
