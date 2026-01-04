@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Type, Loader2, TreeDeciduous, Cross, Heart, Bird, Sun, Anchor, Flower, LucideIcon, Square } from "lucide-react";
+import { Mail, Type, Loader2, Plus, X, Square } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -15,18 +15,37 @@ import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
 import frameSimpleOrnamental from "@/assets/frame-simple-ornamental.png";
+import crossOrnate from "@/assets/symbols/cross-ornate.png";
 
-const symbols: { id: string; name: string; icon: LucideIcon | null; image?: string }[] = [
-  { id: "none", name: "Ingen symbol", icon: null },
-  { id: "tree", name: "Livets tre", icon: TreeDeciduous },
-  { id: "cross", name: "Kors", icon: Cross },
-  { id: "heart", name: "Hjerte", icon: Heart },
-  { id: "dove", name: "Due", icon: Bird },
-  { id: "sun", name: "Sol", icon: Sun },
-  { id: "anchor", name: "Anker", icon: Anchor },
-  { id: "flower", name: "Blomst", icon: Flower },
-  { id: "roses", name: "Roseramme", icon: null, image: frameRoses },
+interface Symbol {
+  id: string;
+  name: string;
+  image: string;
+}
+
+interface SymbolCategory {
+  id: string;
+  name: string;
+  symbols: Symbol[];
+}
+
+const symbolCategories: SymbolCategory[] = [
+  {
+    id: "kors",
+    name: "Kors",
+    symbols: [
+      { id: "cross-ornate", name: "Ornamentert kors", image: crossOrnate },
+    ],
+  },
 ];
+
+interface PlacedSymbol {
+  id: string;
+  symbolId: string;
+  categoryId: string;
+  pos: { x: number; y: number };
+  size: number;
+}
 
 const frames = [
   { id: "ornamental", label: "Ornamental", image: frameOrnamental },
@@ -58,12 +77,14 @@ export default function Komponer() {
   const [birthDate2, setBirthDate2] = useState("14.09 1942");
   const [deathDate2, setDeathDate2] = useState("01.01 2024");
   const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
-  const [selectedSymbol, setSelectedSymbol] = useState("none");
+  const [selectedCategory, setSelectedCategory] = useState<string>("kors");
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
   const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
   
+  // Placed symbols with individual sizes
+  const [placedSymbols, setPlacedSymbols] = useState<PlacedSymbol[]>([]);
+  
   // Text sizes (as percentage of base)
-  const [symbolSize, setSymbolSize] = useState(100);
   const [name1Size, setName1Size] = useState(100);
   const [dates1Size, setDates1Size] = useState(100);
   const [name2Size, setName2Size] = useState(100);
@@ -141,10 +162,16 @@ export default function Komponer() {
     const clampedX = Math.max(15, Math.min(85, x));
     const clampedY = Math.max(12, Math.min(88, y));
     
+    // Check if dragging a placed symbol
+    if (dragging?.startsWith('placed-')) {
+      const symbolId = dragging.replace('placed-', '');
+      setPlacedSymbols(prev => prev.map(s => 
+        s.id === symbolId ? { ...s, pos: { x: clampedX, y: clampedY } } : s
+      ));
+      return;
+    }
+    
     switch (dragging) {
-      case "symbol":
-        setSymbolPos({ x: clampedX, y: clampedY });
-        break;
       case "name1":
         setName1Pos({ x: clampedX, y: clampedY });
         break;
@@ -175,9 +202,8 @@ export default function Komponer() {
 
     const designData = {
       frame: selectedFrame,
-      symbol: selectedSymbol,
+      placedSymbols: placedSymbols,
       elements: {
-        symbol: { pos: symbolPos, size: symbolSize },
         name1: { text: name1, pos: name1Pos, size: name1Size },
         dates1: { text: `${birthDate1} – ${deathDate1}`, pos: dates1Pos, size: dates1Size },
         name2: { text: name2, pos: name2Pos, size: name2Size },
@@ -190,7 +216,11 @@ export default function Komponer() {
       "Navn 1": name1 || "Ikke angitt",
       "Fødselsdato 1": birthDate1 || "Ikke angitt",
       "Dødsdato 1": deathDate1 || "Ikke angitt",
-      "Symbol": symbols.find(s => s.id === selectedSymbol)?.name || "Ingen",
+      "Symboler": placedSymbols.map(s => {
+        const cat = symbolCategories.find(c => c.id === s.categoryId);
+        const sym = cat?.symbols.find(sym => sym.id === s.symbolId);
+        return sym?.name || s.symbolId;
+      }).join(", ") || "Ingen",
       "Ramme": frames.find(f => f.id === selectedFrame)?.label || "Ornamental",
       "Design Data": JSON.stringify(designData),
     };
@@ -220,9 +250,37 @@ export default function Komponer() {
     });
   };
 
-  const selectedSymbolData = symbols.find(s => s.id === selectedSymbol);
-  const SymbolIcon = selectedSymbolData?.icon || null;
   const selectedFrameImage = frames.find(f => f.id === selectedFrame)?.image;
+  
+  // Helper function to get symbol image
+  const getSymbolImage = (categoryId: string, symbolId: string) => {
+    const category = symbolCategories.find(c => c.id === categoryId);
+    return category?.symbols.find(s => s.id === symbolId)?.image;
+  };
+  
+  // Add symbol to preview
+  const addSymbolToPreview = (categoryId: string, symbolId: string) => {
+    const newSymbol: PlacedSymbol = {
+      id: `symbol-${Date.now()}`,
+      symbolId,
+      categoryId,
+      pos: { x: 50, y: 15 + placedSymbols.length * 10 },
+      size: 100,
+    };
+    setPlacedSymbols(prev => [...prev, newSymbol]);
+  };
+  
+  // Remove symbol from preview
+  const removeSymbol = (id: string) => {
+    setPlacedSymbols(prev => prev.filter(s => s.id !== id));
+  };
+  
+  // Update symbol size
+  const updateSymbolSize = (id: string, size: number) => {
+    setPlacedSymbols(prev => prev.map(s => 
+      s.id === id ? { ...s, size } : s
+    ));
+  };
 
   if (loading) {
     return (
@@ -303,38 +361,37 @@ export default function Komponer() {
                     />
                   )}
                   
-                  {/* Symbol */}
-                  {selectedSymbol !== "none" && (
-                    <div 
-                      className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === 'symbol' ? 'scale-110 z-20' : 'z-15'}`}
-                      style={{ 
-                        left: `${symbolPos.x}%`, 
-                        top: `${symbolPos.y}%`,
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                      onMouseDown={(e) => handleMouseDown("symbol", e)}
-                      onTouchStart={(e) => handleMouseDown("symbol", e)}
-                    >
-                      {selectedSymbolData?.image ? (
-                        <img 
-                          src={selectedSymbolData.image} 
-                          alt={selectedSymbolData.name}
-                          style={{ 
-                            width: `${symbolSize * 0.6}px`, 
-                            height: `${symbolSize * 0.45}px`,
-                            objectFit: 'contain',
-                            filter: 'brightness(0)',
-                          }} 
-                          draggable={false}
-                        />
-                      ) : SymbolIcon ? (
-                        <SymbolIcon 
-                          style={{ width: `${symbolSize * 0.4}px`, height: `${symbolSize * 0.4}px` }} 
-                          strokeWidth={1} 
-                        />
-                      ) : null}
-                    </div>
-                  )}
+                  {/* Placed Symbols */}
+                  {placedSymbols.map((placedSymbol) => {
+                    const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
+                    return (
+                      <div 
+                        key={placedSymbol.id}
+                        className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === `placed-${placedSymbol.id}` ? 'scale-110 z-20' : 'z-15'}`}
+                        style={{ 
+                          left: `${placedSymbol.pos.x}%`, 
+                          top: `${placedSymbol.pos.y}%`,
+                          transform: 'translate(-50%, -50%)'
+                        }}
+                        onMouseDown={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
+                        onTouchStart={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
+                      >
+                        {symbolImage && (
+                          <img 
+                            src={symbolImage} 
+                            alt="Symbol"
+                            style={{ 
+                              width: `${placedSymbol.size * 0.6}px`, 
+                              height: `${placedSymbol.size * 0.6}px`,
+                              objectFit: 'contain',
+                              filter: 'brightness(0)',
+                            }} 
+                            draggable={false}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
 
                   {/* Name 1 */}
                   <div 
@@ -705,43 +762,79 @@ export default function Komponer() {
                 <Label className="block text-sm font-semibold text-foreground mb-3">
                   Velg symbol
                 </Label>
-                <div className="grid grid-cols-4 gap-2">
-                  {symbols.map((symbol) => {
-                    const Icon = symbol.icon;
-                    return (
-                      <button
-                        key={symbol.id}
-                        onClick={() => setSelectedSymbol(symbol.id)}
-                        className={`p-3 rounded-lg border-2 transition-all flex items-center justify-center ${
-                          selectedSymbol === symbol.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                        title={symbol.name}
-                      >
-                        {symbol.image ? (
-                          <img src={symbol.image} alt={symbol.name} className="h-8 w-8 object-contain" style={{ filter: 'brightness(0)' }} />
-                        ) : Icon ? (
-                          <Icon className="h-8 w-8" strokeWidth={1.5} />
-                        ) : null}
-                      </button>
-                    );
-                  })}
+                
+                {/* Category tabs */}
+                <div className="flex gap-2 mb-4">
+                  {symbolCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                        selectedCategory === category.id
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
                 </div>
-                <div className="mt-4">
-                  <label className="text-xs text-muted-foreground flex items-center gap-2">
-                    <Type className="w-4 h-4" />
-                    Størrelse: {symbolSize}%
-                  </label>
-                  <input
-                    type="range"
-                    min="50"
-                    max="200"
-                    value={symbolSize}
-                    onChange={(e) => setSymbolSize(Number(e.target.value))}
-                    className="w-full accent-primary"
-                  />
+                
+                {/* Symbols in selected category */}
+                <div className="grid grid-cols-4 gap-2 mb-4">
+                  {symbolCategories.find(c => c.id === selectedCategory)?.symbols.map((symbol) => (
+                    <button
+                      key={symbol.id}
+                      onClick={() => addSymbolToPreview(selectedCategory, symbol.id)}
+                      className="p-3 rounded-lg border-2 border-border hover:border-primary/50 transition-all flex items-center justify-center"
+                      title={`Legg til ${symbol.name}`}
+                    >
+                      <img src={symbol.image} alt={symbol.name} className="h-8 w-8 object-contain" style={{ filter: 'brightness(0)' }} />
+                    </button>
+                  ))}
                 </div>
+                
+                {/* Placed symbols with individual size controls */}
+                {placedSymbols.length > 0 && (
+                  <div className="space-y-3 pt-3 border-t border-border">
+                    <Label className="text-xs text-muted-foreground">Plasserte symboler:</Label>
+                    {placedSymbols.map((placedSymbol, index) => {
+                      const category = symbolCategories.find(c => c.id === placedSymbol.categoryId);
+                      const symbol = category?.symbols.find(s => s.id === placedSymbol.symbolId);
+                      return (
+                        <div key={placedSymbol.id} className="flex items-center gap-3 bg-muted/50 p-2 rounded-lg">
+                          <img 
+                            src={symbol?.image} 
+                            alt={symbol?.name} 
+                            className="h-6 w-6 object-contain" 
+                            style={{ filter: 'brightness(0)' }} 
+                          />
+                          <div className="flex-1">
+                            <label className="text-xs text-muted-foreground flex items-center gap-2">
+                              <Type className="w-3 h-3" />
+                              {placedSymbol.size}%
+                            </label>
+                            <input
+                              type="range"
+                              min="50"
+                              max="200"
+                              value={placedSymbol.size}
+                              onChange={(e) => updateSymbolSize(placedSymbol.id, Number(e.target.value))}
+                              className="w-full accent-primary"
+                            />
+                          </div>
+                          <button
+                            onClick={() => removeSymbol(placedSymbol.id)}
+                            className="p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                            title="Fjern symbol"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* Price & Submit */}
