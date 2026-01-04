@@ -81,7 +81,7 @@ export function Footer() {
             © {new Date().getFullYear()} Livstreet. Alle rettigheter reservert.
           </p>
           <p className="text-xs md:text-sm text-primary-foreground/60">
-            Laget med kjærlighet i Norge 🇳🇴
+            Formidlet i Norge 🇳🇴 – Design og produksjon i Danmark 🇩🇰
           </p>
         </div>
       </div>

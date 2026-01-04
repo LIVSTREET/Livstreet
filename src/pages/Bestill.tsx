@@ -12,7 +12,7 @@ const products = [
     size: "30x40 cm",
     price: 3990,
     image: templateMellom,
-    features: ["Norsk eik", "1 navn inkludert", "Lasergravering", "Valgfritt symbol"],
+    features: ["Eik", "1 navn inkludert", "Lasergravering", "Valgfritt symbol"],
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const products = [
     size: "40x50 cm",
     price: 5490,
     image: templateStor,
-    features: ["Norsk eik", "1-2 navn inkludert", "Lasergravering", "Valgfritt symbol", "Større plass"],
+    features: ["Eik", "1-2 navn inkludert", "Lasergravering", "Valgfritt symbol", "Større plass"],
     popular: true,
   },
 ];
