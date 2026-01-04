@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import gravplateHero from "@/assets/gravplate-hero.png";
-
 export function HeroSection() {
   return <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -13,13 +12,10 @@ export function HeroSection() {
       {/* Content */}
       <div className="container relative z-10 py-10 md:py-20 px-4">
         <div className="max-w-2xl space-y-4 md:space-y-8 animate-fade-in">
-          <h1 className="font-cinzel text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight tracking-wide">
-            Et vakkert og miljøvennlig alternativ for å hedre dine kjære
+          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
+            Et bæredyktig minne i naturlig tre
           </h1>
-          <p className="text-base md:text-xl text-primary-foreground/90 leading-relaxed">
-            Våre håndlagde gravplater i tre er et vakkert og miljøvennlig alternativ. 
-            Hver plate er unik – laget med kjærlighet og respekt for naturen.
-          </p>
+          <p className="text-base md:text-xl text-primary-foreground/90 leading-relaxed">Hver plate er unik – laget med kjærlighet og respekt for naturen.</p>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2 md:pt-4">
             <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
               <Link to="/komponer">Lag din plate</Link>
