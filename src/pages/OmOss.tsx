@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import oakCraftsmanship from "@/assets/oak-craftsmanship.png";
 import foundersImg from "@/assets/founders.png";
+import pederImg from "@/assets/peder.png";
 import { Heart, Leaf, Hammer } from "lucide-react";
 
 const values = [
@@ -110,37 +111,21 @@ export default function OmOss() {
 
       {/* Norwegian Representative */}
       <section className="py-10 md:py-20 bg-secondary">
-        <div className="container px-4">
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center max-w-6xl mx-auto">
-            <div className="order-2 lg:order-1 space-y-4">
-              <h2 className="font-display text-2xl md:text-3xl font-bold">Din kontakt i Norge</h2>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                Jeg heter Peder August Halvorsen, og jeg er stolt av å formidle Livstræets gravplater til Norge. 
-                Som nevø av Dan har jeg vokst opp med en dyp respekt for godt håndverk og kvalitet.
-              </p>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                Jeg har alltid vært glad i skogen og fascinert av treverk – alt man kan gjøre med det. 
-                Det er et vakkert, fleksibelt og varmt materiale som representerer noe annet enn hva stein 
-                kan gjøre. Når jeg så onkel Dans arbeid med Livstreet, skjønte jeg at dette var noe jeg 
-                måtte bringe til Norge.
-              </p>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                Jeg er her for å hjelpe deg gjennom hele prosessen – fra valg av plate til levering. 
-                Ta gjerne kontakt hvis du har spørsmål eller trenger veiledning.
-              </p>
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/kontakt">Ta kontakt</Link>
-              </Button>
-            </div>
-            <div className="order-1 lg:order-2">
-              <div className="aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-muted">
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                  <div className="text-center p-8">
-                    <p className="text-sm">Bilde av Peder kommer her</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="container text-center px-4">
+          <div className="max-w-3xl mx-auto">
+            <img
+              src={pederImg}
+              alt="Peder August Halvorsen"
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-top shadow-lg"
+            />
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Din kontakt i Norge</h2>
+            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
+              Jeg heter Peder August Halvorsen, og som nevø av Dan formidler jeg Livstræets gravplater 
+              til Norge. Jeg er her for å hjelpe deg gjennom hele prosessen – fra valg av plate til levering.
+            </p>
+            <Button variant="hero" size="lg" asChild>
+              <Link to="/kontakt">Ta kontakt</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -155,15 +140,12 @@ export default function OmOss() {
               className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-top shadow-lg"
             />
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-4">Håndverk fra Danmark – formidlet i Norge</h2>
-            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8">
+            <p className="text-muted-foreground text-sm md:text-lg">
               Dan og Steffen Frederiksen startet Livstreet i Danmark med et ønske om å lage gravplater i tre – 
               et naturlig og bærekraftig alternativ til granitt. Deres håndverk og passion for kvalitet 
               videreføres nå i Norge gjennom Livstreet, hvor vi formidler disse unike produktene til norske 
               kunder med samme fokus på verdighet og miljøvennlige valg.
             </p>
-            <Button variant="hero" size="lg" asChild>
-              <Link to="/kontakt">Ta kontakt med oss</Link>
-            </Button>
           </div>
         </div>
       </section>
