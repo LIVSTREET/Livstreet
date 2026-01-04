@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import testimonial1 from "@/assets/testimonial-1.png";
-import testimonial2 from "@/assets/testimonial-2.jpg";
+import testimonial1 from "@/assets/testimonial-1.jpg";
+import testimonial2 from "@/assets/testimonial-1.png";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 const testimonials = [{
   id: 1,
