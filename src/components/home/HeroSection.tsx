@@ -13,12 +13,11 @@ export function HeroSection() {
       <div className="container relative z-10 py-10 md:py-20 px-4">
         <div className="max-w-2xl space-y-4 md:space-y-8 animate-fade-in text-4xl font-serif font-semibold">
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
-            Et bæredyktig minne i naturlig tre
+            Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
-          <p className="text-base md:text-xl text-primary-foreground/90 leading-relaxed">
-            Våre håndlagde gravplater i tre er et vakkert og miljøvennlig alternativ. 
+          <h2 className="text-base md:text-xl text-primary-foreground/90 leading-relaxed font-normal">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
-          </p>
+          </h2>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2 md:pt-4">
             <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
               <Link to="/komponer">Lag din plate</Link>
