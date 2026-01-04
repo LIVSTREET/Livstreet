@@ -1,9 +1,59 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Player from "@vimeo/player";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Volume2 } from "lucide-react";
+import { Volume2 } from "lucide-react";
+
+const VIMEO_ID = "1151281409";
+
+// Muted autoplay preview that loops and covers the card
+const PREVIEW_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1&playsinline=1&controls=0&title=0&byline=0&portrait=0`;
+
+// Dialog player starts muted + autoplay; we unmute on click via Vimeo Player API
+const SOUND_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&playsinline=1&controls=1`;
 
 export function VideoSection() {
   const [isOpen, setIsOpen] = useState(false);
+  const soundIframeRef = useRef<HTMLIFrameElement | null>(null);
+  const playerRef = useRef<Player | null>(null);
+
+  useEffect(() => {
+    if (!soundIframeRef.current) return;
+
+    const player = new Player(soundIframeRef.current);
+    playerRef.current = player;
+
+    void player.setLoop(true);
+    void player.setMuted(true);
+
+    return () => {
+      playerRef.current = null;
+      void player.destroy();
+    };
+  }, []);
+
+  const openWithSound = () => {
+    // Open fullscreen
+    setIsOpen(true);
+
+    // Unmute + play inside the same click gesture
+    const p = playerRef.current;
+    if (!p) return;
+
+    void p.setMuted(false);
+    void p.setVolume(1);
+    void p.play();
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+
+    if (!open) {
+      const p = playerRef.current;
+      if (!p) return;
+      void p.pause();
+      void p.setMuted(true);
+    }
+  };
 
   return (
     <section className="py-20 bg-background">
@@ -17,53 +67,50 @@ export function VideoSection() {
           </p>
         </div>
 
-        <div 
-          className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
-          onClick={() => setIsOpen(true)}
-        >
-          {/* Muted autoplay looping preview video - 4:3 aspect ratio to match video */}
-          <div className="relative" style={{ paddingBottom: '75%' }}>
-            <iframe
-              src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1"
-              className="absolute inset-0 w-full h-full"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              title="Produksjonsvideo 1"
-            />
-          </div>
-          
-          {/* Overlay with sound icon */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        {/* Card */}
+        <div className="relative aspect-video max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+          <iframe
+            src={PREVIEW_SRC}
+            className="w-full h-full pointer-events-none"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            title="Produksjonsvideo (forhåndsvisning)"
+          />
+
+          <button
+            type="button"
+            onClick={openWithSound}
+            className="absolute inset-0 flex items-center justify-center bg-primary/10 opacity-100 md:opacity-0 md:hover:opacity-100 transition-opacity"
+            aria-label="Spill av produksjonsvideo med lyd"
+          >
             <div className="text-center text-primary-foreground">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-black/40 backdrop-blur flex items-center justify-center">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-background/20 backdrop-blur flex items-center justify-center">
                 <Volume2 className="w-8 h-8" />
               </div>
-              <p className="text-lg font-medium drop-shadow-lg">Klikk for lyd</p>
+              <p className="text-lg font-medium">Klikk for lyd</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
 
-      {/* Fullscreen dialog with sound */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] h-auto p-0 bg-black border-none">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
-            <iframe
-              src="https://player.vimeo.com/video/1151281409?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1"
-              className="absolute inset-0 w-full h-full"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              title="Produksjonsvideo fullskjerm"
-            />
-          </div>
+      {/* Fullscreen */}
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent
+          forceMount
+          className="max-w-none w-[100vw] h-[100svh] p-0 gap-0 border-none overflow-hidden rounded-none sm:rounded-none bg-background"
+        >
+          <iframe
+            ref={soundIframeRef}
+            src={SOUND_SRC}
+            className="w-full h-full"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            title="Produksjonsvideo (med lyd)"
+          />
         </DialogContent>
       </Dialog>
     </section>
