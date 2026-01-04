@@ -28,27 +28,27 @@ export default function Gravsteiner() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative py-24 bg-primary">
+      <section className="relative py-12 md:py-24 bg-primary">
         <div className="absolute inset-0 opacity-20">
           <img src={heroBg} alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="container relative z-10 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-4">
+        <div className="container relative z-10 text-center px-4">
+          <h1 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground mb-2 md:mb-4">
             Våre gravplater i tre
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
             Håndlagde minneplater i norsk eik – et bæredyktig og vakkert alternativ til tradisjonelle gravsteiner.
           </p>
         </div>
       </section>
 
       {/* Products Grid */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+      <section className="py-10 md:py-20 bg-background">
+        <div className="container px-4">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
             {products.map((product) => (
               <div key={product.id} className="group">
-                <div className="bg-card rounded-2xl overflow-hidden shadow-lg border border-border hover:border-primary/30 transition-all">
+                <div className="bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-border hover:border-primary/30 transition-all">
                   <div className="aspect-[3/4] overflow-hidden bg-muted">
                     <img
                       src={product.image}
@@ -56,12 +56,12 @@ export default function Gravsteiner() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-8">
-                    <span className="text-sm text-muted-foreground">{product.size}</span>
-                    <h2 className="font-display text-2xl font-bold mt-2 mb-3">{product.name}</h2>
-                    <p className="text-muted-foreground mb-4">{product.description}</p>
+                  <div className="p-4 md:p-8">
+                    <span className="text-xs md:text-sm text-muted-foreground">{product.size}</span>
+                    <h2 className="font-display text-xl md:text-2xl font-bold mt-1 md:mt-2 mb-2 md:mb-3">{product.name}</h2>
+                    <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4">{product.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-semibold text-primary">{product.price}</span>
+                      <span className="text-lg md:text-xl font-semibold text-primary">{product.price}</span>
                       <Button variant="hero" asChild>
                         <Link to="/komponer">Komponer</Link>
                       </Button>
@@ -75,26 +75,26 @@ export default function Gravsteiner() {
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-secondary">
-        <div className="container">
-          <h2 className="font-display text-3xl font-bold text-center mb-12">
+      <section className="py-10 md:py-20 bg-secondary">
+        <div className="container px-4">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-6 md:mb-12">
             Hvorfor velge tre?
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🌳</div>
-              <h3 className="font-display text-xl font-semibold mb-2">Bærekraftig</h3>
-              <p className="text-muted-foreground">Naturlig materiale som brytes ned organisk over tid.</p>
+          <div className="grid grid-cols-3 gap-2 md:gap-8 max-w-4xl mx-auto">
+            <div className="text-center p-2 md:p-6">
+              <div className="text-2xl md:text-4xl mb-2 md:mb-4">🌳</div>
+              <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-2">Bærekraftig</h3>
+              <p className="text-muted-foreground text-xs md:text-base hidden md:block">Naturlig materiale som brytes ned organisk over tid.</p>
             </div>
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="font-display text-xl font-semibold mb-2">Unikt</h3>
-              <p className="text-muted-foreground">Hver plate har sin egen trestruktur og personlighet.</p>
+            <div className="text-center p-2 md:p-6">
+              <div className="text-2xl md:text-4xl mb-2 md:mb-4">✨</div>
+              <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-2">Unikt</h3>
+              <p className="text-muted-foreground text-xs md:text-base hidden md:block">Hver plate har sin egen trestruktur og personlighet.</p>
             </div>
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🇳🇴</div>
-              <h3 className="font-display text-xl font-semibold mb-2">Norsk håndverk</h3>
-              <p className="text-muted-foreground">Laget med stolthet i Norge av dyktige håndverkere.</p>
+            <div className="text-center p-2 md:p-6">
+              <div className="text-2xl md:text-4xl mb-2 md:mb-4">🇳🇴</div>
+              <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-2">Norsk håndverk</h3>
+              <p className="text-muted-foreground text-xs md:text-base hidden md:block">Laget med stolthet i Norge av dyktige håndverkere.</p>
             </div>
           </div>
         </div>

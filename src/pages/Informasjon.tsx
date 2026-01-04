@@ -48,28 +48,28 @@ export default function Informasjon() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="py-20 bg-secondary">
-        <div className="container text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+      <section className="py-10 md:py-20 bg-secondary">
+        <div className="container text-center px-4">
+          <h1 className="font-display text-3xl md:text-5xl font-bold mb-2 md:mb-4">
             Nyttig informasjon
           </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Artikler, veiledninger og tips for å hjelpe deg med valg og vedlikehold av gravminner.
           </p>
         </div>
       </section>
 
       {/* Articles */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <section className="py-10 md:py-20 bg-background">
+        <div className="container px-4">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
             {articles.map((article) => (
               <Link
                 key={article.id}
                 to={`/informasjon/${article.slug}`}
                 className="group"
               >
-                <article className="bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
+                <article className="bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
                   <div className="aspect-video overflow-hidden">
                     <img
                       src={article.image}
@@ -77,17 +77,17 @@ export default function Informasjon() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-xs font-medium text-accent uppercase tracking-wider px-3 py-1 bg-accent/10 rounded-full">
+                  <div className="p-4 md:p-8">
+                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
+                      <span className="text-xs font-medium text-accent uppercase tracking-wider px-2 py-0.5 md:px-3 md:py-1 bg-accent/10 rounded-full">
                         {article.category}
                       </span>
-                      <span className="text-sm text-muted-foreground">{article.date}</span>
+                      <span className="text-xs md:text-sm text-muted-foreground">{article.date}</span>
                     </div>
-                    <h2 className="font-display text-2xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    <h2 className="font-display text-lg md:text-2xl font-semibold mb-1 md:mb-3 group-hover:text-primary transition-colors">
                       {article.title}
                     </h2>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-2">
                       {article.excerpt}
                     </p>
                   </div>
