@@ -3,26 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
 import templateMellom from "@/assets/template-mellom-1.jpg";
-import templateStor from "@/assets/template-stor-1.jpg";
 
-const products = [
-  {
-    id: 1,
-    name: "Gravplate Mellom",
-    description: "Perfekt for enkeltpersoner. 30x40 cm i eik.",
-    price: "fra 3 990 kr",
-    image: templateMellom,
-    size: "30x40 cm",
-  },
-  {
-    id: 2,
-    name: "Gravplate Stor",
-    description: "Større plate for en eller to personer. 40x50 cm i eik.",
-    price: "fra 5 490 kr",
-    image: templateStor,
-    size: "40x50 cm",
-  },
-];
+const product = {
+  id: 1,
+  name: "Gravplate Standard",
+  description: "Standard størrelse for en eller to personer. Laget i eik.",
+  price: "fra 3 990 kr",
+  image: templateMellom,
+  size: "Standard størrelse",
+};
 
 export default function Gravsteiner() {
   return (
@@ -37,39 +26,37 @@ export default function Gravsteiner() {
             Våre gravplater i tre
           </h1>
           <p className="text-base md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-            Håndlagde minneplater i eik – dansk design og produksjon formidlet i Norge.
+            Håndlagde minneplater i standard størrelse – dansk design og produksjon formidlet i Norge.
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
+      {/* Product */}
       <section className="py-10 md:py-20 bg-background">
         <div className="container px-4">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
-            {products.map((product) => (
-              <div key={product.id} className="group">
-                <div className="bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-border hover:border-primary/30 transition-all">
-                  <div className="aspect-[3/4] overflow-hidden bg-muted">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4 md:p-8">
-                    <span className="text-xs md:text-sm text-muted-foreground">{product.size}</span>
-                    <h2 className="font-display text-xl md:text-2xl font-bold mt-1 md:mt-2 mb-2 md:mb-3">{product.name}</h2>
-                    <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4">{product.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg md:text-xl font-semibold text-primary">{product.price}</span>
-                      <Button variant="hero" asChild>
-                        <Link to="/komponer">Send forespørsel</Link>
-                      </Button>
-                    </div>
+          <div className="max-w-md mx-auto">
+            <div className="group">
+              <div className="bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-border hover:border-primary/30 transition-all">
+                <div className="aspect-[3/4] overflow-hidden bg-muted">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-4 md:p-8">
+                  <span className="text-xs md:text-sm text-muted-foreground">{product.size}</span>
+                  <h2 className="font-display text-xl md:text-2xl font-bold mt-1 md:mt-2 mb-2 md:mb-3">{product.name}</h2>
+                  <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4">{product.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg md:text-xl font-semibold text-primary">{product.price}</span>
+                    <Button variant="hero" asChild>
+                      <Link to="/komponer">Send forespørsel</Link>
+                    </Button>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

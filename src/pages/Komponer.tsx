@@ -68,7 +68,7 @@ type FontType = typeof fonts[number]["id"];
 export default function Komponer() {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState("Mellom");
+  const selectedSize = "Standard"; // Fixed to standard size
   const [selectedNameCount, setSelectedNameCount] = useState("1");
   const [name1, setName1] = useState("Karen Marie Hansen");
   const [birthDate1, setBirthDate1] = useState("12.07 1932");
@@ -124,12 +124,12 @@ export default function Komponer() {
   const selectedVariant = useMemo(() => {
     if (!product) return null;
     
+    // Use first available variant or find by name count only
     return product.node.variants.edges.find(v => {
-      const sizeOption = v.node.selectedOptions.find(o => o.name === "Størrelse");
       const nameCountOption = v.node.selectedOptions.find(o => o.name === "Antall navn");
-      return sizeOption?.value === selectedSize && nameCountOption?.value === selectedNameCount;
-    })?.node;
-  }, [product, selectedSize, selectedNameCount]);
+      return nameCountOption?.value === selectedNameCount;
+    })?.node || product.node.variants.edges[0]?.node;
+  }, [product, selectedNameCount]);
 
   const price = selectedVariant ? parseFloat(selectedVariant.price.amount) : 3990;
   const currencyCode = selectedVariant?.price.currencyCode || "NOK";
@@ -305,7 +305,6 @@ export default function Komponer() {
     );
   }
 
-  const sizeOptions = product.node.options.find(o => o.name === "Størrelse")?.values || ["Mellom", "Stor"];
   const nameCountOptions = product.node.options.find(o => o.name === "Antall navn")?.values || ["1", "2"];
 
   return (
@@ -516,37 +515,17 @@ export default function Komponer() {
 
             {/* Controls */}
             <div className="order-1 lg:order-2 space-y-6">
-              {/* Size Selection */}
+              {/* Size Information */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
                   Størrelse
                 </Label>
-                <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="grid grid-cols-2 gap-3">
-                  {sizeOptions.map((size) => {
-                    const variant = product.node.variants.edges.find(v => 
-                      v.node.selectedOptions.some(o => o.name === "Størrelse" && o.value === size) &&
-                      v.node.selectedOptions.some(o => o.name === "Antall navn" && o.value === "1")
-                    )?.node;
-                    const variantPrice = variant ? parseFloat(variant.price.amount) : 0;
-                    
-                    return (
-                      <label
-                        key={size}
-                        className={`flex flex-col p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                          selectedSize === size
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <RadioGroupItem value={size} className="sr-only" />
-                        <span className="font-semibold text-foreground">{size}</span>
-                        <span className="text-sm text-muted-foreground">
-                          fra {formatPrice(variantPrice)}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </RadioGroup>
+                <div className="p-4 rounded-lg border-2 border-primary bg-primary/5">
+                  <span className="font-semibold text-foreground">Standard størrelse</span>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Vi tilbyr kun standard størrelse for våre gravplater.
+                  </p>
+                </div>
               </div>
 
               {/* Name Count */}
