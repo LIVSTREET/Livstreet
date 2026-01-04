@@ -270,7 +270,7 @@ export default function Komponer() {
                 <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
-                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-xs sm:max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-card"
+                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-xs sm:max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-white"
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
                   onMouseLeave={handleMouseUp}
@@ -596,28 +596,6 @@ export default function Komponer() {
                 </div>
               </div>
 
-              {/* Font Selection */}
-              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
-                <Label className="block text-sm font-semibold text-foreground mb-3">
-                  Velg skrifttype
-                </Label>
-                <div className="grid grid-cols-2 gap-3">
-                  {fonts.map((font) => (
-                    <button
-                      key={font.id}
-                      onClick={() => setSelectedFont(font.id)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        selectedFont === font.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                    >
-                      <span className={`${font.className} text-lg text-foreground`}>{font.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
                   Velg symbol
@@ -718,6 +696,28 @@ export default function Komponer() {
                   </div>
                 </div>
               )}
+
+              {/* Font Selection */}
+              <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <Label className="block text-sm font-semibold text-foreground mb-3">
+                  Velg skrifttype
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {fonts.map((font) => (
+                    <button
+                      key={font.id}
+                      onClick={() => setSelectedFont(font.id)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        selectedFont === font.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      <span className={`${font.className} text-lg text-foreground`}>{font.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* Etterskrift */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
