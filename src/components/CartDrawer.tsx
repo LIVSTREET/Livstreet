@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -20,7 +20,17 @@ export const CartDrawer = () => {
     items, 
     updateQuantity, 
     removeItem, 
+    shouldOpenDrawer,
+    closeDrawer,
   } = useCartStore();
+
+  // Listen for programmatic drawer open
+  useEffect(() => {
+    if (shouldOpenDrawer) {
+      setIsOpen(true);
+      closeDrawer();
+    }
+  }, [shouldOpenDrawer, closeDrawer]);
   
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'NOK';
