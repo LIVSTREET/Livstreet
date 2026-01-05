@@ -321,9 +321,10 @@ export default function Komponer() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-background py-8 md:py-16">
-        <div className="container max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
+      <div className="min-h-screen bg-background">
+        {/* Header text - outside scroll container */}
+        <div className="container max-w-7xl mx-auto px-4 pt-8 pb-4">
+          <div className="text-center mb-4">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
               Lag din gravplate
             </h1>
@@ -334,17 +335,20 @@ export default function Komponer() {
               Designet er veiledende. Du kan sende forespørsel uten ferdig design. Vi går alltid gjennom designet sammen med deg før bestilling.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Preview - Sticky on mobile and tablet */}
-            <div className="lg:order-1">
-              <div 
-                className="sticky top-16 z-20 bg-background pb-4 lg:pb-0 lg:top-20"
-                style={{ 
-                  position: 'sticky',
-                  WebkitOverflowScrolling: 'touch',
-                } as React.CSSProperties}
-              >
+        {/* Scrollable container for mobile/tablet */}
+        <div 
+          className="lg:h-auto lg:overflow-visible h-[calc(100vh-14rem)] overflow-y-auto"
+          style={{
+            WebkitOverflowScrolling: 'touch',
+          } as React.CSSProperties}
+        >
+          <div className="container max-w-7xl mx-auto px-4 pb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Preview - Sticky inside scroll container */}
+              <div className="lg:order-1">
+                <div className="sticky top-0 lg:top-20 z-20 bg-background pb-4 lg:pb-0">
                 <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
@@ -857,6 +861,7 @@ export default function Komponer() {
                 </p>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
