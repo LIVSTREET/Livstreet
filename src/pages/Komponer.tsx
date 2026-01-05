@@ -10,6 +10,7 @@ import { Mail, Type, Loader2, Plus, X, Square } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import { PRICING } from "@/lib/constants";
 import platePreview from "@/assets/plate-preview.jpg";
 import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
@@ -194,9 +195,11 @@ export default function Komponer() {
     setDragging(null);
   };
 
+  const openDrawer = useCartStore(state => state.openDrawer);
+
   const handleSendInquiry = () => {
     if (!product || !selectedVariant) {
-      toast.error("Kunne ikke sende forespørsel");
+      toast.error("Kunne ikke legge til i bestilling");
       return;
     }
 
@@ -235,19 +238,28 @@ export default function Komponer() {
       lineItemProperties["Dødsdato 2"] = deathDate2 || "Ikke angitt";
     }
 
+    // Use hardcoded base price instead of Shopify variant price
+    const basePrice = {
+      amount: PRICING.BASE_PRICE.toString(),
+      currencyCode: "NOK"
+    };
+
     addItem({
       product,
       variantId: selectedVariant.id,
       variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
+      price: basePrice,
       quantity: 1,
       selectedOptions: selectedVariant.selectedOptions,
       lineItemProperties,
     });
 
-    toast.success("Din forespørsel er sendt", {
-      description: "Vi kontakter deg snart for å fullføre bestillingen",
+    toast.success("Design lagt til i bestilling", {
+      description: "Gå til bestillingen for å ferdigstille forespørselen",
     });
+
+    // Open the cart drawer
+    openDrawer();
   };
 
   const selectedFrameImage = frames.find(f => f.id === selectedFrame)?.image;
@@ -823,7 +835,7 @@ export default function Komponer() {
               <div className="bg-primary text-primary-foreground p-6 rounded-xl shadow-xl">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg">Veiledende pris:</span>
-                  <span className="text-3xl font-bold">{formatPrice(price)}</span>
+                  <span className="text-3xl font-bold">{formatPrice(PRICING.BASE_PRICE)}</span>
                 </div>
                 <Button 
                   onClick={handleSendInquiry}
@@ -832,10 +844,10 @@ export default function Komponer() {
                   disabled={!selectedVariant}
                 >
                   <Mail className="h-5 w-5 mr-2" />
-                  Send forespørsel
+                  Legg til i bestilling
                 </Button>
                 <p className="text-xs text-primary-foreground/70 mt-3 text-center">
-                  Vi kontakter deg for å fullføre bestillingen
+                  Designet lagres og sendes med forespørselen. Vi kontakter deg for å fullføre bestillingen.
                 </p>
               </div>
             </div>

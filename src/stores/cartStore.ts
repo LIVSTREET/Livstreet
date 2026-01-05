@@ -23,6 +23,7 @@ interface CartStore {
   cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
+  shouldOpenDrawer: boolean;
   
   // Actions
   addItem: (item: CartItem) => void;
@@ -33,6 +34,8 @@ interface CartStore {
   setCheckoutUrl: (url: string) => void;
   setLoading: (loading: boolean) => void;
   createCheckout: () => Promise<string | null>;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 }
 
 async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
@@ -83,6 +86,7 @@ export const useCartStore = create<CartStore>()(
       cartId: null,
       checkoutUrl: null,
       isLoading: false,
+      shouldOpenDrawer: false,
 
       addItem: (item) => {
         const { items } = get();
@@ -127,6 +131,8 @@ export const useCartStore = create<CartStore>()(
       setCartId: (cartId) => set({ cartId }),
       setCheckoutUrl: (checkoutUrl) => set({ checkoutUrl }),
       setLoading: (isLoading) => set({ isLoading }),
+      openDrawer: () => set({ shouldOpenDrawer: true }),
+      closeDrawer: () => set({ shouldOpenDrawer: false }),
 
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
