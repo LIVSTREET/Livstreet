@@ -15,6 +15,7 @@ import { Mail, Loader2, Info, Check } from "lucide-react";
 import { toast } from "sonner";
 import { PRICING } from "@/lib/constants";
 import { useCartStore } from "@/stores/cartStore";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Tooltip,
   TooltipContent,
@@ -92,46 +93,61 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Build inquiry data
-    const inquiryData = {
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      address: formData.address || null,
-      description: formData.description,
-      maintenanceSelected,
-      installationOsloSelected: installationSelected,
-      basePrice: PRICING.BASE_PRICE,
-      maintenancePrice: maintenanceSelected ? PRICING.MAINTENANCE_PRICE : 0,
-      totalPrice,
-      designData: designData || null,
-      status: "Forespørsel mottatt",
-      createdAt: new Date().toISOString(),
-    };
+    try {
+      // Build design summary
+      let designSummary = "";
+      if (designData) {
+        designSummary = `Ramme: ${designData.frame || "Ingen"}, Symboler: ${designData.placedSymbols?.length || 0} stk`;
+        if (designData.elements) {
+          const names = [];
+          if (designData.elements.name1?.text) names.push(designData.elements.name1.text);
+          if (designData.elements.name2?.text) names.push(designData.elements.name2.text);
+          if (names.length > 0) {
+            designSummary += `, Navn: ${names.join(", ")}`;
+          }
+        }
+      }
 
-    // TODO: Send to backend API
-    console.log("Inquiry submitted:", inquiryData);
+      const { error } = await supabase.functions.invoke("send-inquiry", {
+        body: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          address: formData.address || undefined,
+          description: formData.description,
+          hasDesign: !!designData,
+          designSummary,
+          basePrice: PRICING.BASE_PRICE,
+          maintenanceSelected,
+          maintenancePrice: maintenanceSelected ? PRICING.MAINTENANCE_PRICE : 0,
+          installationSelected,
+          installationPrice: PRICING.INSTALLATION_PRICE,
+          totalPrice,
+          source: "inquiry",
+        },
+      });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+      if (error) throw error;
 
-    // TODO: Send email confirmation to user
-    console.log("Email confirmation would be sent to:", formData.email);
+      setIsSubmitted(true);
+      
+      // Clear cart if this was opened from cart
+      if (designData) {
+        clearCart();
+      }
+      
+      // Clear stored inquiry form data
+      clearInquiryFormData();
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Clear cart if this was opened from cart
-    if (designData) {
-      clearCart();
+      toast.success("Forespørsel sendt!", {
+        description: "Vi tar kontakt for å gå gjennom design og detaljer.",
+      });
+    } catch (error) {
+      console.error("Error sending inquiry:", error);
+      toast.error("Kunne ikke sende forespørsel. Prøv igjen senere.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    // Clear stored inquiry form data
-    clearInquiryFormData();
-
-    toast.success("Forespørsel sendt!", {
-      description: "Vi tar kontakt for å gå gjennom design og detaljer.",
-    });
   };
 
   const handleClose = () => {
