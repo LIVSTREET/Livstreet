@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -49,6 +49,8 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const clearCart = useCartStore(state => state.clearCart);
+  const existingInquiryData = useCartStore(state => state.inquiryFormData);
+  const clearInquiryFormData = useCartStore(state => state.clearInquiryFormData);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -57,6 +59,19 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
     address: "",
     description: "",
   });
+
+  // Pre-fill from store when dialog opens
+  useEffect(() => {
+    if (isOpen && existingInquiryData) {
+      setFormData(prev => ({
+        name: existingInquiryData.name || prev.name,
+        phone: existingInquiryData.phone || prev.phone,
+        email: existingInquiryData.email || prev.email,
+        address: existingInquiryData.address || prev.address,
+        description: existingInquiryData.description || prev.description,
+      }));
+    }
+  }, [isOpen, existingInquiryData]);
   
   const [maintenanceSelected, setMaintenanceSelected] = useState(false);
   const [installationSelected, setInstallationSelected] = useState(false);
@@ -110,6 +125,9 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
     if (designData) {
       clearCart();
     }
+    
+    // Clear stored inquiry form data
+    clearInquiryFormData();
 
     toast.success("Forespørsel sendt!", {
       description: "Vi tar kontakt for å gå gjennom design og detaljer.",

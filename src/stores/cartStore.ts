@@ -18,12 +18,21 @@ export interface CartItem {
   lineItemProperties?: Record<string, string>;
 }
 
+export interface InquiryFormData {
+  name?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  description?: string;
+}
+
 interface CartStore {
   items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
   shouldOpenDrawer: boolean;
+  inquiryFormData: InquiryFormData | null;
   
   // Actions
   addItem: (item: CartItem) => void;
@@ -36,6 +45,8 @@ interface CartStore {
   createCheckout: () => Promise<string | null>;
   openDrawer: () => void;
   closeDrawer: () => void;
+  setInquiryFormData: (data: InquiryFormData | null) => void;
+  clearInquiryFormData: () => void;
 }
 
 async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
@@ -87,6 +98,7 @@ export const useCartStore = create<CartStore>()(
       checkoutUrl: null,
       isLoading: false,
       shouldOpenDrawer: false,
+      inquiryFormData: null,
 
       addItem: (item) => {
         const { items } = get();
@@ -133,6 +145,8 @@ export const useCartStore = create<CartStore>()(
       setLoading: (isLoading) => set({ isLoading }),
       openDrawer: () => set({ shouldOpenDrawer: true }),
       closeDrawer: () => set({ shouldOpenDrawer: false }),
+      setInquiryFormData: (data) => set({ inquiryFormData: data }),
+      clearInquiryFormData: () => set({ inquiryFormData: null }),
 
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
