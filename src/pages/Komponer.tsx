@@ -336,9 +336,9 @@ export default function Komponer() {
           </div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
-            {/* Preview */}
-            <div className="lg:order-1">
-              <div className="sticky top-20 z-10 bg-background/95 backdrop-blur-sm pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 lg:bg-transparent lg:backdrop-blur-none">
+            {/* Preview - Sticky on mobile and tablet */}
+            <div className="lg:order-1 order-1">
+              <div className="sticky top-16 z-20 bg-background pb-4 lg:pb-0 lg:top-20">
                 <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
@@ -528,8 +528,8 @@ export default function Komponer() {
               </div>
             </div>
 
-            {/* Controls */}
-            <div className="order-1 lg:order-2 space-y-6">
+            {/* Controls - scrolls normally, preview stays sticky above on mobile */}
+            <div className="order-2 lg:order-2 space-y-6">
               {/* Size Information */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
