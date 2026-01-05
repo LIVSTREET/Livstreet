@@ -1081,7 +1081,7 @@ export default function Komponer() {
 
           {/* Scrollable Controls - with padding-top for fixed preview */}
           <div 
-            className="pt-[300px] sm:pt-[340px]"
+            className="pt-[260px] sm:pt-[280px]"
           >
             <div 
               className="h-[calc(100vh-20rem)] overflow-y-auto px-4 pb-8"
