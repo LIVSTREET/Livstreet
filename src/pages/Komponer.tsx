@@ -255,11 +255,11 @@ export default function Komponer() {
     });
 
     toast.success("Design lagt til i bestilling", {
-      description: "Gå til bestillingen for å ferdigstille forespørselen",
+      description: "Fyll ut skjemaet for å fullføre forespørselen",
     });
 
-    // Open the cart drawer
-    openDrawer();
+    // Open the inquiry form directly
+    useCartStore.getState().openInquiryForm();
   };
 
   const selectedFrameImage = frames.find(f => f.id === selectedFrame)?.image;

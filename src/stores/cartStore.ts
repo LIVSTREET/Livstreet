@@ -32,6 +32,7 @@ interface CartStore {
   checkoutUrl: string | null;
   isLoading: boolean;
   shouldOpenDrawer: boolean;
+  shouldOpenInquiryForm: boolean;
   inquiryFormData: InquiryFormData | null;
   
   // Actions
@@ -45,6 +46,8 @@ interface CartStore {
   createCheckout: () => Promise<string | null>;
   openDrawer: () => void;
   closeDrawer: () => void;
+  openInquiryForm: () => void;
+  closeInquiryForm: () => void;
   setInquiryFormData: (data: InquiryFormData | null) => void;
   clearInquiryFormData: () => void;
 }
@@ -98,6 +101,7 @@ export const useCartStore = create<CartStore>()(
       checkoutUrl: null,
       isLoading: false,
       shouldOpenDrawer: false,
+      shouldOpenInquiryForm: false,
       inquiryFormData: null,
 
       addItem: (item) => {
@@ -145,6 +149,8 @@ export const useCartStore = create<CartStore>()(
       setLoading: (isLoading) => set({ isLoading }),
       openDrawer: () => set({ shouldOpenDrawer: true }),
       closeDrawer: () => set({ shouldOpenDrawer: false }),
+      openInquiryForm: () => set({ shouldOpenInquiryForm: true }),
+      closeInquiryForm: () => set({ shouldOpenInquiryForm: false }),
       setInquiryFormData: (data) => set({ inquiryFormData: data }),
       clearInquiryFormData: () => set({ inquiryFormData: null }),
 
