@@ -15,14 +15,17 @@ import { InquiryForm } from "@/components/InquiryForm";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showInquiryForm, setShowInquiryForm] = useState(false);
   const { 
     items, 
     updateQuantity, 
     removeItem, 
     shouldOpenDrawer,
     closeDrawer,
+    shouldOpenInquiryForm,
+    closeInquiryForm,
   } = useCartStore();
+
+  const [showInquiryForm, setShowInquiryForm] = useState(false);
 
   // Listen for programmatic drawer open
   useEffect(() => {
@@ -31,6 +34,14 @@ export const CartDrawer = () => {
       closeDrawer();
     }
   }, [shouldOpenDrawer, closeDrawer]);
+
+  // Listen for programmatic inquiry form open
+  useEffect(() => {
+    if (shouldOpenInquiryForm) {
+      setShowInquiryForm(true);
+      closeInquiryForm();
+    }
+  }, [shouldOpenInquiryForm, closeInquiryForm]);
   
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'NOK';
