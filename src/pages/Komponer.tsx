@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Type, Loader2, Plus, X, Square } from "lucide-react";
+import { Mail, Type, Loader2, Plus, X, Square, Minus, ChevronUp, ChevronDown } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -907,17 +907,14 @@ export default function Komponer() {
 
         {/* Mobile/Tablet: Fixed preview + scrollable controls */}
         <div className="lg:hidden">
-          {/* Fixed Preview */}
-          <div className="fixed top-16 left-0 right-0 z-30 bg-background border-b border-border px-4 py-2">
-            <div className="max-w-sm mx-auto">
+          {/* Fixed Preview - positioned below header (h-20 = 80px) */}
+          <div 
+            className="fixed left-0 right-0 z-30 bg-background border-b border-border px-4 py-2"
+            style={{ top: '80px' }}
+          >
+            <div className="max-w-xs mx-auto">
               <div 
-                ref={previewRef}
-                className="relative rounded-xl overflow-hidden shadow-lg border-0 aspect-[4/3] cursor-move select-none bg-white"
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                onTouchMove={handleMouseMove}
-                onTouchEnd={handleMouseUp}
+                className="relative rounded-xl overflow-hidden shadow-lg border-0 aspect-[4/3] bg-white touch-none"
               >
                 <img
                   src={platePreview}
@@ -951,14 +948,12 @@ export default function Komponer() {
                   return (
                     <div 
                       key={placedSymbol.id}
-                      className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === `placed-${placedSymbol.id}` ? 'scale-110 z-20' : 'z-15'}`}
+                      className="absolute transition-transform text-foreground/80 z-15"
                       style={{ 
                         left: `${placedSymbol.pos.x}%`, 
                         top: `${placedSymbol.pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
-                      onMouseDown={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
-                      onTouchStart={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
                     >
                       {symbolImage && (
                         <img 
@@ -979,14 +974,12 @@ export default function Komponer() {
 
                 {/* Name 1 */}
                 <div 
-                  className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'name1' ? 'scale-105 z-10' : ''}`}
+                  className="absolute px-2 text-center"
                   style={{ 
                     left: `${name1Pos.x}%`, 
                     top: `${name1Pos.y}%`,
                     transform: 'translate(-50%, -50%)'
                   }}
-                  onMouseDown={(e) => handleMouseDown("name1", e)}
-                  onTouchStart={(e) => handleMouseDown("name1", e)}
                 >
                   <p 
                     className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
@@ -998,14 +991,12 @@ export default function Komponer() {
 
                 {/* Dates 1 */}
                 <div 
-                  className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'dates1' ? 'scale-105 z-10' : ''}`}
+                  className="absolute px-2 text-center"
                   style={{ 
                     left: `${dates1Pos.x}%`, 
                     top: `${dates1Pos.y}%`,
                     transform: 'translate(-50%, -50%)'
                   }}
-                  onMouseDown={(e) => handleMouseDown("dates1", e)}
-                  onTouchStart={(e) => handleMouseDown("dates1", e)}
                 >
                   <p 
                     className="font-cinzel text-foreground whitespace-nowrap"
@@ -1019,14 +1010,12 @@ export default function Komponer() {
                 {selectedNameCount === "2" && (
                   <>
                     <div 
-                      className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'name2' ? 'scale-105 z-10' : ''}`}
+                      className="absolute px-2 text-center"
                       style={{ 
                         left: `${name2Pos.x}%`, 
                         top: `${name2Pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
-                      onMouseDown={(e) => handleMouseDown("name2", e)}
-                      onTouchStart={(e) => handleMouseDown("name2", e)}
                     >
                       <p 
                         className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
@@ -1036,14 +1025,12 @@ export default function Komponer() {
                       </p>
                     </div>
                     <div 
-                      className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'dates2' ? 'scale-105 z-10' : ''}`}
+                      className="absolute px-2 text-center"
                       style={{ 
                         left: `${dates2Pos.x}%`, 
                         top: `${dates2Pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
-                      onMouseDown={(e) => handleMouseDown("dates2", e)}
-                      onTouchStart={(e) => handleMouseDown("dates2", e)}
                     >
                       <p 
                         className="font-cinzel text-foreground whitespace-nowrap"
@@ -1058,14 +1045,12 @@ export default function Komponer() {
                 {/* Etterskrift */}
                 {etterskrift && (
                   <div 
-                    className={`absolute px-4 text-center cursor-grab active:cursor-grabbing ${dragging === 'etterskrift' ? 'scale-105 z-10' : ''}`}
+                    className="absolute px-4 text-center"
                     style={{ 
                       left: `${etterskriftPos.x}%`, 
                       top: `${etterskriftPos.y}%`,
                       transform: 'translate(-50%, -50%)'
                     }}
-                    onMouseDown={(e) => handleMouseDown("etterskrift", e)}
-                    onTouchStart={(e) => handleMouseDown("etterskrift", e)}
                   >
                     <p 
                       className={`${fonts.find(f => f.id === selectedFont)?.className} italic text-foreground/80 whitespace-nowrap`}
@@ -1079,12 +1064,10 @@ export default function Komponer() {
             </div>
           </div>
 
-          {/* Scrollable Controls - with padding-top for fixed preview */}
-          <div 
-            className="pt-[280px] sm:pt-[300px]"
-          >
+          {/* Scrollable Controls - with padding-top for fixed preview (header 80px + preview ~210px) */}
+          <div className="pt-[290px]">
             <div 
-              className="h-[calc(100vh-20rem)] overflow-y-auto px-4 pb-8"
+              className="px-4 pb-32"
               style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
               <div className="max-w-md mx-auto space-y-4">
@@ -1118,7 +1101,28 @@ export default function Komponer() {
                   <h3 className="font-semibold text-foreground mb-3 text-sm">Person 1</h3>
                   <div className="space-y-3">
                     <div>
-                      <Label className="text-xs text-muted-foreground">Navn</Label>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-xs text-muted-foreground">Navn</Label>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground mr-1">{name1Size}%</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-7 w-7 p-0"
+                            onClick={() => setName1Size(Math.max(50, name1Size - 10))}
+                          >
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-7 w-7 p-0"
+                            onClick={() => setName1Size(Math.min(200, name1Size + 10))}
+                          >
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
                       <Input
                         type="text"
                         value={name1}
@@ -1139,7 +1143,28 @@ export default function Komponer() {
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                        <div className="flex items-center justify-between">
+                          <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                          <div className="flex items-center gap-1">
+                            <span className="text-xs text-muted-foreground mr-1">{dates1Size}%</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-6 w-6 p-0"
+                              onClick={() => setDates1Size(Math.max(50, dates1Size - 10))}
+                            >
+                              <Minus className="h-2 w-2" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-6 w-6 p-0"
+                              onClick={() => setDates1Size(Math.min(200, dates1Size + 10))}
+                            >
+                              <Plus className="h-2 w-2" />
+                            </Button>
+                          </div>
+                        </div>
                         <Input
                           type="text"
                           value={deathDate1}
@@ -1158,7 +1183,28 @@ export default function Komponer() {
                     <h3 className="font-semibold text-foreground mb-3 text-sm">Person 2</h3>
                     <div className="space-y-3">
                       <div>
-                        <Label className="text-xs text-muted-foreground">Navn</Label>
+                        <div className="flex items-center justify-between">
+                          <Label className="text-xs text-muted-foreground">Navn</Label>
+                          <div className="flex items-center gap-1">
+                            <span className="text-xs text-muted-foreground mr-1">{name2Size}%</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                              onClick={() => setName2Size(Math.max(50, name2Size - 10))}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                              onClick={() => setName2Size(Math.min(200, name2Size + 10))}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
                         <Input
                           type="text"
                           value={name2}
@@ -1179,7 +1225,28 @@ export default function Komponer() {
                           />
                         </div>
                         <div>
-                          <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                          <div className="flex items-center justify-between">
+                            <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                            <div className="flex items-center gap-1">
+                              <span className="text-xs text-muted-foreground mr-1">{dates2Size}%</span>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => setDates2Size(Math.max(50, dates2Size - 10))}
+                              >
+                                <Minus className="h-2 w-2" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => setDates2Size(Math.min(200, dates2Size + 10))}
+                              >
+                                <Plus className="h-2 w-2" />
+                              </Button>
+                            </div>
+                          </div>
                           <Input
                             type="text"
                             value={deathDate2}
@@ -1195,7 +1262,28 @@ export default function Komponer() {
 
                 {/* Etterskrift */}
                 <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
-                  <Label className="block text-sm font-semibold text-foreground mb-2">Etterskrift</Label>
+                  <div className="flex items-center justify-between mb-2">
+                    <Label className="text-sm font-semibold text-foreground">Etterskrift</Label>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-muted-foreground mr-1">{etterskriftSize}%</span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-7 w-7 p-0"
+                        onClick={() => setEtterskriftSize(Math.max(50, etterskriftSize - 10))}
+                      >
+                        <Minus className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-7 w-7 p-0"
+                        onClick={() => setEtterskriftSize(Math.min(200, etterskriftSize + 10))}
+                      >
+                        <Plus className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
                   <Input
                     type="text"
                     value={etterskrift}
