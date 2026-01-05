@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Palette } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -92,6 +93,23 @@ export default function Kontakt() {
                   Send melding
                 </Button>
               </form>
+
+              {/* Link to configurator */}
+              <div className="mt-6 p-4 bg-muted rounded-lg">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Palette className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Ønsker du å inkludere et design i forespørselen? Vi hjelper deg gjerne med å komponere designet.
+                    </p>
+                    <Button variant="outline" asChild>
+                      <Link to="/komponer">Lag din plate med design</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Contact Info */}

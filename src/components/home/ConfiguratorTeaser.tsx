@@ -61,7 +61,7 @@ export function ConfiguratorTeaser() {
 
             <Button variant="hero" size="lg" asChild>
               <Link to="/komponer">
-                Start komponeringen
+                Lag din plate
                 <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
               </Link>
             </Button>

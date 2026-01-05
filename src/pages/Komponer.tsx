@@ -313,10 +313,13 @@ export default function Komponer() {
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
-              Komponer din gravplate
+              Lag din gravplate
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-4">
               Dra elementene for å plassere dem - dette er kun veiledende
+            </p>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Designet er veiledende. Du kan sende forespørsel uten ferdig design. Vi går alltid gjennom designet sammen med deg før bestilling.
             </p>
           </div>
 

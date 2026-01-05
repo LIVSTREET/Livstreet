@@ -19,17 +19,17 @@ export function Footer() {
           <div className="space-y-2 md:space-y-4">
             <h4 className="font-display text-sm md:text-lg font-semibold">Sider</h4>
             <nav className="flex flex-col gap-1.5 md:gap-2">
-              <Link to="/gravsteiner" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                Gravsteiner
-              </Link>
               <Link to="/komponer" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                Komponer din plate
+                Lag din plate
               </Link>
               <Link to="/informasjon" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Nyttig informasjon
               </Link>
               <Link to="/om-oss" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Om oss
+              </Link>
+              <Link to="/kontakt" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                Kontakt oss
               </Link>
             </nav>
           </div>

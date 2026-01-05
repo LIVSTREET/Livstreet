@@ -6,8 +6,7 @@ import logo from "@/assets/livstreet-logo.png";
 
 const navLinks = [
   { href: "/", label: "Forside" },
-  { href: "/gravsteiner", label: "Gravsteiner" },
-  { href: "/komponer", label: "Komponer" },
+  { href: "/komponer", label: "Lag din plate" },
   { href: "/informasjon", label: "Nyttig informasjon" },
   { href: "/om-oss", label: "Om oss" },
   { href: "/kontakt", label: "Kontakt oss" },
@@ -53,7 +52,7 @@ export function Header() {
         {/* CTA Button */}
         <div className="hidden lg:flex items-center gap-4">
           <Button variant="hero" size="lg" asChild>
-            <Link to="/komponer">Send forespørsel</Link>
+            <Link to="/komponer">Lag din plate</Link>
           </Button>
         </div>
 
@@ -87,7 +86,7 @@ export function Header() {
             ))}
             <Button variant="hero" size="lg" className="mt-4" asChild>
               <Link to="/komponer" onClick={() => setMobileMenuOpen(false)}>
-                Send forespørsel
+                Lag din plate
               </Link>
             </Button>
           </nav>
