@@ -1,0 +1,5 @@
+export const PRICING = {
+  BASE_PRICE: 17950,
+  MAINTENANCE_PRICE: 3950,
+  INSTALLATION_PRICE: 0,
+} as const;

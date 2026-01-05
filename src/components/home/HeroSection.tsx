@@ -23,7 +23,7 @@ export function HeroSection() {
               <Link to="/komponer">Lag din plate</Link>
             </Button>
             <Button variant="hero-outline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/gravsteiner">Se gravsteiner</Link>
+              <Link to="/kontakt">Kontakt oss</Link>
             </Button>
           </div>
         </div>

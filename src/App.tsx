@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Gravsteiner from "./pages/Gravsteiner";
 import Komponer from "./pages/Komponer";
 import Informasjon from "./pages/Informasjon";
 import OmOss from "./pages/OmOss";
@@ -23,7 +22,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/gravsteiner" element={<Gravsteiner />} />
           <Route path="/komponer" element={<Komponer />} />
           <Route path="/informasjon" element={<Informasjon />} />
           <Route path="/om-oss" element={<OmOss />} />
