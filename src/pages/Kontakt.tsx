@@ -5,16 +5,42 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Palette } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { useCartStore } from "@/stores/cartStore";
 
 export default function Kontakt() {
+  const setInquiryFormData = useCartStore(state => state.setInquiryFormData);
+  const existingInquiryData = useCartStore(state => state.inquiryFormData);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
+
+  // Load existing data from store on mount
+  useEffect(() => {
+    if (existingInquiryData) {
+      setFormData(prev => ({
+        name: existingInquiryData.name || prev.name,
+        email: existingInquiryData.email || prev.email,
+        phone: existingInquiryData.phone || prev.phone,
+        message: existingInquiryData.description || prev.message,
+      }));
+    }
+  }, []);
+
+  // Save to store on blur
+  const handleBlur = () => {
+    setInquiryFormData({
+      name: formData.name || undefined,
+      email: formData.email || undefined,
+      phone: formData.phone || undefined,
+      description: formData.message || undefined,
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +79,7 @@ export default function Kontakt() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onBlur={handleBlur}
                       placeholder="Ditt navn"
                     />
                   </div>
@@ -63,6 +90,7 @@ export default function Kontakt() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onBlur={handleBlur}
                       placeholder="+47 123 45 678"
                     />
                   </div>
@@ -75,6 +103,7 @@ export default function Kontakt() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onBlur={handleBlur}
                     placeholder="din@epost.no"
                   />
                 </div>
@@ -86,6 +115,7 @@ export default function Kontakt() {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onBlur={handleBlur}
                     placeholder="Hvordan kan vi hjelpe deg?"
                   />
                 </div>
@@ -104,7 +134,19 @@ export default function Kontakt() {
                     <p className="text-sm text-muted-foreground mb-3">
                       Ønsker du å inkludere et design i forespørselen? Vi hjelper deg gjerne med å komponere designet.
                     </p>
-                    <Button variant="outline" asChild>
+                    <Button 
+                      variant="outline" 
+                      asChild
+                      onClick={() => {
+                        // Save latest form data before navigating
+                        setInquiryFormData({
+                          name: formData.name || undefined,
+                          email: formData.email || undefined,
+                          phone: formData.phone || undefined,
+                          description: formData.message || undefined,
+                        });
+                      }}
+                    >
                       <Link to="/komponer">Lag din plate med design</Link>
                     </Button>
                   </div>
