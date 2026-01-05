@@ -4,14 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Palette } from "lucide-react";
+import { Mail, Phone, MapPin, Palette, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Kontakt() {
   const setInquiryFormData = useCartStore(state => state.setInquiryFormData);
   const existingInquiryData = useCartStore(state => state.inquiryFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -42,11 +44,32 @@ export default function Kontakt() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    toast.success("Takk for din henvendelse! Vi svarer deg så snart som mulig.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase.functions.invoke("send-inquiry", {
+        body: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          description: formData.message,
+          source: "contact",
+        },
+      });
+
+      if (error) throw error;
+
+      toast.success("Takk for din henvendelse! Vi svarer deg så snart som mulig.");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      setInquiryFormData(null);
+    } catch (error) {
+      console.error("Error sending inquiry:", error);
+      toast.error("Kunne ikke sende melding. Prøv igjen senere.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -119,8 +142,15 @@ export default function Kontakt() {
                     placeholder="Hvordan kan vi hjelpe deg?"
                   />
                 </div>
-                <Button variant="hero" size="lg" type="submit">
-                  Send melding
+                <Button variant="hero" size="lg" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Sender...
+                    </>
+                  ) : (
+                    "Send melding"
+                  )}
                 </Button>
               </form>
 
