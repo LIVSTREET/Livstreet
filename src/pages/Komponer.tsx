@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { PRICING } from "@/lib/constants";
+import { ElementEditor, EditableElement } from "@/components/komponer/ElementEditor";
 import platePreview from "@/assets/plate-preview.jpg";
 import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
@@ -106,6 +107,9 @@ export default function Komponer() {
   // Drag state
   const [dragging, setDragging] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  
+  // Selected element for editing
+  const [selectedElement, setSelectedElement] = useState<EditableElement | null>(null);
   
   const addItem = useCartStore(state => state.addItem);
 
@@ -296,6 +300,118 @@ export default function Komponer() {
       s.id === id ? { ...s, size } : s
     ));
   };
+
+  // Update symbol position
+  const updateSymbolPosition = (id: string, pos: { x: number; y: number }) => {
+    setPlacedSymbols(prev => prev.map(s => 
+      s.id === id ? { ...s, pos } : s
+    ));
+  };
+
+  // Handle element selection
+  const handleElementSelect = useCallback((element: EditableElement) => {
+    setSelectedElement(element);
+  }, []);
+
+  // Handle element move
+  const handleElementMove = useCallback((direction: "up" | "down" | "left" | "right") => {
+    if (!selectedElement) return;
+    
+    const step = 2; // 2% step for movement
+    const delta = { x: 0, y: 0 };
+    
+    switch (direction) {
+      case "up": delta.y = -step; break;
+      case "down": delta.y = step; break;
+      case "left": delta.x = -step; break;
+      case "right": delta.x = step; break;
+    }
+    
+    const clamp = (val: number) => Math.max(5, Math.min(95, val));
+    
+    if (selectedElement.startsWith("symbol-")) {
+      const symbolId = selectedElement;
+      const symbol = placedSymbols.find(s => s.id === symbolId);
+      if (symbol) {
+        updateSymbolPosition(symbolId, {
+          x: clamp(symbol.pos.x + delta.x),
+          y: clamp(symbol.pos.y + delta.y),
+        });
+      }
+    } else {
+      switch (selectedElement) {
+        case "name1":
+          setName1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          break;
+        case "dates1":
+          setDates1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          break;
+        case "name2":
+          setName2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          break;
+        case "dates2":
+          setDates2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          break;
+        case "etterskrift":
+          setEtterskriftPos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          break;
+      }
+    }
+  }, [selectedElement, placedSymbols]);
+
+  // Handle element resize
+  const handleElementResize = useCallback((sizeDelta: number) => {
+    if (!selectedElement) return;
+    
+    const clampSize = (val: number) => Math.max(50, Math.min(200, val));
+    
+    if (selectedElement.startsWith("symbol-")) {
+      const symbolId = selectedElement;
+      const symbol = placedSymbols.find(s => s.id === symbolId);
+      if (symbol) {
+        updateSymbolSize(symbolId, clampSize(symbol.size + sizeDelta));
+      }
+    } else {
+      switch (selectedElement) {
+        case "name1":
+          setName1Size(prev => clampSize(prev + sizeDelta));
+          break;
+        case "dates1":
+          setDates1Size(prev => clampSize(prev + sizeDelta));
+          break;
+        case "name2":
+          setName2Size(prev => clampSize(prev + sizeDelta));
+          break;
+        case "dates2":
+          setDates2Size(prev => clampSize(prev + sizeDelta));
+          break;
+        case "etterskrift":
+          setEtterskriftSize(prev => clampSize(prev + sizeDelta));
+          break;
+      }
+    }
+  }, [selectedElement, placedSymbols]);
+
+  // Get label and size for selected element
+  const getElementInfo = useCallback(() => {
+    if (!selectedElement) return { label: "", size: undefined };
+    
+    if (selectedElement.startsWith("symbol-")) {
+      const symbol = placedSymbols.find(s => s.id === selectedElement);
+      const cat = symbolCategories.find(c => c.id === symbol?.categoryId);
+      const sym = cat?.symbols.find(s => s.id === symbol?.symbolId);
+      return { label: sym?.name || "Symbol", size: symbol?.size };
+    }
+    
+    switch (selectedElement) {
+      case "name1": return { label: "Navn 1", size: name1Size };
+      case "dates1": return { label: "Datoer 1", size: dates1Size };
+      case "name2": return { label: "Navn 2", size: name2Size };
+      case "dates2": return { label: "Datoer 2", size: dates2Size };
+      case "etterskrift": return { label: "Etterskrift", size: etterskriftSize };
+      default: return { label: "", size: undefined };
+    }
+  }, [selectedElement, placedSymbols, name1Size, dates1Size, name2Size, dates2Size, etterskriftSize]);
 
   if (loading) {
     return (
@@ -942,18 +1058,22 @@ export default function Komponer() {
                   />
                 )}
                 
-                {/* Placed Symbols */}
+                {/* Placed Symbols - tappable */}
                 {placedSymbols.map((placedSymbol) => {
                   const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
+                  const isSelected = selectedElement === placedSymbol.id;
                   return (
                     <div 
                       key={placedSymbol.id}
-                      className="absolute transition-transform text-foreground/80 z-15"
+                      className={`absolute transition-all text-foreground/80 z-15 cursor-pointer ${
+                        isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''
+                      }`}
                       style={{ 
                         left: `${placedSymbol.pos.x}%`, 
                         top: `${placedSymbol.pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
+                      onClick={() => handleElementSelect(placedSymbol.id as EditableElement)}
                     >
                       {symbolImage && (
                         <img 
@@ -972,14 +1092,17 @@ export default function Komponer() {
                   );
                 })}
 
-                {/* Name 1 */}
+                {/* Name 1 - tappable */}
                 <div 
-                  className="absolute px-2 text-center"
+                  className={`absolute px-2 text-center cursor-pointer transition-all ${
+                    selectedElement === 'name1' ? 'ring-2 ring-primary ring-offset-1 rounded bg-primary/10' : ''
+                  }`}
                   style={{ 
                     left: `${name1Pos.x}%`, 
                     top: `${name1Pos.y}%`,
                     transform: 'translate(-50%, -50%)'
                   }}
+                  onClick={() => handleElementSelect('name1')}
                 >
                   <p 
                     className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
@@ -989,14 +1112,17 @@ export default function Komponer() {
                   </p>
                 </div>
 
-                {/* Dates 1 */}
+                {/* Dates 1 - tappable */}
                 <div 
-                  className="absolute px-2 text-center"
+                  className={`absolute px-2 text-center cursor-pointer transition-all ${
+                    selectedElement === 'dates1' ? 'ring-2 ring-primary ring-offset-1 rounded bg-primary/10' : ''
+                  }`}
                   style={{ 
                     left: `${dates1Pos.x}%`, 
                     top: `${dates1Pos.y}%`,
                     transform: 'translate(-50%, -50%)'
                   }}
+                  onClick={() => handleElementSelect('dates1')}
                 >
                   <p 
                     className="font-cinzel text-foreground whitespace-nowrap"
@@ -1006,16 +1132,19 @@ export default function Komponer() {
                   </p>
                 </div>
 
-                {/* Name 2 */}
+                {/* Name 2 - tappable */}
                 {selectedNameCount === "2" && (
                   <>
                     <div 
-                      className="absolute px-2 text-center"
+                      className={`absolute px-2 text-center cursor-pointer transition-all ${
+                        selectedElement === 'name2' ? 'ring-2 ring-primary ring-offset-1 rounded bg-primary/10' : ''
+                      }`}
                       style={{ 
                         left: `${name2Pos.x}%`, 
                         top: `${name2Pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
+                      onClick={() => handleElementSelect('name2')}
                     >
                       <p 
                         className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
@@ -1025,12 +1154,15 @@ export default function Komponer() {
                       </p>
                     </div>
                     <div 
-                      className="absolute px-2 text-center"
+                      className={`absolute px-2 text-center cursor-pointer transition-all ${
+                        selectedElement === 'dates2' ? 'ring-2 ring-primary ring-offset-1 rounded bg-primary/10' : ''
+                      }`}
                       style={{ 
                         left: `${dates2Pos.x}%`, 
                         top: `${dates2Pos.y}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
+                      onClick={() => handleElementSelect('dates2')}
                     >
                       <p 
                         className="font-cinzel text-foreground whitespace-nowrap"
@@ -1042,15 +1174,18 @@ export default function Komponer() {
                   </>
                 )}
 
-                {/* Etterskrift */}
+                {/* Etterskrift - tappable */}
                 {etterskrift && (
                   <div 
-                    className="absolute px-4 text-center"
+                    className={`absolute px-4 text-center cursor-pointer transition-all ${
+                      selectedElement === 'etterskrift' ? 'ring-2 ring-primary ring-offset-1 rounded bg-primary/10' : ''
+                    }`}
                     style={{ 
                       left: `${etterskriftPos.x}%`, 
                       top: `${etterskriftPos.y}%`,
                       transform: 'translate(-50%, -50%)'
                     }}
+                    onClick={() => handleElementSelect('etterskrift')}
                   >
                     <p 
                       className={`${fonts.find(f => f.id === selectedFont)?.className} italic text-foreground/80 whitespace-nowrap`}
@@ -1060,6 +1195,15 @@ export default function Komponer() {
                     </p>
                   </div>
                 )}
+                
+                {/* Tap hint when nothing selected */}
+                {!selectedElement && (
+                  <div className="absolute bottom-2 left-0 right-0 text-center">
+                    <span className="text-xs bg-foreground/80 text-background px-2 py-1 rounded-full">
+                      Trykk for å redigere
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1067,7 +1211,7 @@ export default function Komponer() {
           {/* Scrollable Controls - with padding-top for fixed preview (header 80px + preview ~210px) */}
           <div className="pt-[290px]">
             <div 
-              className="px-4 pb-32"
+              className={`px-4 ${selectedElement ? 'pb-56' : 'pb-32'}`}
               style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
               <div className="max-w-md mx-auto space-y-4">
@@ -1418,6 +1562,16 @@ export default function Komponer() {
               </div>
             </div>
           </div>
+          
+          {/* Element Editor - Fixed at bottom */}
+          <ElementEditor
+            selectedElement={selectedElement}
+            onClose={() => setSelectedElement(null)}
+            onMove={handleElementMove}
+            onResize={handleElementResize}
+            elementLabel={getElementInfo().label}
+            currentSize={getElementInfo().size}
+          />
         </div>
       </div>
     </Layout>
