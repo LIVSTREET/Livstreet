@@ -335,10 +335,16 @@ export default function Komponer() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Preview - Sticky on mobile and tablet */}
-            <div className="lg:order-1 order-1">
-              <div className="sticky top-16 z-20 bg-background pb-4 lg:pb-0 lg:top-20">
+            <div className="lg:order-1">
+              <div 
+                className="sticky top-16 z-20 bg-background pb-4 lg:pb-0 lg:top-20"
+                style={{ 
+                  position: 'sticky',
+                  WebkitOverflowScrolling: 'touch',
+                } as React.CSSProperties}
+              >
                 <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
