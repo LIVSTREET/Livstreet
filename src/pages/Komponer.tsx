@@ -322,37 +322,31 @@ export default function Komponer() {
   return (
     <Layout>
       <div className="min-h-screen bg-background">
-        {/* Header text - outside scroll container */}
+        {/* Header text */}
         <div className="container max-w-7xl mx-auto px-4 pt-8 pb-4">
           <div className="text-center mb-4">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
               Lag din gravplate
             </h1>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-muted-foreground mb-4 hidden sm:block">
               Dra elementene for å plassere dem - dette er kun veiledende
             </p>
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto hidden md:block">
               Designet er veiledende. Du kan sende forespørsel uten ferdig design. Vi går alltid gjennom designet sammen med deg før bestilling.
             </p>
           </div>
         </div>
 
-        {/* Scrollable container for mobile/tablet */}
-        <div 
-          className="lg:h-auto lg:overflow-visible h-[calc(100vh-14rem)] overflow-y-auto"
-          style={{
-            WebkitOverflowScrolling: 'touch',
-          } as React.CSSProperties}
-        >
+        {/* Desktop: Side by side layout */}
+        <div className="hidden lg:block">
           <div className="container max-w-7xl mx-auto px-4 pb-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-              {/* Preview - Sticky inside scroll container */}
-              <div className="lg:order-1">
-                <div className="sticky top-0 lg:top-20 z-20 bg-background pb-4 lg:pb-0">
-                <h2 className="font-display text-lg lg:text-xl font-semibold text-foreground mb-3 lg:mb-4">Forhåndsvisning</h2>
+            <div className="grid grid-cols-2 gap-8 items-start">
+              {/* Preview - Sticky on desktop */}
+              <div className="sticky top-20 z-20">
+                <h2 className="font-display text-xl font-semibold text-foreground mb-4">Forhåndsvisning</h2>
                 <div 
                   ref={previewRef}
-                  className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border-0 aspect-[4/3] max-w-xs sm:max-w-sm lg:max-w-lg mx-auto cursor-move select-none bg-white"
+                  className="relative rounded-2xl overflow-hidden shadow-2xl border-0 aspect-[4/3] max-w-lg mx-auto cursor-move select-none bg-white"
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
                   onMouseLeave={handleMouseUp}
@@ -536,10 +530,9 @@ export default function Komponer() {
                   💡 Tips: Klikk og dra elementene for å flytte dem
                 </p>
               </div>
-            </div>
 
-            {/* Controls - scrolls normally, preview stays sticky above on mobile */}
-            <div className="order-2 lg:order-2 space-y-6">
+              {/* Controls - Desktop */}
+              <div className="space-y-6">
               {/* Size Information */}
               <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
                 <Label className="block text-sm font-semibold text-foreground mb-3">
@@ -862,6 +855,433 @@ export default function Komponer() {
               </div>
             </div>
           </div>
+        </div>
+        </div>
+
+        {/* Mobile/Tablet: Fixed preview + scrollable controls */}
+        <div className="lg:hidden">
+          {/* Fixed Preview */}
+          <div className="fixed top-16 left-0 right-0 z-30 bg-background border-b border-border px-4 py-3">
+            <div className="max-w-xs mx-auto">
+              <div 
+                ref={previewRef}
+                className="relative rounded-xl overflow-hidden shadow-lg border-0 aspect-[4/3] cursor-move select-none bg-white"
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onTouchMove={handleMouseMove}
+                onTouchEnd={handleMouseUp}
+              >
+                <img
+                  src={platePreview}
+                  alt="Gravplate mal"
+                  className="w-full h-full object-contain pointer-events-none"
+                  draggable={false}
+                />
+                
+                {/* Frame overlay */}
+                {selectedFrame !== "none" && selectedFrameImage && (
+                  <img
+                    src={selectedFrameImage}
+                    alt="Ramme"
+                    className="absolute pointer-events-none z-10"
+                    style={{ 
+                      top: '54%',
+                      left: '50%',
+                      width: selectedFrame === 'simple' ? '150%' : '135%',
+                      height: selectedFrame === 'simple' ? '120%' : '110%',
+                      transform: 'translate(-50%, -50%)',
+                      objectFit: 'fill',
+                      mixBlendMode: 'multiply',
+                    }}
+                    draggable={false}
+                  />
+                )}
+                
+                {/* Placed Symbols */}
+                {placedSymbols.map((placedSymbol) => {
+                  const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
+                  return (
+                    <div 
+                      key={placedSymbol.id}
+                      className={`absolute transition-transform text-foreground/80 cursor-grab active:cursor-grabbing hover:scale-110 ${dragging === `placed-${placedSymbol.id}` ? 'scale-110 z-20' : 'z-15'}`}
+                      style={{ 
+                        left: `${placedSymbol.pos.x}%`, 
+                        top: `${placedSymbol.pos.y}%`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      onMouseDown={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
+                      onTouchStart={(e) => handleMouseDown(`placed-${placedSymbol.id}`, e)}
+                    >
+                      {symbolImage && (
+                        <img 
+                          src={symbolImage} 
+                          alt="Symbol"
+                          style={{ 
+                            width: `${placedSymbol.size * 0.5}px`, 
+                            height: `${placedSymbol.size * 0.5}px`,
+                            objectFit: 'contain',
+                            filter: 'brightness(0)',
+                          }} 
+                          draggable={false}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+
+                {/* Name 1 */}
+                <div 
+                  className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'name1' ? 'scale-105 z-10' : ''}`}
+                  style={{ 
+                    left: `${name1Pos.x}%`, 
+                    top: `${name1Pos.y}%`,
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                  onMouseDown={(e) => handleMouseDown("name1", e)}
+                  onTouchStart={(e) => handleMouseDown("name1", e)}
+                >
+                  <p 
+                    className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
+                    style={{ fontSize: `${name1Size * 0.18}px` }}
+                  >
+                    {name1 || "Navn"}
+                  </p>
+                </div>
+
+                {/* Dates 1 */}
+                <div 
+                  className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'dates1' ? 'scale-105 z-10' : ''}`}
+                  style={{ 
+                    left: `${dates1Pos.x}%`, 
+                    top: `${dates1Pos.y}%`,
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                  onMouseDown={(e) => handleMouseDown("dates1", e)}
+                  onTouchStart={(e) => handleMouseDown("dates1", e)}
+                >
+                  <p 
+                    className="font-cinzel text-foreground whitespace-nowrap"
+                    style={{ fontSize: `${dates1Size * 0.12}px` }}
+                  >
+                    {birthDate1 || "00.00 0000"} – {deathDate1 || "00.00 0000"}
+                  </p>
+                </div>
+
+                {/* Name 2 */}
+                {selectedNameCount === "2" && (
+                  <>
+                    <div 
+                      className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'name2' ? 'scale-105 z-10' : ''}`}
+                      style={{ 
+                        left: `${name2Pos.x}%`, 
+                        top: `${name2Pos.y}%`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      onMouseDown={(e) => handleMouseDown("name2", e)}
+                      onTouchStart={(e) => handleMouseDown("name2", e)}
+                    >
+                      <p 
+                        className={`${fonts.find(f => f.id === selectedFont)?.className} font-bold text-foreground whitespace-nowrap`}
+                        style={{ fontSize: `${name2Size * 0.18}px` }}
+                      >
+                        {name2 || "Navn"}
+                      </p>
+                    </div>
+                    <div 
+                      className={`absolute px-2 text-center cursor-grab active:cursor-grabbing ${dragging === 'dates2' ? 'scale-105 z-10' : ''}`}
+                      style={{ 
+                        left: `${dates2Pos.x}%`, 
+                        top: `${dates2Pos.y}%`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      onMouseDown={(e) => handleMouseDown("dates2", e)}
+                      onTouchStart={(e) => handleMouseDown("dates2", e)}
+                    >
+                      <p 
+                        className="font-cinzel text-foreground whitespace-nowrap"
+                        style={{ fontSize: `${dates2Size * 0.12}px` }}
+                      >
+                        {birthDate2 || "00.00 0000"} – {deathDate2 || "00.00 0000"}
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                {/* Etterskrift */}
+                {etterskrift && (
+                  <div 
+                    className={`absolute px-4 text-center cursor-grab active:cursor-grabbing ${dragging === 'etterskrift' ? 'scale-105 z-10' : ''}`}
+                    style={{ 
+                      left: `${etterskriftPos.x}%`, 
+                      top: `${etterskriftPos.y}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    onMouseDown={(e) => handleMouseDown("etterskrift", e)}
+                    onTouchStart={(e) => handleMouseDown("etterskrift", e)}
+                  >
+                    <p 
+                      className={`${fonts.find(f => f.id === selectedFont)?.className} italic text-foreground/80 whitespace-nowrap`}
+                      style={{ fontSize: `${etterskriftSize * 0.14}px` }}
+                    >
+                      {etterskrift}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Scrollable Controls - with padding-top for fixed preview */}
+          <div 
+            className="pt-[280px] sm:pt-[320px]"
+          >
+            <div 
+              className="h-[calc(100vh-20rem)] overflow-y-auto px-4 pb-8"
+              style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+            >
+              <div className="max-w-md mx-auto space-y-4">
+                {/* Size Information */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Størrelse</Label>
+                  <div className="p-3 rounded-lg border-2 border-primary bg-primary/5">
+                    <span className="font-semibold text-foreground text-sm">Standard størrelse</span>
+                  </div>
+                </div>
+
+                {/* Name Count */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Antall navn</Label>
+                  <Select value={selectedNameCount} onValueChange={setSelectedNameCount}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nameCountOptions.map((count) => (
+                        <SelectItem key={count} value={count}>
+                          {count} {parseInt(count) === 1 ? "person" : "personer"}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Person 1 */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <h3 className="font-semibold text-foreground mb-3 text-sm">Person 1</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <Label className="text-xs text-muted-foreground">Navn</Label>
+                      <Input
+                        type="text"
+                        value={name1}
+                        onChange={(e) => setName1(e.target.value)}
+                        placeholder="Fornavn Etternavn"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <Label className="text-xs text-muted-foreground">Fødselsdato</Label>
+                        <Input
+                          type="text"
+                          value={birthDate1}
+                          onChange={(e) => setBirthDate1(e.target.value)}
+                          placeholder="dd.mm åååå"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                        <Input
+                          type="text"
+                          value={deathDate1}
+                          onChange={(e) => setDeathDate1(e.target.value)}
+                          placeholder="dd.mm åååå"
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Person 2 */}
+                {selectedNameCount === "2" && (
+                  <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                    <h3 className="font-semibold text-foreground mb-3 text-sm">Person 2</h3>
+                    <div className="space-y-3">
+                      <div>
+                        <Label className="text-xs text-muted-foreground">Navn</Label>
+                        <Input
+                          type="text"
+                          value={name2}
+                          onChange={(e) => setName2(e.target.value)}
+                          placeholder="Fornavn Etternavn"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <Label className="text-xs text-muted-foreground">Fødselsdato</Label>
+                          <Input
+                            type="text"
+                            value={birthDate2}
+                            onChange={(e) => setBirthDate2(e.target.value)}
+                            placeholder="dd.mm åååå"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-xs text-muted-foreground">Dødsdato</Label>
+                          <Input
+                            type="text"
+                            value={deathDate2}
+                            onChange={(e) => setDeathDate2(e.target.value)}
+                            placeholder="dd.mm åååå"
+                            className="mt-1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Etterskrift */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Etterskrift</Label>
+                  <Input
+                    type="text"
+                    value={etterskrift}
+                    onChange={(e) => setEtterskrift(e.target.value)}
+                    placeholder="F.eks. Alltid elsket, alltid savnet"
+                  />
+                </div>
+
+                {/* Frame Selection */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Ramme</Label>
+                  <RadioGroup value={selectedFrame} onValueChange={(v) => setSelectedFrame(v as FrameType)}>
+                    <div className="grid grid-cols-2 gap-2">
+                      {frames.map((frame) => (
+                        <div key={frame.id} className="flex items-center">
+                          <RadioGroupItem value={frame.id} id={`mobile-frame-${frame.id}`} className="sr-only" />
+                          <Label
+                            htmlFor={`mobile-frame-${frame.id}`}
+                            className={`flex-1 p-2 rounded-lg border-2 cursor-pointer transition-all text-center text-xs ${
+                              selectedFrame === frame.id
+                                ? "border-primary bg-primary/5"
+                                : "border-border hover:border-primary/50"
+                            }`}
+                          >
+                            {frame.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                {/* Font Selection */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Skrifttype</Label>
+                  <Select value={selectedFont} onValueChange={(v) => setSelectedFont(v as FontType)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fonts.map((font) => (
+                        <SelectItem key={font.id} value={font.id}>
+                          <span className={font.className}>{font.label}</span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Symbol Selection */}
+                <div className="bg-card p-4 rounded-xl shadow-sm border border-border">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">Symboler</Label>
+                  <div className="space-y-3">
+                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Velg kategori" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {symbolCategories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {symbolCategories
+                        .find((c) => c.id === selectedCategory)
+                        ?.symbols.map((symbol) => (
+                          <button
+                            key={symbol.id}
+                            type="button"
+                            onClick={() => addSymbolToPreview(selectedCategory, symbol.id)}
+                            className="p-2 rounded-lg border border-border hover:border-primary hover:bg-primary/5 transition-all"
+                          >
+                            <img 
+                              src={symbol.image} 
+                              alt={symbol.name}
+                              className="w-8 h-8 object-contain"
+                              style={{ filter: 'brightness(0)' }}
+                            />
+                          </button>
+                        ))}
+                    </div>
+
+                    {/* Placed symbols list */}
+                    {placedSymbols.length > 0 && (
+                      <div className="space-y-2 pt-2 border-t border-border">
+                        <p className="text-xs text-muted-foreground">Plasserte symboler:</p>
+                        {placedSymbols.map((ps) => {
+                          const cat = symbolCategories.find(c => c.id === ps.categoryId);
+                          const sym = cat?.symbols.find(s => s.id === ps.symbolId);
+                          return (
+                            <div key={ps.id} className="flex items-center justify-between p-2 bg-muted rounded-lg">
+                              <span className="text-xs">{sym?.name}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeSymbol(ps.id)}
+                                className="h-6 w-6 p-0"
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Price & Submit */}
+                <div className="bg-primary text-primary-foreground p-4 rounded-xl">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="font-semibold">Gravplate</span>
+                    <span className="text-xl font-bold">{formatPrice(PRICING.BASE_PRICE)}</span>
+                  </div>
+                  <Button
+                    onClick={handleSendInquiry}
+                    variant="secondary"
+                    className="w-full py-5 text-base font-semibold"
+                    disabled={!selectedVariant}
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Legg til i bestilling
+                  </Button>
+                  <p className="text-xs text-primary-foreground/70 mt-2 text-center">
+                    Vi kontakter deg for å fullføre bestillingen.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
