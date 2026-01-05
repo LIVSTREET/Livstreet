@@ -82,6 +82,9 @@ export default function Komponer() {
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
   const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
   
+  // Welcome message state
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
+  
   // Placed symbols with individual sizes
   const [placedSymbols, setPlacedSymbols] = useState<PlacedSymbol[]>([]);
   
@@ -319,21 +322,65 @@ export default function Komponer() {
 
   const nameCountOptions = product.node.options.find(o => o.name === "Antall navn")?.values || ["1", "2"];
 
+  // Welcome message component
+  const WelcomeMessage = () => {
+    if (!showWelcomeMessage) return null;
+
+    return (
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-fade-in"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setShowWelcomeMessage(false);
+          }
+        }}
+      >
+        <div 
+          className="bg-card border border-border rounded-2xl p-6 mx-4 max-w-md shadow-xl animate-scale-in"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2 className="font-display text-2xl font-bold text-foreground text-center mb-4">
+            Velkommen til design-modulen
+          </h2>
+
+          <div className="space-y-3 text-muted-foreground text-sm">
+            <p className="flex items-start gap-2">
+              <span className="text-primary mt-0.5">•</span>
+              Designet er veiledende. Du kan sende forespørsel uten ferdig design.
+            </p>
+            <p className="flex items-start gap-2">
+              <span className="text-primary mt-0.5">•</span>
+              Vi går alltid gjennom designet sammen med deg før bestilling.
+            </p>
+            <p className="flex items-start gap-2">
+              <span className="text-primary mt-0.5">•</span>
+              Dra elementene for å plassere dem - dette er kun veiledende.
+            </p>
+          </div>
+
+          <Button
+            onClick={() => setShowWelcomeMessage(false)}
+            className="w-full mt-6"
+          >
+            Forstått
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Layout>
+      {/* Welcome Message */}
+      <WelcomeMessage />
+      
       <div className="min-h-screen bg-background">
-        {/* Header text */}
+        {/* Header text - simplified */}
         <div className="container max-w-7xl mx-auto px-4 pt-8 pb-4">
           <div className="text-center mb-4">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
               Lag din gravplate
             </h1>
-            <p className="text-muted-foreground mb-4 hidden sm:block">
-              Dra elementene for å plassere dem - dette er kun veiledende
-            </p>
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto hidden md:block">
-              Designet er veiledende. Du kan sende forespørsel uten ferdig design. Vi går alltid gjennom designet sammen med deg før bestilling.
-            </p>
           </div>
         </div>
 
@@ -861,7 +908,7 @@ export default function Komponer() {
         {/* Mobile/Tablet: Fixed preview + scrollable controls */}
         <div className="lg:hidden">
           {/* Fixed Preview */}
-          <div className="fixed top-16 left-0 right-0 z-30 bg-background border-b border-border px-4 py-3">
+          <div className="fixed top-24 left-0 right-0 z-30 bg-background border-b border-border px-4 py-3">
             <div className="max-w-xs mx-auto">
               <div 
                 ref={previewRef}
@@ -1034,7 +1081,7 @@ export default function Komponer() {
 
           {/* Scrollable Controls - with padding-top for fixed preview */}
           <div 
-            className="pt-[280px] sm:pt-[320px]"
+            className="pt-[300px] sm:pt-[340px]"
           >
             <div 
               className="h-[calc(100vh-20rem)] overflow-y-auto px-4 pb-8"
