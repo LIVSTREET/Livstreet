@@ -375,10 +375,10 @@ export default function Komponer() {
       <WelcomeMessage />
       
       <div className="min-h-screen bg-background">
-        {/* Header text - simplified */}
-        <div className="container max-w-7xl mx-auto px-4 pt-8 pb-4">
-          <div className="text-center mb-4">
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
+        {/* Header text - simplified and compact */}
+        <div className="container max-w-7xl mx-auto px-4 pt-2 pb-1 lg:pt-8 lg:pb-4">
+          <div className="text-center">
+            <h1 className="font-display text-xl lg:text-3xl font-bold text-foreground">
               Lag din gravplate
             </h1>
           </div>
@@ -908,8 +908,8 @@ export default function Komponer() {
         {/* Mobile/Tablet: Fixed preview + scrollable controls */}
         <div className="lg:hidden">
           {/* Fixed Preview */}
-          <div className="fixed top-24 left-0 right-0 z-30 bg-background border-b border-border px-4 py-3">
-            <div className="max-w-xs mx-auto">
+          <div className="fixed top-16 left-0 right-0 z-30 bg-background border-b border-border px-4 py-2">
+            <div className="max-w-sm mx-auto">
               <div 
                 ref={previewRef}
                 className="relative rounded-xl overflow-hidden shadow-lg border-0 aspect-[4/3] cursor-move select-none bg-white"
@@ -1081,7 +1081,7 @@ export default function Komponer() {
 
           {/* Scrollable Controls - with padding-top for fixed preview */}
           <div 
-            className="pt-[260px] sm:pt-[280px]"
+            className="pt-[280px] sm:pt-[300px]"
           >
             <div 
               className="h-[calc(100vh-20rem)] overflow-y-auto px-4 pb-8"
