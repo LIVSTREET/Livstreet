@@ -24,6 +24,9 @@ export default {
         "alex-brush": ["Alex Brush", "cursive"],
         "allura": ["Allura", "cursive"],
         "edwardian": ["Edwardian Script ITC", "cursive"],
+        "monotype-corsiva": ["Monotype Corsiva", "cursive"],
+        "blackadder": ["Blackadder ITC", "fantasy"],
+        "old-english": ["Old English Text MT", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
