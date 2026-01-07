@@ -123,6 +123,31 @@ export default function Kontakt() {
                   message: e.target.value
                 })} onBlur={handleBlur} placeholder="Hvordan kan vi hjelpe deg?" />
                 </div>
+                {/* Link to configurator */}
+                <div className="p-4 bg-muted rounded-lg mb-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Palette className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Ønsker du å inkludere et design i forespørselen? Vi hjelper deg gjerne med å komponere designet.
+                      </p>
+                      <Button variant="outline" asChild onClick={() => {
+                        // Save latest form data before navigating
+                        setInquiryFormData({
+                          name: formData.name || undefined,
+                          email: formData.email || undefined,
+                          phone: formData.phone || undefined,
+                          description: formData.message || undefined
+                        });
+                      }}>
+                        <Link to="/komponer">Lag din plate med design</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
                 <Button variant="hero" size="lg" type="submit" disabled={isSubmitting}>
                   {isSubmitting ? <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -130,31 +155,6 @@ export default function Kontakt() {
                     </> : "Send melding"}
                 </Button>
               </form>
-
-              {/* Link to configurator */}
-              <div className="mt-6 p-4 bg-muted rounded-lg">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Palette className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      Ønsker du å inkludere et design i forespørselen? Vi hjelper deg gjerne med å komponere designet.
-                    </p>
-                    <Button variant="outline" asChild onClick={() => {
-                    // Save latest form data before navigating
-                    setInquiryFormData({
-                      name: formData.name || undefined,
-                      email: formData.email || undefined,
-                      phone: formData.phone || undefined,
-                      description: formData.message || undefined
-                    });
-                  }}>
-                      <Link to="/komponer">Lag din plate med design</Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Contact Info */}
