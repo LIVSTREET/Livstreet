@@ -56,19 +56,19 @@ export function VideoSection() {
   };
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+    <section className="py-10 md:py-20 bg-background">
+      <div className="container px-4">
+        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-12">
+          <h2 className="font-display text-2xl md:text-4xl font-bold mb-2 md:mb-4">
             Håndverk med sjel
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm md:text-lg">
             Se hvordan vi skaper hver gravplate med presisjon og omsorg i vårt verksted.
           </p>
         </div>
 
         {/* Card */}
-        <div className="relative aspect-video max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl">
           <iframe
             src={PREVIEW_SRC}
             className="w-full h-full pointer-events-none"

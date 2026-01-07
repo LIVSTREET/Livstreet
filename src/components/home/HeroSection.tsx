@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import gravplateHero from "@/assets/gravplate-hero.png";
 export function HeroSection() {
-  return <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img alt="Gravplate i eik på kirkegård" className="w-full h-full object-cover" src={gravplateHero} />
