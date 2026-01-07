@@ -10,15 +10,15 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 py-10 md:py-20 px-4 mt-0 mb-[250px]">
-        <div className="max-w-2xl space-y-4 md:space-y-8 animate-fade-in text-4xl font-serif font-semibold">
+      <div className="container relative z-10 py-12 md:py-24 px-4">
+        <div className="max-w-2xl space-y-6 md:space-y-8 animate-fade-in">
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
             Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
-          <h2 className="text-base md:text-xl leading-relaxed font-serif mt-px font-bold text-[#f8f6f1]/[0.58]">
+          <h2 className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/70">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
           </h2>
-          <div className="flex-col gap-3 pt-2 md:pt-4 flex items-start justify-center ml-[15px] mb-px border-0 mt-[150px] sm:flex-col sm:flex sm:items-start sm:justify-end md:gap-[15px] px-[111px]">
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
               <Link to="/komponer">Lag din plate</Link>
             </Button>
