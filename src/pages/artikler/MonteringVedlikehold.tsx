@@ -8,7 +8,7 @@ export default function MonteringVedlikehold() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative py-16 md:py-28 bg-gradient-to-b from-secondary to-background overflow-hidden">
+      <section className="relative py-8 md:py-14 bg-gradient-to-b from-secondary to-background overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-accent rounded-full blur-3xl" />

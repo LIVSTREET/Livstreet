@@ -7,7 +7,7 @@ export default function Baerekraft() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-b from-forest/10 via-moss/5 to-background overflow-hidden">
+      <section className="relative py-8 md:py-14 bg-gradient-to-b from-forest/10 via-moss/5 to-background overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-forest/5 via-transparent to-transparent" />
         <div className="container px-4 relative">
           <Link 

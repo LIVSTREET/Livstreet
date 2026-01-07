@@ -7,7 +7,7 @@ export default function HvaSkjerEtterpa() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-secondary overflow-hidden">
+      <section className="relative py-8 md:py-14 bg-secondary overflow-hidden">
         <div className="container px-4">
           <Link 
             to="/informasjon" 
