@@ -11,7 +11,8 @@ const FORCE_GMAIL_ONLY = true;
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 // Gmail SMTP
-const GMAIL_APP_PASSWORD = Deno.env.get("GMAIL_APP_PASSWORD");
+// App passwords are often shown with spaces. We normalize to avoid auth failures.
+const GMAIL_APP_PASSWORD = (Deno.env.get("GMAIL_APP_PASSWORD") ?? "").replace(/\s+/g, "");
 const GMAIL_USER = "livstreet.store@gmail.com";
 
 const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
