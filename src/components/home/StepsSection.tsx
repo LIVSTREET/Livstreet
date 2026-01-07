@@ -1,5 +1,5 @@
-import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck } from "lucide-react";
-
+import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 const steps = [
   {
     icon: MessageCircle,
@@ -63,6 +63,20 @@ export function StepsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Micro CTA */}
+        <div className="text-center mt-8 md:mt-12">
+          <p className="text-muted-foreground text-sm md:text-base mb-2">
+            Vil du vite mer om hva som skjer videre?
+          </p>
+          <Link 
+            to="/informasjon/hva-skjer-etterpa" 
+            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm md:text-base"
+          >
+            Les mer om prosessen
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>
