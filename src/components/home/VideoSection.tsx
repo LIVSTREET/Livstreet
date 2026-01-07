@@ -99,7 +99,7 @@ export function VideoSection() {
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent
           forceMount
-          className="max-w-none w-[100vw] h-[100svh] p-0 gap-0 border-none overflow-hidden rounded-none sm:rounded-none bg-background"
+          className="max-w-[95vw] md:max-w-[90vw] w-full h-auto aspect-video p-0 gap-0 border-2 border-primary/50 overflow-hidden rounded-xl bg-background"
         >
           <iframe
             ref={soundIframeRef}
