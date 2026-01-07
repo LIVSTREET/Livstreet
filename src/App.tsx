@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Komponer from "./pages/Komponer";
 import Informasjon from "./pages/Informasjon";
+import MonteringVedlikehold from "./pages/artikler/MonteringVedlikehold";
 import OmOss from "./pages/OmOss";
 import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/komponer" element={<Komponer />} />
           <Route path="/informasjon" element={<Informasjon />} />
+          <Route path="/informasjon/montering-vedlikehold" element={<MonteringVedlikehold />} />
           <Route path="/om-oss" element={<OmOss />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/bestill" element={<Bestill />} />
