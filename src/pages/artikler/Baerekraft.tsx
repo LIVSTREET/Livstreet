@@ -42,7 +42,7 @@ export default function Baerekraft() {
       {/* Hero Image */}
       <section className="relative -mt-8 md:-mt-12 pb-12 md:pb-20">
         <div className="container px-4">
-          <div className="max-w-5xl mx-auto animate-scale-in" style={{ animationDelay: "0.2s" }}>
+          <div className="max-w-2xl mx-auto animate-scale-in" style={{ animationDelay: "0.2s" }}>
             <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <img 
                 src={baerekraftHero} 

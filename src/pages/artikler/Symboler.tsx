@@ -1,7 +1,8 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sparkles, Heart, Feather, Flower2, TreeDeciduous, Cross, Anchor, CircleDot, Info, PenTool, MessageCircle } from "lucide-react";
-import crossOrnate from "@/assets/symbols/cross-ornate.png";
+
+const symbolImage = "/lovable-uploads/d0419dda-1a16-415b-abb8-e0af94719ab4.png";
 
 export default function Symboler() {
   return (
@@ -42,11 +43,11 @@ export default function Symboler() {
       {/* Hero Image */}
       <section className="relative -mt-8 md:-mt-12 pb-12 md:pb-20">
         <div className="container px-4">
-          <div className="max-w-5xl mx-auto animate-scale-in" style={{ animationDelay: "0.2s" }}>
+          <div className="max-w-2xl mx-auto animate-scale-in" style={{ animationDelay: "0.2s" }}>
             <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <img 
-                src={crossOrnate} 
-                alt="Håndtegnet symbol på gravplate" 
+                src={symbolImage} 
+                alt="Gravplate med håndtegnet symbol" 
                 className="w-full h-auto object-cover"
               />
             </div>
