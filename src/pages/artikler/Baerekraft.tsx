@@ -39,32 +39,28 @@ export default function Baerekraft() {
         </div>
       </section>
 
-      {/* Hero Image */}
-      <section className="relative -mt-8 md:-mt-12 pb-12 md:pb-20">
-        <div className="container px-4">
-          <div className="max-w-2xl mx-auto animate-scale-in" style={{ animationDelay: "0.2s" }}>
-            <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
-              <img 
-                src={baerekraftHero} 
-                alt="Majestetisk eiketre i grønt landskap" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction */}
+      {/* Introduction with Image */}
       <section className="py-12 md:py-20 bg-background">
         <div className="container px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="prose prose-lg animate-fade-in" style={{ animationDelay: "0.3s" }}>
-              <p className="text-lg md:text-xl text-foreground leading-relaxed mb-6">
-                Hos Livstreet formidler vi bærekraftige gravplater i massivt, FSC-sertifisert eik – som et varmt og verdig alternativ til den tradisjonelle gravsteinen i granitt. Produktene er designet og produsert i Danmark, og utformet for å hedre minnet på en personlig, vakker og miljøvennlig måte.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Gravplaten i tre er et bevisst valg for dem som ønsker et gravminne i naturlige materialer, med lavere miljøbelastning og et roligere uttrykk.
-              </p>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="prose prose-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                <p className="text-lg md:text-xl text-foreground leading-relaxed mb-6">
+                  Hos Livstreet formidler vi bærekraftige gravplater i massivt, FSC-sertifisert eik – som et varmt og verdig alternativ til den tradisjonelle gravsteinen i granitt. Produktene er designet og produsert i Danmark, og utformet for å hedre minnet på en personlig, vakker og miljøvennlig måte.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Gravplaten i tre er et bevisst valg for dem som ønsker et gravminne i naturlige materialer, med lavere miljøbelastning og et roligere uttrykk.
+                </p>
+              </div>
+              <div className="animate-scale-in order-first md:order-last" style={{ animationDelay: "0.3s" }}>
+                <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-xl max-w-sm mx-auto">
+                  <img 
+                    src={baerekraftHero} 
+                    alt="Majestetisk eiketre i grønt landskap" 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
