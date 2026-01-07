@@ -18,10 +18,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-20 items-center justify-between">
+      <div className="container flex h-24 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Livstreet - Bæredyktig Minne" className="h-16 w-auto" />
+          <img src={logo} alt="Livstreet - Bæredyktig Minne" className="h-20 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -48,13 +48,6 @@ export function Header() {
             </div>
           ))}
         </nav>
-
-        {/* CTA Button */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Button variant="hero" size="lg" asChild>
-            <Link to="/komponer">Lag din plate</Link>
-          </Button>
-        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -84,11 +77,6 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <Button variant="hero" size="lg" className="mt-4" asChild>
-              <Link to="/komponer" onClick={() => setMobileMenuOpen(false)}>
-                Lag din plate
-              </Link>
-            </Button>
           </nav>
         </div>
       )}
