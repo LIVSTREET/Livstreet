@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import article1 from "@/assets/article-1.jpg";
-import article2 from "@/assets/article-2.jpg";
-import article3 from "@/assets/article-3.jpg";
-import article4 from "@/assets/article-4.jpg";
+import monteringImg from "@/assets/montering-vedlikehold.png";
+import baerekraftImg from "@/assets/baerekraft-hero.png";
+import symbolerImg from "@/assets/article-3.jpg";
+import hvaSkjerImg from "@/assets/hva-skjer-etterpa.png";
 
 const articles = [
   {
     id: 1,
-    image: article1,
-    category: "Veiledning",
-    title: "Hvordan velge riktig gravstein",
-    excerpt: "En guide til å finne den perfekte måten å hedre din kjære på.",
-    slug: "velge-gravstein",
+    image: monteringImg,
+    category: "Vedlikehold",
+    title: "Montering og vedlikehold",
+    excerpt: "Enkelt å ta vare på – et trygt og varig valg.",
+    slug: "montering-vedlikehold",
   },
   {
     id: 2,
-    image: article2,
+    image: baerekraftImg,
     category: "Bærekraft",
     title: "Miljøvennlige alternativer",
     excerpt: "Hvorfor trebaserte gravplater er et godt valg for naturen.",
@@ -24,7 +24,7 @@ const articles = [
   },
   {
     id: 3,
-    image: article3,
+    image: symbolerImg,
     category: "Symboler",
     title: "Betydningen av ulike symboler",
     excerpt: "Lær om tradisjoner og symbolikk i gravminnedesign.",
@@ -32,11 +32,11 @@ const articles = [
   },
   {
     id: 4,
-    image: article4,
-    category: "Vedlikehold",
-    title: "Stell av treplater gjennom året",
-    excerpt: "Tips for å bevare gravplatens skjønnhet i alle årstider.",
-    slug: "vedlikehold",
+    image: hvaSkjerImg,
+    category: "Prosess",
+    title: "Hva skjer etter bestilling?",
+    excerpt: "En trygg prosess – steg for steg.",
+    slug: "hva-skjer-etterpa",
   },
 ];
 
