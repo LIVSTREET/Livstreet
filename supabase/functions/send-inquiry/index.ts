@@ -182,43 +182,59 @@ function buildInternalEmailHtml(data: InquiryRequest): string {
 // Build customer confirmation email HTML
 function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
   return `
-    <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; color: #333;">
-      <p>Kjære ${name},</p>
+    <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 600px; margin: 0 auto; color: #2c2c2c; line-height: 1.7; padding: 20px;">
       
-      <p>Takk for at du har tatt kontakt med oss i Livstreet.</p>
+      <p style="font-size: 17px; margin-bottom: 20px;">Kjære deg,</p>
       
-      <p>Vi vet at valget av gravminne ofte skjer i en tid der mye annet også skal tas stilling til. Derfor ønsker vi å gjøre prosessen så rolig, oversiktlig og trygg som mulig. Du trenger ikke å ha alle svarene med én gang – vi tar dette steg for steg, sammen med deg.</p>
+      <p style="font-size: 16px; margin-bottom: 16px;">Takk for at du har tatt kontakt med oss i Livstreet.</p>
       
-      <h2 style="color: #5c4a3a; margin-top: 30px;">Hva skjer videre?</h2>
+      <p style="font-size: 16px; margin-bottom: 24px;">Vi vet at valget av gravminne ofte skjer i en tid der mye annet også skal tas stilling til. Derfor ønsker vi å gjøre prosessen så rolig, oversiktlig og trygg som mulig. Du trenger ikke å ha alle svarene med én gang – vi tar dette steg for steg, sammen med deg.</p>
       
-      <ol style="line-height: 1.8;">
-        <li><strong>Vi starter med dine ønsker</strong><br>
-        Vi går gjennom opplysningene og ønskene du har sendt inn. Har du ikke alt klart ennå, er det helt i orden – dette kan avklares underveis.</li>
-        
-        <li><strong>Designutkast til godkjenning</strong><br>
-        Basert på dialogen lager vi et designutkast av gravplaten. Dette sendes til deg på e-post, slik at du i ro og fred kan se hvordan det ferdige gravminnet vil fremstå.</li>
-        
-        <li><strong>Justering og endelig bekreftelse</strong><br>
-        Ønsker du endringer, tilpasser vi designet til det føles riktig. Først når du er fornøyd og har gitt en skriftlig bekreftelse, går vi videre.</li>
-        
-        <li><strong>Faktura og oppstart av produksjon</strong><br>
-        Etter godkjenning sender vi faktura. Når betalingen er mottatt, settes gravplaten i produksjon.</li>
-        
-        <li><strong>Produksjon og levering</strong><br>
-        Normal leveringstid er 2–3 uker. Dersom du har behov for raskere levering, er du velkommen til å ta kontakt – så ser vi på mulighetene sammen.</li>
-      </ol>
+      <h2 style="color: #5c4a3a; font-size: 20px; margin-top: 32px; margin-bottom: 20px; border-bottom: 1px solid #e0d6cc; padding-bottom: 8px;">Hva skjer videre?</h2>
       
-      ${hasDesign ? "<p><em>Vi har mottatt designet du har laget, og vil gjennomgå dette grundig.</em></p>" : ""}
+      <div style="margin-bottom: 24px;">
+        <p style="font-size: 16px; margin-bottom: 6px;"><strong style="color: #5c4a3a;">1. Vi starter med dine ønsker</strong></p>
+        <p style="font-size: 15px; color: #444; margin-left: 20px; margin-bottom: 16px;">Vi går gjennom opplysningene og ønskene du har sendt inn. Har du ikke alt klart ennå, er det helt i orden – dette kan avklares underveis.</p>
+      </div>
       
-      <p style="margin-top: 30px;">Har du spørsmål underveis, eller er det noe du er usikker på, er du alltid velkommen til å <strong>svare direkte på denne e-posten</strong> eller ta kontakt med oss på annen måte. Vi er her for å hjelpe.</p>
+      <div style="margin-bottom: 24px;">
+        <p style="font-size: 16px; margin-bottom: 6px;"><strong style="color: #5c4a3a;">2. Designutkast til godkjenning</strong></p>
+        <p style="font-size: 15px; color: #444; margin-left: 20px; margin-bottom: 16px;">Basert på dialogen lager vi et designutkast av gravplaten. Dette sendes til deg på e-post, slik at du i ro og fred kan se hvordan det ferdige gravminnet vil fremstå.</p>
+      </div>
       
-      <p style="margin-top: 30px;">Med vennlig hilsen</p>
-      <p><strong>Peder August Halvorsen</strong><br>Livstreet</p>
-      <p style="color: #666; font-size: 14px;">
-        Telefon: 452 51 280<br>
-        E-post: livstreet.store@gmail.com<br>
-        Nettside: livstreet.org
+      <div style="margin-bottom: 24px;">
+        <p style="font-size: 16px; margin-bottom: 6px;"><strong style="color: #5c4a3a;">3. Justering og endelig bekreftelse</strong></p>
+        <p style="font-size: 15px; color: #444; margin-left: 20px; margin-bottom: 16px;">Ønsker du endringer, tilpasser vi designet til det føles riktig. Først når du er fornøyd og har gitt en skriftlig bekreftelse, går vi videre.</p>
+      </div>
+      
+      <div style="margin-bottom: 24px;">
+        <p style="font-size: 16px; margin-bottom: 6px;"><strong style="color: #5c4a3a;">4. Faktura og oppstart av produksjon</strong></p>
+        <p style="font-size: 15px; color: #444; margin-left: 20px; margin-bottom: 16px;">Etter godkjenning sender vi faktura. Når betalingen er mottatt, settes gravplaten i produksjon.</p>
+      </div>
+      
+      <div style="margin-bottom: 24px;">
+        <p style="font-size: 16px; margin-bottom: 6px;"><strong style="color: #5c4a3a;">5. Produksjon og levering</strong></p>
+        <p style="font-size: 15px; color: #444; margin-left: 20px; margin-bottom: 16px;">Normal leveringstid er 2–3 uker. Dersom du har behov for raskere levering, er du velkommen til å ta kontakt – så ser vi på mulighetene sammen.</p>
+      </div>
+      
+      ${hasDesign ? '<p style="font-size: 15px; font-style: italic; color: #666; margin-top: 20px; padding: 12px; background-color: #f9f7f5; border-radius: 6px;">Vi har mottatt designet du har laget, og vil gjennomgå dette grundig.</p>' : ""}
+      
+      <p style="font-size: 16px; margin-top: 28px; margin-bottom: 28px;">Har du spørsmål underveis, eller er det noe du er usikker på, er du alltid velkommen til å svare på denne e-posten eller ta kontakt med oss direkte. Vi er her for å hjelpe.</p>
+      
+      <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #e0d6cc;">
+        <p style="font-size: 16px; margin-bottom: 4px;">Med vennlig hilsen</p>
+        <p style="font-size: 17px; font-weight: bold; color: #5c4a3a; margin-bottom: 16px;">Peder August Halvorsen – Livstreet</p>
+        <p style="font-size: 14px; color: #666; line-height: 1.6;">
+          <a href="tel:45251280" style="color: #5c4a3a; text-decoration: none;">452 51 280</a><br>
+          <a href="mailto:livstreet.store@gmail.com" style="color: #5c4a3a; text-decoration: none;">livstreet.store@gmail.com</a><br>
+          <a href="https://livstreet.org" style="color: #5c4a3a; text-decoration: none;">livstreet.org</a>
+        </p>
+      </div>
+      
+      <p style="font-size: 14px; color: #888; margin-top: 24px; font-style: italic; text-align: center;">
+        Du kan trygt svare direkte på denne e-posten – svaret går rett til oss.
       </p>
+      
     </div>
   `;
 }
