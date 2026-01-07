@@ -112,12 +112,46 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResult = await emailResponse.json();
     console.log("Email sent to Livstreet:", emailResult);
 
-    // Send confirmation email to customer
+    // Send confirmation email to customer with "Hva skjer videre?" content
     const confirmationHtml = `
-      <h1>Takk for din henvendelse, ${name}!</h1>
-      <p>Vi har mottatt din forespørsel og vil ta kontakt med deg så snart som mulig.</p>
-      ${hasDesign ? "<p>Vi har mottatt ditt design og vil gjennomgå det grundig.</p>" : ""}
-      <p>Med vennlig hilsen,<br>Livstreet</p>
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; color: #333;">
+        <p>Kjære ${name},</p>
+        
+        <p>Takk for at du har tatt kontakt med oss i Livstreet.</p>
+        
+        <p>Vi vet at valget av gravminne ofte skjer i en tid der mye annet også skal tas stilling til. Derfor ønsker vi å gjøre prosessen så rolig, oversiktlig og trygg som mulig. Du trenger ikke å ha alle svarene med én gang – vi tar dette steg for steg, sammen med deg.</p>
+        
+        <h2 style="color: #5c4a3a; margin-top: 30px;">Hva skjer videre?</h2>
+        
+        <ol style="line-height: 1.8;">
+          <li><strong>Vi starter med dine ønsker</strong><br>
+          Vi går gjennom opplysningene og ønskene du har sendt inn. Har du ikke alt klart ennå, er det helt i orden – dette kan avklares underveis.</li>
+          
+          <li><strong>Designutkast til godkjenning</strong><br>
+          Basert på dialogen lager vi et designutkast av gravplaten. Dette sendes til deg på e-post, slik at du i ro og fred kan se hvordan det ferdige gravminnet vil fremstå.</li>
+          
+          <li><strong>Justering og endelig bekreftelse</strong><br>
+          Ønsker du endringer, tilpasser vi designet til det føles riktig. Først når du er fornøyd og har gitt en skriftlig bekreftelse, går vi videre.</li>
+          
+          <li><strong>Faktura og oppstart av produksjon</strong><br>
+          Etter godkjenning sender vi faktura. Når betalingen er mottatt, settes gravplaten i produksjon.</li>
+          
+          <li><strong>Produksjon og levering</strong><br>
+          Normal leveringstid er 2–3 uker. Dersom du har behov for raskere levering, er du velkommen til å ta kontakt – så ser vi på mulighetene sammen.</li>
+        </ol>
+        
+        ${hasDesign ? "<p><em>Vi har mottatt designet du har laget, og vil gjennomgå dette grundig.</em></p>" : ""}
+        
+        <p style="margin-top: 30px;">Har du spørsmål underveis, eller er det noe du er usikker på, er du alltid velkommen til å svare på denne e-posten eller ta kontakt med oss direkte. Vi er her for å hjelpe.</p>
+        
+        <p style="margin-top: 30px;">Med vennlig hilsen</p>
+        <p><strong>Peder August Halvorsen</strong><br>Livstreet</p>
+        <p style="color: #666; font-size: 14px;">
+          Telefon: 452 51 280<br>
+          E-post: livstreet.store@gmail.com<br>
+          Nettside: livstreet.org
+        </p>
+      </div>
     `;
 
     const confirmationResponse = await fetch("https://api.resend.com/emails", {
