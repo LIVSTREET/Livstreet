@@ -41,8 +41,7 @@ export function ContactSection() {
           {/* Location */}
           <div className="mt-4 md:mt-8 p-4 md:p-6 bg-muted rounded-lg md:rounded-xl flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-center md:text-left">
             <MapPin className="h-5 w-5 md:h-6 md:w-6 text-primary shrink-0" />
-            <p className="text-muted-foreground text-sm md:text-base">​Oslo, Norge<strong className="text-foreground">​ </strong> Oslo, Norge
-            </p>
+            <p className="text-muted-foreground text-sm md:text-base">Oslo, Norge</p>
           </div>
         </div>
       </div>
