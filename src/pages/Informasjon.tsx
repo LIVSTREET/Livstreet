@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import article2 from "@/assets/baerekraft-hero.png";
 import article3 from "@/assets/article-3.jpg";
-import article4 from "@/assets/article-4.jpg";
+import article4 from "@/assets/hva-skjer-etterpa.png";
 
 const articles = [
   {
