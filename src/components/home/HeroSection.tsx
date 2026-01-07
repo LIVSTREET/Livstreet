@@ -6,7 +6,7 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img alt="Gravplate i eik på kirkegård" className="w-full h-full object-cover" src={gravplateHero} />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40 opacity-70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/50 to-primary/20 opacity-50" />
       </div>
 
       {/* Content */}
