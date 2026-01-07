@@ -68,7 +68,7 @@ export function VideoSection() {
         </div>
 
         {/* Card */}
-        <div className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl">
+        <div className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/50 focus-within:ring-primary">
           <iframe
             src={PREVIEW_SRC}
             className="w-full h-full pointer-events-none"
