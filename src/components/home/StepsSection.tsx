@@ -1,25 +1,30 @@
-import { FileText, Palette, Truck, Wrench } from "lucide-react";
+import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck } from "lucide-react";
 
 const steps = [
   {
-    icon: FileText,
-    title: "1. Bestill",
-    description: "Design din plate online eller kontakt oss for hjelp med personlig veiledning.",
+    icon: MessageCircle,
+    title: "1. Du tar kontakt",
+    description: "Fortell oss litt om dine ønsker – helt uforpliktende.",
   },
   {
-    icon: Palette,
-    title: "2. Vi lager",
-    description: "Platen produseres i Danmark i eik med lasergravering og naturlig finish.",
+    icon: FileEdit,
+    title: "2. Vi lager et forslag",
+    description: "Du mottar et designutkast som kan justeres til det føles riktig.",
+  },
+  {
+    icon: CheckCircle,
+    title: "3. Du godkjenner",
+    description: "Ingen hast. Vi går videre først når du er fornøyd.",
+  },
+  {
+    icon: Hammer,
+    title: "4. Vi lager gravplaten",
+    description: "Håndlaget i massivt eiketre med stor omtanke.",
   },
   {
     icon: Truck,
-    title: "3. Levering",
-    description: "Platen sendes trygt til deg eller direkte til kirkegården etter avtale.",
-  },
-  {
-    icon: Wrench,
-    title: "4. Montering",
-    description: "Vi tilbyr profesjonell montering, eller du kan gjøre det selv med enkel guide.",
+    title: "5. Levering",
+    description: "Innen 2–3 uker. Vi hjelper deg videre ved behov.",
   },
 ];
 
@@ -36,7 +41,7 @@ export function StepsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6">
           {steps.map((step, index) => (
             <div
               key={index}
