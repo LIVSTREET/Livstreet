@@ -62,7 +62,10 @@ const fonts = [
   { id: "great-vibes", label: "Great Vibes", className: "font-great-vibes" },
   { id: "alex-brush", label: "Alex Brush", className: "font-alex-brush" },
   { id: "allura", label: "Allura", className: "font-allura" },
-  { id: "edwardian", label: "Edwardian Script", className: "font-edwardian" },
+  { id: "edwardian", label: "Edwardian Script ITC", className: "font-edwardian" },
+  { id: "monotype-corsiva", label: "Monotype Corsiva", className: "font-monotype-corsiva" },
+  { id: "blackadder", label: "Blackadder ITC", className: "font-blackadder" },
+  { id: "old-english", label: "Old English Text MT", className: "font-old-english" },
 ] as const;
 
 type FontType = typeof fonts[number]["id"];
