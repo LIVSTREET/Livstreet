@@ -36,11 +36,11 @@ const articles = [
   {
     id: 4,
     image: article4,
-    category: "Vedlikehold",
-    title: "Stell av treplater gjennom året",
-    excerpt: "Tips for å bevare gravplatens skjønnhet i alle årstider, fra vinter til sommer.",
-    date: "1. desember 2024",
-    slug: "vedlikehold",
+    category: "Prosess",
+    title: "Hva skjer etter bestilling er sendt?",
+    excerpt: "En trygg prosess – steg for steg. Fra henvendelse til ferdig gravminne.",
+    date: "7. januar 2025",
+    slug: "hva-skjer-etterpa",
   },
 ];
 

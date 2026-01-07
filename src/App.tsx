@@ -9,6 +9,7 @@ import Informasjon from "./pages/Informasjon";
 import MonteringVedlikehold from "./pages/artikler/MonteringVedlikehold";
 import Baerekraft from "./pages/artikler/Baerekraft";
 import Symboler from "./pages/artikler/Symboler";
+import HvaSkjerEtterpa from "./pages/artikler/HvaSkjerEtterpa";
 import OmOss from "./pages/OmOss";
 import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/informasjon/montering-vedlikehold" element={<MonteringVedlikehold />} />
           <Route path="/informasjon/miljovennlig" element={<Baerekraft />} />
           <Route path="/informasjon/symboler" element={<Symboler />} />
+          <Route path="/informasjon/hva-skjer-etterpa" element={<HvaSkjerEtterpa />} />
           <Route path="/om-oss" element={<OmOss />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/bestill" element={<Bestill />} />
