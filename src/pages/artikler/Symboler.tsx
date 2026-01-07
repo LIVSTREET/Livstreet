@@ -1,8 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sparkles, Heart, Feather, Flower2, TreeDeciduous, Cross, Anchor, CircleDot, Info, PenTool, MessageCircle } from "lucide-react";
-
-const symbolImage = "/lovable-uploads/d0419dda-1a16-415b-abb8-e0af94719ab4.png";
+import symbolImage from "@/assets/article-3.jpg";
 
 export default function Symboler() {
   return (
