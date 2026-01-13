@@ -57,7 +57,9 @@ export default function Kontakt() {
         }
       });
       if (error) throw error;
-      toast.success("Takk for din henvendelse! Vi svarer deg så snart som mulig.");
+      toast.success("Takk for din henvendelse!", {
+        description: "Vi tar kontakt så snart vi kan – vanligvis innen 24 timer.",
+      });
       setFormData({
         name: "",
         email: "",
