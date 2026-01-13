@@ -2,13 +2,15 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 /**
- * TEMP MODE (per request): Gmail-only sending.
- * We are intentionally NOT sending via Resend until you say otherwise.
+ * Email sending mode:
+ * - Prefer Resend (recommended for transactional email)
+ * - Fallback to Gmail SMTP if Resend fails
  */
-const FORCE_GMAIL_ONLY = true;
+const FORCE_GMAIL_ONLY = false;
 
-// Resend (kept for later re-enable)
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+// Resend
+const RESEND_API_KEY = (Deno.env.get("RESEND_API_KEY") ?? "").trim();
+const RESEND_FROM = (Deno.env.get("RESEND_FROM") ?? "Livstreet <onboarding@resend.dev>").trim();
 
 // Gmail SMTP
 // App passwords are often shown with spaces. We normalize to avoid auth failures.
@@ -235,10 +237,14 @@ async function sendViaGmailSMTP(
   }
 }
 
-// Resend sender kept for later re-enable
+// Resend sender
 async function sendViaResend(
   payload: EmailPayload,
 ): Promise<{ success: boolean; provider: "resend"; error?: string }> {
+  if (!RESEND_API_KEY) {
+    return { success: false, provider: "resend", error: "RESEND_API_KEY is missing" };
+  }
+
   try {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -247,7 +253,7 @@ async function sendViaResend(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Livstreet <no-reply@send.livstreet.org>",
+        from: RESEND_FROM,
         to: payload.to,
         subject: payload.subject,
         html: payload.html,
@@ -277,12 +283,17 @@ async function sendEmail(
     return await sendViaGmailSMTP(payload);
   }
 
-  // fallback behavior if we later re-enable Resend
   const resend = await sendViaResend(payload);
   if (resend.success) return resend;
 
-  safeEmailLog(`Resend failed (${resend.error}), attempting Gmail fallback...`);
-  return await sendViaGmailSMTP(payload);
+  const gmail = await sendViaGmailSMTP(payload);
+  if (gmail.success) return gmail;
+
+  return {
+    success: false,
+    provider: "none",
+    error: `resend: ${resend.error || "unknown"}; gmail: ${gmail.error || "unknown"}`,
+  };
 }
 
 function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
