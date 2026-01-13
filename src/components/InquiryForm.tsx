@@ -118,6 +118,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
           address: formData.address || undefined,
           description: formData.description,
           hasDesign: !!designData,
+          designData: designData || undefined,
           designSummary,
           designImageBase64: designImageData?.imageBase64 || undefined,
           basePrice: PRICING.BASE_PRICE,

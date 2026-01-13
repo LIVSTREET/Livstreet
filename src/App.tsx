@@ -19,6 +19,7 @@ import Kjopsvilkar from "./pages/Kjopsvilkar";
 import GarantiKvalitet from "./pages/GarantiKvalitet";
 import NotFound from "./pages/NotFound";
 import AdminSymbols from "./pages/admin/Symbols";
+import AdminInbox from "./pages/admin/Inbox";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/kjopsvilkar" element={<Kjopsvilkar />} />
           <Route path="/garanti-kvalitet" element={<GarantiKvalitet />} />
           <Route path="/admin/symbols" element={<AdminSymbols />} />
+          <Route path="/admin/inbox" element={<AdminInbox />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
