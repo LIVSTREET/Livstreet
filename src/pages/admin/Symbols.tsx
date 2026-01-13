@@ -76,17 +76,20 @@ export default function AdminSymbols() {
   };
 
   const handleUpload = async () => {
-    if (!formData.file || !formData.name || !formData.category) {
-      toast.error("Fyll ut alle obligatoriske felter");
+    if (!formData.file) {
+      toast.error("Velg en fil å laste opp");
       return;
     }
 
     setUploading(true);
     try {
       const tags = formData.tags.split(',').map(t => t.trim()).filter(Boolean);
+      // Use filename as fallback for name, 'annet' as fallback for category
+      const symbolName = formData.name || formData.file.name.replace(/\.[^/.]+$/, "");
+      const symbolCategory = formData.category || 'annet';
       await createSymbol(formData.file, {
-        name: formData.name,
-        category: formData.category,
+        name: symbolName,
+        category: symbolCategory,
         tags,
         status: formData.status,
         stroke_only: formData.stroke_only,
@@ -193,7 +196,7 @@ export default function AdminSymbols() {
               </DialogHeader>
               <div className="space-y-4 mt-4">
                 <div className="space-y-2">
-                  <Label htmlFor="file">Fil (PNG/SVG) *</Label>
+                  <Label htmlFor="file">Fil (PNG/SVG)</Label>
                   <Input
                     id="file"
                     type="file"
@@ -203,17 +206,17 @@ export default function AdminSymbols() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="name">Navn *</Label>
+                  <Label htmlFor="name">Navn</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="F.eks. Ornamentert kors"
+                    placeholder="F.eks. Ornamentert kors (bruker filnavn hvis tom)"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Kategori *</Label>
+                  <Label>Kategori</Label>
                   <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Velg kategori" />
