@@ -110,6 +110,9 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
         }
       }
 
+      // Log design image status for debugging
+      console.log("Sending inquiry with design image:", designImageData?.imageBase64 ? `${designImageData.imageBase64.length} bytes` : "none");
+
       const { error } = await supabase.functions.invoke("send-inquiry", {
         body: {
           name: formData.name,

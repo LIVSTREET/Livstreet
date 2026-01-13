@@ -224,16 +224,25 @@ export default function Komponer() {
     let imageBase64 = "";
     if (previewRef.current) {
       try {
+        // Wait a moment for images to fully render
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         const canvas = await html2canvas(previewRef.current, {
           backgroundColor: "#ffffff",
           scale: 2,
           useCORS: true,
           allowTaint: true,
+          logging: false,
+          imageTimeout: 5000,
         });
         imageBase64 = canvas.toDataURL("image/png");
+        console.log("Design image captured successfully, size:", imageBase64.length);
       } catch (err) {
         console.error("Could not capture design image:", err);
+        toast.error("Kunne ikke fange designbildet. Bildet vil ikke bli lagret.");
       }
+    } else {
+      console.error("Preview ref is null");
     }
 
     const designData = {
