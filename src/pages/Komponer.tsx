@@ -68,7 +68,7 @@ export default function Komponer() {
   const [name2, setName2] = useState("Søren Peter Hansen");
   const [birthDate2, setBirthDate2] = useState("14.09 1942");
   const [deathDate2, setDeathDate2] = useState("01.01 2024");
-  const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
+  const [etterskrift, setEtterskrift] = useState("Alltid elsket, alltid savnet");
   const [selectedCategory, setSelectedCategory] = useState<string>("kors");
   const [selectedFrame, setSelectedFrame] = useState<FrameType>("simple-ornamental");
   const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
