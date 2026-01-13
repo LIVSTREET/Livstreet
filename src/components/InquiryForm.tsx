@@ -25,6 +25,7 @@ import { DesignMiniPreview } from "@/components/komponer/DesignMiniPreview";
 
 interface DesignData {
   frame: string;
+  font?: string;
   placedSymbols?: Array<{
     id: string;
     symbolId: string;
@@ -32,6 +33,7 @@ interface DesignData {
     pos: { x: number; y: number };
     size: number;
   }>;
+  symbolImages?: Record<string, string>;
   elements?: {
     name1?: { text: string; pos: { x: number; y: number }; size: number };
     dates1?: { text: string; pos: { x: number; y: number }; size: number };

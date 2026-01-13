@@ -245,9 +245,21 @@ export default function Komponer() {
       console.error("Preview ref is null");
     }
 
+    // Build symbol images map for mini preview
+    const symbolImages: Record<string, string> = {};
+    placedSymbols.forEach(s => {
+      const cat = symbolCategories.find(c => c.id === s.categoryId);
+      const sym = cat?.symbols.find(sym => sym.id === s.symbolId);
+      if (sym?.image) {
+        symbolImages[s.symbolId] = sym.image;
+      }
+    });
+
     const designData = {
       frame: selectedFrame,
+      font: selectedFont,
       placedSymbols: placedSymbols,
+      symbolImages: symbolImages,
       elements: {
         name1: { text: name1, pos: name1Pos, size: name1Size },
         dates1: { text: `${birthDate1} – ${deathDate1}`, pos: dates1Pos, size: dates1Size },
