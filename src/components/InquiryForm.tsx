@@ -225,11 +225,19 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
               </div>
             </div>
             
-            {/* Mini preview of the design */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
-              <DesignMiniPreview designData={designData} />
-            </div>
+            {/* Design screenshot */}
+            {designImageData?.imageBase64 && (
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
+                <div className="rounded-lg border border-border overflow-hidden bg-white">
+                  <img 
+                    src={designImageData.imageBase64}
+                    alt="Design preview" 
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="p-4 bg-muted rounded-lg">
