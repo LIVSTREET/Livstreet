@@ -230,7 +230,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
         </div>
 
         {/* Design Preview Image */}
-        {designImageData?.imageBase64 && (
+        {designImageData?.imageBase64 ? (
           <div className="space-y-2">
             <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
             <div className="rounded-lg border border-border overflow-hidden bg-white">
@@ -238,11 +238,19 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
                 src={designImageData.imageBase64}
                 alt="Design preview" 
                 className="w-full h-auto object-contain max-h-64"
-                onError={(e) => console.error("Failed to load design preview image")}
+                onError={(e) => {
+                  console.error("Failed to load design preview image, data length:", designImageData.imageBase64?.length);
+                  // Hide the broken image
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
               />
             </div>
           </div>
-        )}
+        ) : designData ? (
+          <p className="text-xs text-muted-foreground italic">
+            Design-forhåndsvisning kunne ikke lastes. Vi vil se designet ditt basert på konfigurasjonsdataene.
+          </p>
+        ) : null}
 
           {/* Contact info */}
           <div className="grid grid-cols-2 gap-3">

@@ -184,6 +184,14 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'livstreet-cart',
       storage: createJSONStorage(() => localStorage),
+      // Don't persist designImageData - it's too large for localStorage
+      partialize: (state) => ({
+        items: state.items,
+        cartId: state.cartId,
+        checkoutUrl: state.checkoutUrl,
+        inquiryFormData: state.inquiryFormData,
+        // Exclude: designImageData, isLoading, shouldOpenDrawer, shouldOpenInquiryForm
+      }),
     }
   )
 );
