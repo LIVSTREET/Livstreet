@@ -19,8 +19,10 @@ const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
 const REPLY_TO_EMAIL = "livstreet.store@gmail.com";
 
 // Supabase credentials for database operations
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const SUPABASE_URL = (Deno.env.get("SUPABASE_URL") ?? "").trim();
+// Keys can sometimes contain newlines/spaces when pasted into secrets
+const SUPABASE_SERVICE_ROLE_KEY =
+  (Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "").replace(/\s+/g, "");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -67,19 +69,34 @@ function safeEmailLog(str: string) {
   console.log(str);
 }
 
-// Upload design image to Supabase Storage and return the URL
-async function uploadDesignImage(imageBase64: string, inquiryId: string): Promise<string | null> {
+// Upload design image to Storage and return the storage path
+async function uploadDesignImage(
+  imageBase64: string,
+  inquiryId: string,
+): Promise<string | null> {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     console.error("Supabase credentials missing for storage upload");
     return null;
   }
 
   try {
-    // Extract base64 data (remove data:image/png;base64, prefix if present)
-    const base64Data = imageBase64.includes(",") 
-      ? imageBase64.split(",")[1] 
+    // Detect mime from data URL (defaults to png)
+    let contentType = "image/png";
+    let ext = "png";
+
+    const dataUrlMatch = imageBase64.match(/^data:([^;]+);base64,/);
+    if (dataUrlMatch?.[1]) {
+      contentType = dataUrlMatch[1];
+      if (contentType === "image/jpeg") ext = "jpg";
+      else if (contentType === "image/webp") ext = "webp";
+      else if (contentType === "image/png") ext = "png";
+    }
+
+    // Extract base64 data (remove data:*;base64, prefix if present)
+    const base64Data = imageBase64.includes(",")
+      ? imageBase64.split(",")[1]
       : imageBase64;
-    
+
     // Decode base64 to binary
     const binaryString = atob(base64Data);
     const bytes = new Uint8Array(binaryString.length);
@@ -87,19 +104,20 @@ async function uploadDesignImage(imageBase64: string, inquiryId: string): Promis
       bytes[i] = binaryString.charCodeAt(i);
     }
 
-    const fileName = `${inquiryId}/preview.png`;
-    
+    const fileName = `${inquiryId}/preview.${ext}`;
+
     const response = await fetch(
       `${SUPABASE_URL}/storage/v1/object/design-previews/${fileName}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "image/png",
-          "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          "x-upsert": "true"
+          "Content-Type": contentType,
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "x-upsert": "true",
         },
-        body: bytes
-      }
+        body: bytes,
+      },
     );
 
     if (!response.ok) {
@@ -108,7 +126,7 @@ async function uploadDesignImage(imageBase64: string, inquiryId: string): Promis
       return null;
     }
 
-    // Return the storage path (we'll generate signed URLs when viewing)
+    // Return the storage path (UI generates signed URLs when viewing)
     return fileName;
   } catch (error) {
     console.error("Error uploading design image:", error);
