@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import oakCraftsmanship from "@/assets/oak-craftsmanship.png";
 import foundersImg from "@/assets/founders.png";
 import pederImg from "@/assets/peder.png";
@@ -91,7 +92,7 @@ export default function OmOss() {
               </p>
             </div>
             <div className="aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-xl order-1 lg:order-2 animate-scale-in">
-              <img
+              <OptimizedImage
                 src={oakCraftsmanship}
                 alt="Eiketre og håndverksverktøy"
                 className="w-full h-full object-cover"
@@ -185,7 +186,7 @@ export default function OmOss() {
         <div className="container text-center px-4">
           <div className="max-w-3xl mx-auto">
             <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 md:mb-6 animate-scale-in">
-              <img
+              <OptimizedImage
                 src={foundersImg}
                 alt="Dan og Steffen Frederiksen"
                 className="w-full h-full rounded-full object-cover object-top shadow-lg"
@@ -209,7 +210,7 @@ export default function OmOss() {
       <section className="py-12 md:py-20 bg-background">
         <div className="container text-center px-4">
           <div className="max-w-3xl mx-auto">
-            <img
+            <OptimizedImage
               src={pederImg}
               alt="Peder August Halvorsen"
               className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-4 md:mb-6 object-cover object-center shadow-lg animate-scale-in"

@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare, FileEdit, CheckCircle, CreditCard, Package, HeartHandshake, Clock } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import heroImage from "@/assets/hva-skjer-etterpa.png";
 
 export default function HvaSkjerEtterpa() {
@@ -45,7 +46,7 @@ export default function HvaSkjerEtterpa() {
             </div>
             <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <img 
+                <OptimizedImage 
                   src={heroImage} 
                   alt="Notatbok på trebord med utsikt mot gammelt eiketre" 
                   className="w-full h-auto object-cover"

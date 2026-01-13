@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Leaf, TreeDeciduous, Globe, CheckCircle2, Heart, Truck, Shield, Quote } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import baerekraftHero from "@/assets/baerekraft-hero.png";
 
 export default function Baerekraft() {
@@ -54,7 +55,7 @@ export default function Baerekraft() {
               </div>
               <div className="animate-scale-in order-first md:order-last" style={{ animationDelay: "0.3s" }}>
                 <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-xl max-w-sm mx-auto">
-                  <img 
+                  <OptimizedImage 
                     src={baerekraftHero} 
                     alt="Majestetisk eiketre i grønt landskap" 
                     className="w-full h-auto object-cover"

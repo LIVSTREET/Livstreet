@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import article2 from "@/assets/baerekraft-hero.png";
 import article3 from "@/assets/article-3.jpg";
@@ -71,7 +72,7 @@ export default function Informasjon() {
               >
                 <article className="bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
                   <div className="aspect-video overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={article.image}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import baerekraftImg from "@/assets/baerekraft-hero.png";
 import symbolerImg from "@/assets/article-3.jpg";
@@ -71,7 +72,7 @@ export function ArticlesSection() {
             >
               <article className="bg-card rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={article.image}
                     alt={article.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

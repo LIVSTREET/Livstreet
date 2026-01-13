@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logo from "@/assets/livstreet-logo.png";
+
 export function Footer() {
   return <footer className="bg-primary text-primary-foreground">
       <div className="container py-8 md:py-16 px-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1 space-y-3 md:space-y-4">
-            <img src={logo} alt="Livstreet" className="h-10 md:h-12 w-auto brightness-0 invert" />
+            <OptimizedImage src={logo} alt="Livstreet" className="h-10 md:h-12 w-auto brightness-0 invert" />
             <p className="text-primary-foreground/80 text-xs md:text-sm leading-relaxed">
               Bærekraftige gravplater i tre – et vakkert og miljøvennlig alternativ for å hedre dine kjære.
             </p>
