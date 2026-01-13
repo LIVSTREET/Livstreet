@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Hammer, Droplets, Clock, Leaf, CheckCircle2, AlertCircle, Heart } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -41,7 +42,7 @@ export default function MonteringVedlikehold() {
         <div className="container px-4">
           <div className="max-w-5xl mx-auto">
             <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl animate-scale-in">
-              <img 
+              <OptimizedImage 
                 src={monteringImg} 
                 alt="Montering av gravplate i tre" 
                 className="w-full h-auto object-cover"

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logo from "@/assets/livstreet-logo.png";
 
 const navLinks = [
@@ -21,7 +22,7 @@ export function Header() {
       <div className="container flex h-24 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Livstreet - Bæredyktig Minne" className="h-20 w-auto" />
+          <OptimizedImage src={logo} alt="Livstreet - Bæredyktig Minne" className="h-20 w-auto" priority={true} />
         </Link>
 
         {/* Desktop Navigation */}

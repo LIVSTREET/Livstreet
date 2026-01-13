@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import gravplateHero from "@/assets/gravplate-hero.png";
+
 export function HeroSection() {
   return <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img alt="Gravplate i eik på kirkegård" className="w-full h-full object-cover" src={gravplateHero} />
+        <OptimizedImage 
+          src={gravplateHero} 
+          alt="Gravplate i eik på kirkegård" 
+          className="w-full h-full object-cover"
+          priority={true}
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/50 to-primary/20 opacity-50" />
       </div>
 
