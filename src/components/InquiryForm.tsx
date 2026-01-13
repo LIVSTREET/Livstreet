@@ -209,25 +209,39 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          {/* Design summary */}
-          <div className="p-4 bg-muted rounded-lg">
-            {designData ? (
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Design inkludert</p>
-                <p className="text-xs text-muted-foreground">
-                  Ramme: {designData.frame || "Ingen"} • 
-                  Symboler: {designData.placedSymbols?.length || 0} stk
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Ingen design lastet</p>
-                <p className="text-xs text-muted-foreground">
-                  Vi hjelper deg med design etter forespørsel
-                </p>
-              </div>
-            )}
+        {/* Design summary */}
+        <div className="p-4 bg-muted rounded-lg">
+          {designData ? (
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Design inkludert</p>
+              <p className="text-xs text-muted-foreground">
+                Ramme: {designData.frame || "Ingen"} • 
+                Symboler: {designData.placedSymbols?.length || 0} stk
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Ingen design lastet</p>
+              <p className="text-xs text-muted-foreground">
+                Vi hjelper deg med design etter forespørsel
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Design Preview Image */}
+        {designImageData?.imageBase64 && (
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
+            <div className="rounded-lg border border-border overflow-hidden bg-white">
+              <img 
+                src={designImageData.imageBase64}
+                alt="Design preview" 
+                className="w-full h-auto object-contain"
+              />
+            </div>
           </div>
+        )}
 
           {/* Contact info */}
           <div className="grid grid-cols-2 gap-3">
