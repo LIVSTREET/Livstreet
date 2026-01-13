@@ -117,15 +117,17 @@ async function uploadDesignImage(imageBase64: string, inquiryId: string): Promis
 }
 
 // Save inquiry to database
-async function saveInquiryToDatabase(data: InquiryRequest, designImagePath: string | null): Promise<string | null> {
+async function saveInquiryToDatabase(
+  inquiryId: string, 
+  data: InquiryRequest, 
+  designImagePath: string | null
+): Promise<boolean> {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     console.error("Supabase credentials missing for database insert");
-    return null;
+    return false;
   }
 
   try {
-    const inquiryId = crypto.randomUUID();
-    
     const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
       method: "POST",
       headers: {
@@ -158,14 +160,14 @@ async function saveInquiryToDatabase(data: InquiryRequest, designImagePath: stri
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Database insert failed:", errorText);
-      return null;
+      return false;
     }
 
     console.log(`Inquiry saved to database with ID: ${inquiryId}`);
-    return inquiryId;
+    return true;
   } catch (error) {
     console.error("Error saving inquiry to database:", error);
-    return null;
+    return false;
   }
 }
 
@@ -349,13 +351,10 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Step 3: Save inquiry to database (this is the primary data store now)
-    const savedInquiryId = await saveInquiryToDatabase({
-      ...data,
-      // Remove the base64 image from the data to avoid storing it in JSONB
-    }, designImagePath);
+    const saved = await saveInquiryToDatabase(inquiryId, data, designImagePath);
     
-    if (savedInquiryId) {
-      safeEmailLog(`Inquiry saved to database: ${savedInquiryId}`);
+    if (saved) {
+      safeEmailLog(`Inquiry saved to database: ${inquiryId}`);
     } else {
       console.error("Failed to save inquiry to database - continuing with email only");
     }
@@ -382,7 +381,7 @@ const handler = async (req: Request): Promise<Response> => {
     // @ts-ignore
     EdgeRuntime.waitUntil(sendJob);
 
-    return new Response(JSON.stringify({ success: true, inquiryId: savedInquiryId }), {
+    return new Response(JSON.stringify({ success: true, inquiryId }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
