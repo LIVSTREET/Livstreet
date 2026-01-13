@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      symbols: {
+        Row: {
+          category: string
+          created_at: string | null
+          file_type: string
+          id: string
+          name: string
+          preview_url: string | null
+          sort_order: number | null
+          source_url: string | null
+          status: string
+          stroke_only: boolean | null
+          tags: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          file_type?: string
+          id?: string
+          name: string
+          preview_url?: string | null
+          sort_order?: number | null
+          source_url?: string | null
+          status?: string
+          stroke_only?: boolean | null
+          tags?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          file_type?: string
+          id?: string
+          name?: string
+          preview_url?: string | null
+          sort_order?: number | null
+          source_url?: string | null
+          status?: string
+          stroke_only?: boolean | null
+          tags?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

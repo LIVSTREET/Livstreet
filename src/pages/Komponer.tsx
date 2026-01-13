@@ -12,69 +12,18 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { PRICING } from "@/lib/constants";
 import { ElementEditor, EditableElement } from "@/components/komponer/ElementEditor";
+import { getSymbolsByCategory, type SymbolCategory } from "@/lib/symbols";
 import platePreview from "@/assets/plate-preview.jpg";
 import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
 import frameSimpleOrnamental from "@/assets/frame-simple-ornamental.png";
-import crossOrnate from "@/assets/symbols/cross-ornate.png";
-import crossBudded from "@/assets/symbols/cross-budded.png";
-import crossClassic from "@/assets/symbols/cross-classic.png";
-import heartCross from "@/assets/symbols/heart-cross.png";
-import hearts from "@/assets/symbols/hearts.png";
-import sun from "@/assets/symbols/sun.png";
-import fish from "@/assets/symbols/fish.png";
-import dove from "@/assets/symbols/dove.png";
-import candle from "@/assets/symbols/candle.png";
 
 interface Symbol {
   id: string;
   name: string;
   image: string;
 }
-
-interface SymbolCategory {
-  id: string;
-  name: string;
-  symbols: Symbol[];
-}
-
-const symbolCategories: SymbolCategory[] = [
-  {
-    id: "kors",
-    name: "Kors",
-    symbols: [
-      { id: "cross-ornate", name: "Ornamentert kors", image: crossOrnate },
-      { id: "cross-budded", name: "Kløverkors", image: crossBudded },
-      { id: "cross-classic", name: "Klassisk kors", image: crossClassic },
-      { id: "heart-cross", name: "Hjerte med kors", image: heartCross },
-    ],
-  },
-  {
-    id: "hjerte",
-    name: "Hjerte",
-    symbols: [
-      { id: "hearts", name: "Doble hjerter", image: hearts },
-      { id: "heart-cross-hjerte", name: "Hjerte med kors", image: heartCross },
-    ],
-  },
-  {
-    id: "natur",
-    name: "Natur",
-    symbols: [
-      { id: "sun", name: "Sol", image: sun },
-      { id: "candle", name: "Stearinlys", image: candle },
-    ],
-  },
-  {
-    id: "dyr",
-    name: "Dyr",
-    symbols: [
-      { id: "fish", name: "Fisk (Ichthys)", image: fish },
-      { id: "dove", name: "Due", image: dove },
-    ],
-  },
-];
 
 interface PlacedSymbol {
   id: string;
@@ -108,6 +57,8 @@ type FontType = typeof fonts[number]["id"];
 export default function Komponer() {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [symbolCategories, setSymbolCategories] = useState<SymbolCategory[]>([]);
+  const [symbolsLoading, setSymbolsLoading] = useState(true);
   const selectedSize = "Standard"; // Fixed to standard size
   const [selectedNameCount, setSelectedNameCount] = useState("1");
   const [name1, setName1] = useState("Karen Marie Hansen");
@@ -163,6 +114,26 @@ export default function Komponer() {
       }
     }
     loadProducts();
+  }, []);
+
+  // Load symbols from database
+  useEffect(() => {
+    async function loadSymbols() {
+      try {
+        const categories = await getSymbolsByCategory();
+        setSymbolCategories(categories);
+        // Set initial category if we have categories
+        if (categories.length > 0 && !categories.find(c => c.id === selectedCategory)) {
+          setSelectedCategory(categories[0].id);
+        }
+      } catch (error) {
+        console.error("Error loading symbols:", error);
+        setSymbolCategories([]);
+      } finally {
+        setSymbolsLoading(false);
+      }
+    }
+    loadSymbols();
   }, []);
 
   const product = products[0];
