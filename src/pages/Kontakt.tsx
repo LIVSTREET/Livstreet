@@ -154,6 +154,22 @@ export default function Kontakt() {
                       Sender...
                     </> : "Send melding"}
                 </Button>
+
+                {/* Guarantee points */}
+                <div className="mt-6 space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="text-forest">✓</span>
+                    <span>10 års kvalitetsgaranti</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="text-forest">✓</span>
+                    <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="text-forest">✓</span>
+                    <span>Valgfri fabrikkfornyelse tilgjengelig</span>
+                  </div>
+                </div>
               </form>
             </div>
 

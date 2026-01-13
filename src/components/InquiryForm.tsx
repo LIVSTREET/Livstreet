@@ -289,16 +289,16 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
                 onCheckedChange={(checked) => setMaintenanceSelected(checked === true)}
               />
               <div className="flex-1">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                   <Label htmlFor="maintenance" className="font-medium cursor-pointer">
-                    Vedlikehold og full garanti (20 år)
+                    Fabrikkfornyelse
                   </Label>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-xs">
-                      <p>Full garanti i 20 år forutsetter gjennomført vedlikehold hos produsent. Vedlikehold kan også bestilles senere, men dette kan påvirke garantien.</p>
+                      <p>Full fabrikkfornyelse ved vårt verksted i Danmark inkluderer sliping, ny overflatebehandling og kontroll før retur. Dette er valgfritt og forbundet med frakt- og servicekostnader.</p>
                     </TooltipContent>
                   </Tooltip>
                 </div>
@@ -336,7 +336,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             </div>
             {maintenanceSelected && (
               <div className="flex justify-between text-sm">
-                <span>Vedlikehold (20 år)</span>
+                <span>Fabrikkfornyelse</span>
                 <span>+{formatPrice(PRICING.MAINTENANCE_PRICE)}</span>
               </div>
             )}
@@ -370,10 +370,26 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             ) : (
               <>
                 <Mail className="w-4 h-4 mr-2" />
-                Send forespørsel
+                Legg til i bestilling
               </>
             )}
           </Button>
+
+          {/* Guarantee points */}
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-forest">✓</span>
+              <span>10 års kvalitetsgaranti</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-forest">✓</span>
+              <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-forest">✓</span>
+              <span>Valgfri fabrikkfornyelse tilgjengelig</span>
+            </div>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
