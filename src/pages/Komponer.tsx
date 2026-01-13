@@ -297,8 +297,11 @@ export default function Komponer() {
     });
 
     // Store design image for inquiry form
-    if (imageBase64) {
+    if (imageBase64 && imageBase64.length > 100) {
+      console.log("Storing design image in cart store, size:", imageBase64.length);
       useCartStore.getState().setDesignImageData({ imageBase64 });
+    } else {
+      console.warn("Design image not captured or too small:", imageBase64?.length || 0);
     }
 
     toast.success("Design lagt til i bestilling", {
