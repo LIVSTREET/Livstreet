@@ -21,6 +21,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { DesignMiniPreview } from "@/components/komponer/DesignMiniPreview";
 
 interface DesignData {
   frame: string;
@@ -209,48 +210,35 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-        {/* Design summary */}
-        <div className="p-4 bg-muted rounded-lg">
-          {designData ? (
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Design inkludert</p>
-              <p className="text-xs text-muted-foreground">
-                Ramme: {designData.frame || "Ingen"} • 
-                Symboler: {designData.placedSymbols?.length || 0} stk
-              </p>
+        {/* Design summary and preview */}
+        {designData ? (
+          <div className="space-y-3">
+            <div className="p-4 bg-muted rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Design inkludert</p>
+                <p className="text-xs text-muted-foreground">
+                  Ramme: {designData.frame || "Ingen"} • 
+                  Symboler: {designData.placedSymbols?.length || 0} stk
+                </p>
+              </div>
             </div>
-          ) : (
+            
+            {/* Mini preview of the design */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
+              <DesignMiniPreview designData={designData} />
+            </div>
+          </div>
+        ) : (
+          <div className="p-4 bg-muted rounded-lg">
             <div className="space-y-1">
               <p className="text-sm font-medium">Ingen design lastet</p>
               <p className="text-xs text-muted-foreground">
                 Vi hjelper deg med design etter forespørsel
               </p>
             </div>
-          )}
-        </div>
-
-        {/* Design Preview Image */}
-        {designImageData?.imageBase64 ? (
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Forhåndsvisning av design</Label>
-            <div className="rounded-lg border border-border overflow-hidden bg-white">
-              <img 
-                src={designImageData.imageBase64}
-                alt="Design preview" 
-                className="w-full h-auto object-contain max-h-64"
-                onError={(e) => {
-                  console.error("Failed to load design preview image, data length:", designImageData.imageBase64?.length);
-                  // Hide the broken image
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
-            </div>
           </div>
-        ) : designData ? (
-          <p className="text-xs text-muted-foreground italic">
-            Design-forhåndsvisning kunne ikke lastes. Vi vil se designet ditt basert på konfigurasjonsdataene.
-          </p>
-        ) : null}
+        )}
 
           {/* Contact info */}
           <div className="grid grid-cols-2 gap-3">
