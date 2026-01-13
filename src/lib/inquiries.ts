@@ -100,7 +100,8 @@ export async function getDesignImageUrl(imagePath: string): Promise<string | nul
   return data?.signedUrl || null;
 }
 
-export function formatPrice(price: number): string {
+export function formatPrice(price: number | null | undefined): string {
+  if (price == null) return "–";
   return price.toLocaleString("nb-NO") + " kr";
 }
 
