@@ -211,7 +211,7 @@ function InquiryDetail({
         </div>
 
         {/* Design Preview */}
-        {inquiry.has_design && (
+        {inquiry.has_design && inquiry.design_image_url && (
           <div className="space-y-2">
             <h4 className="font-semibold text-sm text-muted-foreground">Design</h4>
             {imageUrl ? (
