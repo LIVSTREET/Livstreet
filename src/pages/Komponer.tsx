@@ -69,7 +69,7 @@ export default function Komponer() {
   const [deathDate2, setDeathDate2] = useState("01.01 2024");
   const [etterskrift, setEtterskrift] = useState("Altid elsket, altid savnet");
   const [selectedCategory, setSelectedCategory] = useState<string>("kors");
-  const [selectedFrame, setSelectedFrame] = useState<FrameType>("ornamental");
+  const [selectedFrame, setSelectedFrame] = useState<FrameType>("simple-ornamental");
   const [selectedFont, setSelectedFont] = useState<FontType>("great-vibes");
   
   // Welcome message state
