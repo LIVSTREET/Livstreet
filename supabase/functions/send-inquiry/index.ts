@@ -33,6 +33,7 @@ interface InquiryRequest {
   // Design data
   hasDesign?: boolean;
   designSummary?: string;
+  designImageBase64?: string;
   // Pricing
   basePrice?: number;
   maintenanceSelected?: boolean;
@@ -166,6 +167,7 @@ function buildInternalEmailHtml(data: InquiryRequest): string {
     description,
     hasDesign,
     designSummary,
+    designImageBase64,
     basePrice,
     maintenanceSelected,
     maintenancePrice,
@@ -193,13 +195,22 @@ function buildInternalEmailHtml(data: InquiryRequest): string {
       <h2>Design</h2>
       <p>${designSummary || "Eget design vedlagt"}</p>
     `;
+    
+    if (designImageBase64) {
+      emailHtml += `
+        <div style="margin: 20px 0;">
+          <p><strong>Kundens design:</strong></p>
+          <img src="${designImageBase64}" alt="Kundens design" style="max-width: 100%; width: 500px; border: 1px solid #ccc; border-radius: 8px;" />
+        </div>
+      `;
+    }
   }
 
   if (basePrice) {
     emailHtml += `
       <h2>Prisdetaljer</h2>
       <p><strong>Gravplate:</strong> ${basePrice.toLocaleString("nb-NO")} NOK</p>
-      ${maintenanceSelected ? `<p><strong>Vedlikehold (årlig):</strong> ${maintenancePrice?.toLocaleString("nb-NO")} NOK</p>` : ""}
+      ${maintenanceSelected ? `<p><strong>Fabrikkfornyelse:</strong> ${maintenancePrice?.toLocaleString("nb-NO")} NOK</p>` : ""}
       ${installationSelected ? `<p><strong>Montering:</strong> ${installationPrice?.toLocaleString("nb-NO")} NOK (inkludert)</p>` : ""}
       <p><strong>Total:</strong> ${totalPrice?.toLocaleString("nb-NO")} NOK</p>
     `;

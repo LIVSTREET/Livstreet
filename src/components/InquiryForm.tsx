@@ -52,6 +52,8 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
   const clearCart = useCartStore(state => state.clearCart);
   const existingInquiryData = useCartStore(state => state.inquiryFormData);
   const clearInquiryFormData = useCartStore(state => state.clearInquiryFormData);
+  const designImageData = useCartStore(state => state.designImageData);
+  const clearDesignImageData = useCartStore(state => state.clearDesignImageData);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -117,6 +119,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
           description: formData.description,
           hasDesign: !!designData,
           designSummary,
+          designImageBase64: designImageData?.imageBase64 || undefined,
           basePrice: PRICING.BASE_PRICE,
           maintenanceSelected,
           maintenancePrice: maintenanceSelected ? PRICING.MAINTENANCE_PRICE : 0,
@@ -136,8 +139,9 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
         clearCart();
       }
       
-      // Clear stored inquiry form data
+      // Clear stored inquiry form data and design image
       clearInquiryFormData();
+      clearDesignImageData();
 
       toast.success("Forespørsel sendt!", {
         description: "Vi tar kontakt for å gå gjennom design og detaljer.",

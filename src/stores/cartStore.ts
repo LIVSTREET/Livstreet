@@ -26,6 +26,10 @@ export interface InquiryFormData {
   description?: string;
 }
 
+export interface DesignImageData {
+  imageBase64: string;
+}
+
 interface CartStore {
   items: CartItem[];
   cartId: string | null;
@@ -34,6 +38,7 @@ interface CartStore {
   shouldOpenDrawer: boolean;
   shouldOpenInquiryForm: boolean;
   inquiryFormData: InquiryFormData | null;
+  designImageData: DesignImageData | null;
   
   // Actions
   addItem: (item: CartItem) => void;
@@ -50,6 +55,8 @@ interface CartStore {
   closeInquiryForm: () => void;
   setInquiryFormData: (data: InquiryFormData | null) => void;
   clearInquiryFormData: () => void;
+  setDesignImageData: (data: DesignImageData | null) => void;
+  clearDesignImageData: () => void;
 }
 
 async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
@@ -103,6 +110,7 @@ export const useCartStore = create<CartStore>()(
       shouldOpenDrawer: false,
       shouldOpenInquiryForm: false,
       inquiryFormData: null,
+      designImageData: null,
 
       addItem: (item) => {
         const { items } = get();
@@ -153,6 +161,8 @@ export const useCartStore = create<CartStore>()(
       closeInquiryForm: () => set({ shouldOpenInquiryForm: false }),
       setInquiryFormData: (data) => set({ inquiryFormData: data }),
       clearInquiryFormData: () => set({ inquiryFormData: null }),
+      setDesignImageData: (data) => set({ designImageData: data }),
+      clearDesignImageData: () => set({ designImageData: null }),
 
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();

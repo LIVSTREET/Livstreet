@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import html2canvas from "html2canvas";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -213,10 +214,26 @@ export default function Komponer() {
 
   const openDrawer = useCartStore(state => state.openDrawer);
 
-  const handleSendInquiry = () => {
+  const handleSendInquiry = async () => {
     if (!product || !selectedVariant) {
       toast.error("Kunne ikke legge til i bestilling");
       return;
+    }
+
+    // Capture preview as image
+    let imageBase64 = "";
+    if (previewRef.current) {
+      try {
+        const canvas = await html2canvas(previewRef.current, {
+          backgroundColor: "#ffffff",
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+        });
+        imageBase64 = canvas.toDataURL("image/png");
+      } catch (err) {
+        console.error("Could not capture design image:", err);
+      }
     }
 
     const designData = {
@@ -269,6 +286,11 @@ export default function Komponer() {
       selectedOptions: selectedVariant.selectedOptions,
       lineItemProperties,
     });
+
+    // Store design image for inquiry form
+    if (imageBase64) {
+      useCartStore.getState().setDesignImageData({ imageBase64 });
+    }
 
     toast.success("Design lagt til i bestilling", {
       description: "Fyll ut skjemaet for å fullføre forespørselen",
