@@ -14,6 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
+      inquiries: {
+        Row: {
+          address: string | null
+          base_price: number | null
+          created_at: string | null
+          description: string
+          design_data: Json | null
+          design_image_url: string | null
+          email: string
+          has_design: boolean | null
+          id: string
+          installation_price: number | null
+          installation_selected: boolean | null
+          ip_address: string | null
+          maintenance_price: number | null
+          maintenance_selected: boolean | null
+          name: string
+          notes: string | null
+          phone: string
+          source: string
+          status: string | null
+          total_price: number | null
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          address?: string | null
+          base_price?: number | null
+          created_at?: string | null
+          description: string
+          design_data?: Json | null
+          design_image_url?: string | null
+          email: string
+          has_design?: boolean | null
+          id?: string
+          installation_price?: number | null
+          installation_selected?: boolean | null
+          ip_address?: string | null
+          maintenance_price?: number | null
+          maintenance_selected?: boolean | null
+          name: string
+          notes?: string | null
+          phone: string
+          source: string
+          status?: string | null
+          total_price?: number | null
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          address?: string | null
+          base_price?: number | null
+          created_at?: string | null
+          description?: string
+          design_data?: Json | null
+          design_image_url?: string | null
+          email?: string
+          has_design?: boolean | null
+          id?: string
+          installation_price?: number | null
+          installation_selected?: boolean | null
+          ip_address?: string | null
+          maintenance_price?: number | null
+          maintenance_selected?: boolean | null
+          name?: string
+          notes?: string | null
+          phone?: string
+          source?: string
+          status?: string | null
+          total_price?: number | null
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       symbols: {
         Row: {
           category: string

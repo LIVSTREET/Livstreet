@@ -18,6 +18,10 @@ const GMAIL_USER = "livstreet.store@gmail.com";
 const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
 const REPLY_TO_EMAIL = "livstreet.store@gmail.com";
 
+// Supabase credentials for database operations
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -32,6 +36,7 @@ interface InquiryRequest {
   description: string;
   // Design data
   hasDesign?: boolean;
+  designData?: any;
   designSummary?: string;
   designImageBase64?: string;
   // Pricing
@@ -60,6 +65,108 @@ interface EmailPayload {
 function safeEmailLog(str: string) {
   // Avoid leaking full HTML to logs
   console.log(str);
+}
+
+// Upload design image to Supabase Storage and return the URL
+async function uploadDesignImage(imageBase64: string, inquiryId: string): Promise<string | null> {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Supabase credentials missing for storage upload");
+    return null;
+  }
+
+  try {
+    // Extract base64 data (remove data:image/png;base64, prefix if present)
+    const base64Data = imageBase64.includes(",") 
+      ? imageBase64.split(",")[1] 
+      : imageBase64;
+    
+    // Decode base64 to binary
+    const binaryString = atob(base64Data);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const fileName = `${inquiryId}/preview.png`;
+    
+    const response = await fetch(
+      `${SUPABASE_URL}/storage/v1/object/design-previews/${fileName}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "image/png",
+          "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "x-upsert": "true"
+        },
+        body: bytes
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Storage upload failed:", errorText);
+      return null;
+    }
+
+    // Return the storage path (we'll generate signed URLs when viewing)
+    return fileName;
+  } catch (error) {
+    console.error("Error uploading design image:", error);
+    return null;
+  }
+}
+
+// Save inquiry to database
+async function saveInquiryToDatabase(data: InquiryRequest, designImagePath: string | null): Promise<string | null> {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Supabase credentials missing for database insert");
+    return null;
+  }
+
+  try {
+    const inquiryId = crypto.randomUUID();
+    
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_SERVICE_ROLE_KEY,
+        "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify({
+        id: inquiryId,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        address: data.address || null,
+        description: data.description,
+        has_design: data.hasDesign || false,
+        design_data: data.designData || null,
+        design_image_url: designImagePath,
+        base_price: data.basePrice || null,
+        maintenance_selected: data.maintenanceSelected || false,
+        maintenance_price: data.maintenancePrice || null,
+        installation_selected: data.installationSelected || false,
+        installation_price: data.installationPrice || null,
+        total_price: data.totalPrice || null,
+        source: data.source,
+        status: "new"
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Database insert failed:", errorText);
+      return null;
+    }
+
+    console.log(`Inquiry saved to database with ID: ${inquiryId}`);
+    return inquiryId;
+  } catch (error) {
+    console.error("Error saving inquiry to database:", error);
+    return null;
+  }
 }
 
 async function sendViaGmailSMTP(
@@ -158,74 +265,6 @@ async function sendEmail(
   return await sendViaGmailSMTP(payload);
 }
 
-function buildInternalEmailHtml(data: InquiryRequest): string {
-  const {
-    name,
-    phone,
-    email,
-    address,
-    description,
-    hasDesign,
-    designSummary,
-    designImageBase64,
-    basePrice,
-    maintenanceSelected,
-    maintenancePrice,
-    installationSelected,
-    installationPrice,
-    totalPrice,
-    source,
-  } = data;
-
-  let emailHtml = `
-    <h1>Ny forespørsel fra ${source === "contact" ? "Kontaktskjema" : "Bestillingsskjema"}</h1>
-
-    <h2>Kundeinformasjon</h2>
-    <p><strong>Navn:</strong> ${name}</p>
-    <p><strong>Telefon:</strong> ${phone}</p>
-    <p><strong>E-post:</strong> ${email}</p>
-    ${address ? `<p><strong>Adresse:</strong> ${address}</p>` : ""}
-
-    <h2>Melding</h2>
-    <p>${description.replace(/\n/g, "<br>")}</p>
-  `;
-
-  if (hasDesign) {
-    emailHtml += `
-      <h2>Design</h2>
-      <p>${designSummary || "Eget design vedlagt"}</p>
-    `;
-    
-    if (designImageBase64) {
-      emailHtml += `
-        <div style="margin: 20px 0;">
-          <p><strong>Kundens design:</strong></p>
-          <img src="${designImageBase64}" alt="Kundens design" style="max-width: 100%; width: 500px; border: 1px solid #ccc; border-radius: 8px;" />
-        </div>
-      `;
-    }
-  }
-
-  if (basePrice) {
-    emailHtml += `
-      <h2>Prisdetaljer</h2>
-      <p><strong>Gravplate:</strong> ${basePrice.toLocaleString("nb-NO")} NOK</p>
-      ${maintenanceSelected ? `<p><strong>Fabrikkfornyelse:</strong> ${maintenancePrice?.toLocaleString("nb-NO")} NOK</p>` : ""}
-      ${installationSelected ? `<p><strong>Montering:</strong> ${installationPrice?.toLocaleString("nb-NO")} NOK (inkludert)</p>` : ""}
-      <p><strong>Total:</strong> ${totalPrice?.toLocaleString("nb-NO")} NOK</p>
-    `;
-  }
-
-  emailHtml += `
-    <hr>
-    <p style="color: #666; font-size: 12px;">
-      Sendt fra Livstreet nettside - ${new Date().toLocaleString("nb-NO")}
-    </p>
-  `;
-
-  return emailHtml;
-}
-
 function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
   return `
     <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 600px; margin: 0 auto; color: #2c2c2c; line-height: 1.7; padding: 20px;">
@@ -297,19 +336,32 @@ const handler = async (req: Request): Promise<Response> => {
       `Received inquiry (source=${data.source}, hasDesign=${!!data.hasDesign}, testMode=${!!data.testMode})`,
     );
 
-    const { name, email, hasDesign, source, testMode } = data;
+    const { name, email, hasDesign, source, testMode, designImageBase64 } = data;
 
-    const internalRecipient = [RECIPIENT_EMAIL];
+    // Step 1: Generate inquiry ID and save to database
+    let designImagePath: string | null = null;
+    const inquiryId = crypto.randomUUID();
+
+    // Step 2: Upload design image to storage if present
+    if (designImageBase64) {
+      designImagePath = await uploadDesignImage(designImageBase64, inquiryId);
+      safeEmailLog(`Design image upload: ${designImagePath ? "success" : "failed"}`);
+    }
+
+    // Step 3: Save inquiry to database (this is the primary data store now)
+    const savedInquiryId = await saveInquiryToDatabase({
+      ...data,
+      // Remove the base64 image from the data to avoid storing it in JSONB
+    }, designImagePath);
+    
+    if (savedInquiryId) {
+      safeEmailLog(`Inquiry saved to database: ${savedInquiryId}`);
+    } else {
+      console.error("Failed to save inquiry to database - continuing with email only");
+    }
+
+    // Step 4: Send confirmation email to customer only (no internal email - we use inbox now)
     const customerRecipient = testMode ? [RECIPIENT_EMAIL] : [email];
-
-    const internalPayload: EmailPayload = {
-      to: internalRecipient,
-      subject: `Ny forespørsel fra ${name} - ${
-        source === "contact" ? "Kontaktskjema" : "Bestilling"
-      }`,
-      html: buildInternalEmailHtml(data),
-      replyTo: REPLY_TO_EMAIL,
-    };
 
     const confirmationPayload: EmailPayload = {
       to: customerRecipient,
@@ -320,11 +372,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Non-blocking: send in background
     const sendJob = (async () => {
-      const internal = await sendEmail(internalPayload);
-      safeEmailLog(
-        `Internal email: ${internal.success ? "sent" : "failed"} (provider=${internal.provider})${internal.error ? ` error=${internal.error}` : ""}`,
-      );
-
       const confirmation = await sendEmail(confirmationPayload);
       safeEmailLog(
         `Confirmation email: ${confirmation.success ? "sent" : "failed"} (provider=${confirmation.provider})${confirmation.error ? ` error=${confirmation.error}` : ""}`,
@@ -335,7 +382,7 @@ const handler = async (req: Request): Promise<Response> => {
     // @ts-ignore
     EdgeRuntime.waitUntil(sendJob);
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, inquiryId: savedInquiryId }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
