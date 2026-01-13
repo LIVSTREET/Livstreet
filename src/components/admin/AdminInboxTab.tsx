@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Layout } from "@/components/layout/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -304,7 +303,7 @@ function InquiryDetail({
   );
 }
 
-export default function AdminInbox() {
+export function AdminInboxTab() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
@@ -317,80 +316,78 @@ export default function AdminInbox() {
   const newCount = inquiries.filter((i) => i.status === "new").length;
 
   return (
-    <Layout>
-      <div className="container mx-auto px-4 py-8 pt-28">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div>
-            <h1 className="text-3xl font-serif text-foreground">Innboks</h1>
-            <p className="text-muted-foreground">
-              {inquiries.length} forespørsler
-              {newCount > 0 && ` (${newCount} nye)`}
-            </p>
-          </div>
-
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Søk etter navn, e-post..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
-            />
-          </div>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-semibold">Innboks</h2>
+          <p className="text-muted-foreground text-sm">
+            {inquiries.length} forespørsler
+            {newCount > 0 && ` (${newCount} nye)`}
+          </p>
         </div>
 
-        <Tabs value={statusFilter} onValueChange={setStatusFilter} className="mb-6">
-          <TabsList className="flex-wrap">
-            {STATUS_TABS.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-          </div>
-        ) : inquiries.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">
-                {searchQuery
-                  ? "Ingen forespørsler funnet med dette søket"
-                  : "Ingen forespørsler"}
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4">
-            {inquiries.map((inquiry) => (
-              <InquiryCard
-                key={inquiry.id}
-                inquiry={inquiry}
-                onClick={() => setSelectedInquiry(inquiry)}
-              />
-            ))}
-          </div>
-        )}
-
-        <Dialog 
-          open={!!selectedInquiry} 
-          onOpenChange={(open) => !open && setSelectedInquiry(null)}
-        >
-          {selectedInquiry && (
-            <InquiryDetail
-              inquiry={selectedInquiry}
-              onClose={() => setSelectedInquiry(null)}
-              onUpdate={() => {
-                refetch();
-                setSelectedInquiry(null);
-              }}
-            />
-          )}
-        </Dialog>
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Søk etter navn, e-post..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
       </div>
-    </Layout>
+
+      <Tabs value={statusFilter} onValueChange={setStatusFilter}>
+        <TabsList className="flex-wrap">
+          {STATUS_TABS.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        </div>
+      ) : inquiries.length === 0 ? (
+        <Card>
+          <CardContent className="py-12 text-center">
+            <p className="text-muted-foreground">
+              {searchQuery
+                ? "Ingen forespørsler funnet med dette søket"
+                : "Ingen forespørsler"}
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid gap-4">
+          {inquiries.map((inquiry) => (
+            <InquiryCard
+              key={inquiry.id}
+              inquiry={inquiry}
+              onClick={() => setSelectedInquiry(inquiry)}
+            />
+          ))}
+        </div>
+      )}
+
+      <Dialog 
+        open={!!selectedInquiry} 
+        onOpenChange={(open) => !open && setSelectedInquiry(null)}
+      >
+        {selectedInquiry && (
+          <InquiryDetail
+            inquiry={selectedInquiry}
+            onClose={() => setSelectedInquiry(null)}
+            onUpdate={() => {
+              refetch();
+              setSelectedInquiry(null);
+            }}
+          />
+        )}
+      </Dialog>
+    </div>
   );
 }

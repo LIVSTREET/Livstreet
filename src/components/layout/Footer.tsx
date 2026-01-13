@@ -45,6 +45,9 @@ export function Footer() {
               <Link to="/kjopsvilkar" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Kjøpsvilkår
               </Link>
+              <Link to="/admin" className="text-xs md:text-sm text-primary-foreground/40 hover:text-primary-foreground/60 transition-colors">
+                Admin
+              </Link>
             </nav>
           </div>
 
