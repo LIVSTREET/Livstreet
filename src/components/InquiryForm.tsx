@@ -237,7 +237,8 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
               <img 
                 src={designImageData.imageBase64}
                 alt="Design preview" 
-                className="w-full h-auto object-contain"
+                className="w-full h-auto object-contain max-h-64"
+                onError={(e) => console.error("Failed to load design preview image")}
               />
             </div>
           </div>
