@@ -148,7 +148,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
       clearDesignImageData();
 
       toast.success("Forespørsel sendt!", {
-        description: "Vi tar kontakt for å gå gjennom design og detaljer.",
+        description: "Vi tar kontakt så snart vi kan – vanligvis innen 24 timer.",
       });
     } catch (error) {
       console.error("Error sending inquiry:", error);
@@ -184,7 +184,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
               Takk for forespørselen!
             </h2>
             <p className="text-muted-foreground mb-4">
-              Vi tar kontakt for å gå gjennom design, detaljer og videre prosess.
+              Vi tar kontakt så snart vi kan – vanligvis innen 24 timer.
             </p>
             <p className="text-sm text-muted-foreground">
               En bekreftelse er sendt til {formData.email}
