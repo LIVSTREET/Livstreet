@@ -298,7 +298,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
                       <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-xs">
-                      <p>Full fabrikkfornyelse ved vårt verksted i Danmark inkluderer sliping, ny overflatebehandling og kontroll før retur. Dette er valgfritt og forbundet med frakt- og servicekostnader.</p>
+                      <p>Full fabrikkfornyelse ved vårt verksted i Danmark inkluderer sliping, ny overflatebehandling og kontroll før retur. Prisen inkluderer frakt og arbeid i Danmark én gang.</p>
                     </TooltipContent>
                   </Tooltip>
                 </div>
