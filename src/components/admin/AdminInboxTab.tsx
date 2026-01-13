@@ -211,17 +211,24 @@ function InquiryDetail({
         </div>
 
         {/* Design Preview */}
-        {inquiry.has_design && inquiry.design_image_url && (
+        {inquiry.has_design && (
           <div className="space-y-2">
             <h4 className="font-semibold text-sm text-muted-foreground">Design</h4>
-            {imageUrl ? (
-              <img 
-                src={imageUrl} 
-                alt="Kundens design" 
-                className="w-full max-w-md rounded-lg border"
-              />
+
+            {inquiry.design_image_url ? (
+              imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="Kundens design"
+                  className="w-full max-w-md rounded-lg border"
+                />
+              ) : (
+                <p className="text-sm text-muted-foreground">Laster bilde...</p>
+              )
             ) : (
-              <p className="text-sm text-muted-foreground">Laster bilde...</p>
+              <p className="text-sm text-muted-foreground">
+                Design ble sendt inn, men designbildet er ikke lagret for denne forespørselen.
+              </p>
             )}
           </div>
         )}
