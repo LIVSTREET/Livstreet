@@ -3,15 +3,18 @@ import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameSimpleOrnamental from "@/assets/frame-simple-ornamental.png";
 
+interface PlacedSymbol {
+  id: string;
+  symbolId: string;
+  categoryId: string;
+  pos: { x: number; y: number };
+  size: number;
+}
+
 interface DesignData {
   frame: string;
-  placedSymbols?: Array<{
-    id: string;
-    symbolId: string;
-    categoryId: string;
-    pos: { x: number; y: number };
-    size: number;
-  }>;
+  font?: string;
+  placedSymbols?: PlacedSymbol[];
   elements?: {
     name1?: { text: string; pos: { x: number; y: number }; size: number };
     dates1?: { text: string; pos: { x: number; y: number }; size: number };
@@ -19,6 +22,7 @@ interface DesignData {
     dates2?: { text: string; pos: { x: number; y: number }; size: number };
     etterskrift?: { text: string; pos: { x: number; y: number }; size: number };
   };
+  symbolImages?: Record<string, string>; // Map of symbolId to image URL
 }
 
 interface DesignMiniPreviewProps {
@@ -32,32 +36,82 @@ const frames: Record<string, string | null> = {
   none: null,
 };
 
+const fontClasses: Record<string, string> = {
+  "great-vibes": "font-great-vibes",
+  "alex-brush": "font-alex-brush",
+  "allura": "font-allura",
+  "edwardian": "font-edwardian",
+  "monotype-corsiva": "font-monotype-corsiva",
+  "blackadder": "font-blackadder",
+  "old-english": "font-old-english",
+};
+
 export function DesignMiniPreview({ designData }: DesignMiniPreviewProps) {
   const frameImage = frames[designData.frame] || null;
   const elements = designData.elements;
+  const fontClass = fontClasses[designData.font || "great-vibes"] || "font-great-vibes";
+
+  // Base font sizes (in px) for the mini preview
+  const baseSizes = {
+    name: 14,
+    dates: 10,
+    etterskrift: 9,
+    symbol: 28,
+  };
 
   // Helper to render text element
   const renderTextElement = (
     element: { text: string; pos: { x: number; y: number }; size: number } | undefined,
-    defaultSize: number = 14
+    baseSize: number
   ) => {
     if (!element?.text) return null;
-    const fontSize = Math.max(8, (element.size / 100) * defaultSize);
+    const fontSize = Math.max(6, (element.size / 100) * baseSize);
     
     return (
       <div
-        className="absolute text-center whitespace-nowrap font-display pointer-events-none"
+        className={`absolute text-center whitespace-nowrap pointer-events-none ${fontClass}`}
         style={{
           left: `${element.pos.x}%`,
           top: `${element.pos.y}%`,
           transform: "translate(-50%, -50%)",
           fontSize: `${fontSize}px`,
           color: "#1a1a1a",
+          textShadow: "0 0 1px rgba(255,255,255,0.5)",
         }}
       >
         {element.text}
       </div>
     );
+  };
+
+  // Render placed symbols
+  const renderSymbols = () => {
+    if (!designData.placedSymbols?.length || !designData.symbolImages) return null;
+
+    return designData.placedSymbols.map((symbol) => {
+      const imageUrl = designData.symbolImages?.[symbol.symbolId];
+      if (!imageUrl) return null;
+
+      const symbolSize = Math.max(16, (symbol.size / 100) * baseSizes.symbol);
+
+      return (
+        <img
+          key={symbol.id}
+          src={imageUrl}
+          alt=""
+          className="absolute pointer-events-none"
+          style={{
+            left: `${symbol.pos.x}%`,
+            top: `${symbol.pos.y}%`,
+            transform: "translate(-50%, -50%)",
+            width: `${symbolSize}px`,
+            height: `${symbolSize}px`,
+            objectFit: "contain",
+            filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.1))",
+          }}
+        />
+      );
+    });
   };
 
   return (
@@ -78,19 +132,15 @@ export function DesignMiniPreview({ designData }: DesignMiniPreviewProps) {
         />
       )}
       
-      {/* Text elements */}
-      {renderTextElement(elements?.name1, 16)}
-      {renderTextElement(elements?.dates1, 12)}
-      {renderTextElement(elements?.name2, 16)}
-      {renderTextElement(elements?.dates2, 12)}
-      {renderTextElement(elements?.etterskrift, 10)}
+      {/* Symbols */}
+      {renderSymbols()}
       
-      {/* Symbol count indicator */}
-      {(designData.placedSymbols?.length ?? 0) > 0 && (
-        <div className="absolute bottom-1 right-1 bg-primary/80 text-primary-foreground text-xs px-1.5 py-0.5 rounded">
-          {designData.placedSymbols?.length} symbol{(designData.placedSymbols?.length ?? 0) > 1 ? 'er' : ''}
-        </div>
-      )}
+      {/* Text elements */}
+      {renderTextElement(elements?.name1, baseSizes.name)}
+      {renderTextElement(elements?.dates1, baseSizes.dates)}
+      {renderTextElement(elements?.name2, baseSizes.name)}
+      {renderTextElement(elements?.dates2, baseSizes.dates)}
+      {renderTextElement(elements?.etterskrift, baseSizes.etterskrift)}
     </div>
   );
 }
