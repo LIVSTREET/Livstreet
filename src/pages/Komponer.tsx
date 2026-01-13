@@ -212,7 +212,7 @@ export default function Komponer() {
     setDragging(null);
   };
 
-  const openDrawer = useCartStore(state => state.openDrawer);
+  
 
   const handleSendInquiry = async () => {
     if (!product || !selectedVariant) {
@@ -266,7 +266,6 @@ export default function Komponer() {
         
         document.body.removeChild(clone);
         imageBase64 = canvas.toDataURL("image/jpeg", 0.85);
-        console.log("Design image captured successfully, size:", imageBase64.length);
       } catch (err) {
         console.error("Could not capture design image:", err);
         toast.error("Kunne ikke fange designbildet. Bildet vil ikke bli lagret.");
@@ -340,10 +339,7 @@ export default function Komponer() {
 
     // Store design image for inquiry form
     if (imageBase64 && imageBase64.length > 100) {
-      console.log("Storing design image in cart store, size:", imageBase64.length);
       useCartStore.getState().setDesignImageData({ imageBase64 });
-    } else {
-      console.warn("Design image not captured or too small:", imageBase64?.length || 0);
     }
 
     toast.success("Design lagt til i bestilling", {
