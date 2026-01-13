@@ -16,6 +16,7 @@ import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
 import Personvern from "./pages/Personvern";
 import Kjopsvilkar from "./pages/Kjopsvilkar";
+import GarantiKvalitet from "./pages/GarantiKvalitet";
 import NotFound from "./pages/NotFound";
 import AdminSymbols from "./pages/admin/Symbols";
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/bestill" element={<Bestill />} />
           <Route path="/personvern" element={<Personvern />} />
           <Route path="/kjopsvilkar" element={<Kjopsvilkar />} />
+          <Route path="/garanti-kvalitet" element={<GarantiKvalitet />} />
           <Route path="/admin/symbols" element={<AdminSymbols />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
