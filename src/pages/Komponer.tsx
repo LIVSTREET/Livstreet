@@ -224,18 +224,48 @@ export default function Komponer() {
     let imageBase64 = "";
     if (previewRef.current) {
       try {
-        // Wait a moment for images to fully render
+        // Clone the preview element to manipulate images
+        const clone = previewRef.current.cloneNode(true) as HTMLElement;
+        clone.style.position = 'absolute';
+        clone.style.left = '-9999px';
+        document.body.appendChild(clone);
+        
+        // Convert all images to inline base64 to avoid CORS issues
+        const images = clone.querySelectorAll('img');
+        await Promise.all(
+          Array.from(images).map(async (img) => {
+            try {
+              const response = await fetch(img.src, { mode: 'cors' });
+              const blob = await response.blob();
+              return new Promise<void>((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  img.src = reader.result as string;
+                  resolve();
+                };
+                reader.onerror = () => resolve(); // Continue even if one fails
+                reader.readAsDataURL(blob);
+              });
+            } catch {
+              // If fetch fails, try to use original src
+              return Promise.resolve();
+            }
+          })
+        );
+        
+        // Wait for images to render with new sources
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        const canvas = await html2canvas(previewRef.current, {
+        const canvas = await html2canvas(clone, {
           backgroundColor: "#ffffff",
           scale: 2,
           useCORS: true,
           allowTaint: true,
           logging: false,
-          imageTimeout: 5000,
         });
-        imageBase64 = canvas.toDataURL("image/png");
+        
+        document.body.removeChild(clone);
+        imageBase64 = canvas.toDataURL("image/jpeg", 0.85);
         console.log("Design image captured successfully, size:", imageBase64.length);
       } catch (err) {
         console.error("Could not capture design image:", err);
