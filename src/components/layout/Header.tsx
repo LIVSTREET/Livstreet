@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import logo from "@/assets/livstreet-logo.png";
@@ -49,6 +49,18 @@ export function Header() {
             </div>
           ))}
         </nav>
+
+        {/* Phone Number */}
+        <a 
+          href="tel:+4745251280" 
+          className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+        >
+          <Phone className="h-5 w-5" />
+          <span className="flex flex-col leading-tight">
+            <span className="font-semibold">+47 452 51 280</span>
+            <span className="text-xs text-muted-foreground">Ring eller send melding</span>
+          </span>
+        </a>
 
         {/* Mobile Menu Button */}
         <button
