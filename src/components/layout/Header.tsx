@@ -90,6 +90,18 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Phone Number in Mobile Menu */}
+            <a 
+              href="tel:+4745251280" 
+              className="flex items-center gap-3 px-4 py-3 mt-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+            >
+              <Phone className="h-5 w-5" />
+              <span className="flex flex-col leading-tight">
+                <span className="font-semibold">+47 452 51 280</span>
+                <span className="text-xs text-muted-foreground">Ring eller send melding</span>
+              </span>
+            </a>
           </nav>
         </div>
       )}
