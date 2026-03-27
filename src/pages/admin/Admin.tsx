@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { LogOut, Inbox, Image } from "lucide-react";
+import { LogOut, Inbox, Image, Handshake } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { AdminInboxTab } from "@/components/admin/AdminInboxTab";
 import { AdminSymbolsTab } from "@/components/admin/AdminSymbolsTab";
+import { AdminPartnershipTab } from "@/components/admin/AdminPartnershipTab";
 
 export default function Admin() {
   const { user, signOut } = useAuth();
