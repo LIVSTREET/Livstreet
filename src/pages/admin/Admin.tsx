@@ -63,12 +63,19 @@ export default function Admin() {
               <Image className="w-4 h-4" />
               Symboler
             </TabsTrigger>
+            <TabsTrigger value="partnership" className="gap-2">
+              <Handshake className="w-4 h-4" />
+              Samarbeid
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="inbox">
             <AdminInboxTab />
           </TabsContent>
           <TabsContent value="symbols">
             <AdminSymbolsTab />
+          </TabsContent>
+          <TabsContent value="partnership">
+            <AdminPartnershipTab />
           </TabsContent>
         </Tabs>
       </main>
