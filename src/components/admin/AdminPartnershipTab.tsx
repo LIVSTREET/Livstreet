@@ -341,7 +341,7 @@ function ContactForm({
               <Checkbox
                 id={key}
                 checked={!!form[key]}
-                onCheckedChange={(v) => set(key, !!v)}
+                onCheckedChange={(v) => set(key as keyof PartnershipContactInput, !!v)}
               />
               <Label htmlFor={key} className="font-normal text-sm">
                 {label}
