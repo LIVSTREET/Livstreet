@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { LogOut, Inbox, Image } from "lucide-react";
+import { LogOut, Inbox, Image, Handshake } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { AdminInboxTab } from "@/components/admin/AdminInboxTab";
 import { AdminSymbolsTab } from "@/components/admin/AdminSymbolsTab";
+import { AdminPartnershipTab } from "@/components/admin/AdminPartnershipTab";
 
 export default function Admin() {
   const { user, signOut } = useAuth();
@@ -62,12 +63,19 @@ export default function Admin() {
               <Image className="w-4 h-4" />
               Symboler
             </TabsTrigger>
+            <TabsTrigger value="partnership" className="gap-2">
+              <Handshake className="w-4 h-4" />
+              Samarbeid
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="inbox">
             <AdminInboxTab />
           </TabsContent>
           <TabsContent value="symbols">
             <AdminSymbolsTab />
+          </TabsContent>
+          <TabsContent value="partnership">
+            <AdminPartnershipTab />
           </TabsContent>
         </Tabs>
       </main>
