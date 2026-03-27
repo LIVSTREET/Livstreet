@@ -89,6 +89,99 @@ export type Database = {
         }
         Relationships: []
       }
+      partnership_contacts: {
+        Row: {
+          archived: boolean
+          contact_method: string | null
+          contacted: boolean
+          created_at: string
+          email: string | null
+          follow_up_date: string | null
+          id: string
+          last_contact_date: string | null
+          name: string
+          next_step: string | null
+          notes: string | null
+          organization: string | null
+          our_offer: string | null
+          phone: string | null
+          status: string
+          their_needs: string | null
+          title: string | null
+          topic_commission: boolean
+          topic_customization: boolean
+          topic_delivery: boolean
+          topic_demo_interest: boolean
+          topic_exclusivity: boolean
+          topic_existing_supplier: boolean
+          topic_price: boolean
+          topic_quality: boolean
+          topic_wants_followup: boolean
+          type: string | null
+          updated_at: string
+        }
+        Insert: {
+          archived?: boolean
+          contact_method?: string | null
+          contacted?: boolean
+          created_at?: string
+          email?: string | null
+          follow_up_date?: string | null
+          id?: string
+          last_contact_date?: string | null
+          name: string
+          next_step?: string | null
+          notes?: string | null
+          organization?: string | null
+          our_offer?: string | null
+          phone?: string | null
+          status?: string
+          their_needs?: string | null
+          title?: string | null
+          topic_commission?: boolean
+          topic_customization?: boolean
+          topic_delivery?: boolean
+          topic_demo_interest?: boolean
+          topic_exclusivity?: boolean
+          topic_existing_supplier?: boolean
+          topic_price?: boolean
+          topic_quality?: boolean
+          topic_wants_followup?: boolean
+          type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          archived?: boolean
+          contact_method?: string | null
+          contacted?: boolean
+          created_at?: string
+          email?: string | null
+          follow_up_date?: string | null
+          id?: string
+          last_contact_date?: string | null
+          name?: string
+          next_step?: string | null
+          notes?: string | null
+          organization?: string | null
+          our_offer?: string | null
+          phone?: string | null
+          status?: string
+          their_needs?: string | null
+          title?: string | null
+          topic_commission?: boolean
+          topic_customization?: boolean
+          topic_delivery?: boolean
+          topic_demo_interest?: boolean
+          topic_exclusivity?: boolean
+          topic_existing_supplier?: boolean
+          topic_price?: boolean
+          topic_quality?: boolean
+          topic_wants_followup?: boolean
+          type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       symbols: {
         Row: {
           category: string
