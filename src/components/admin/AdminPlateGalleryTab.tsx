@@ -89,12 +89,13 @@ export function AdminPlateGalleryTab() {
         <h3 className="font-semibold text-lg">Last opp nytt bilde</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="gallery-file">Bildefil</Label>
+            <Label htmlFor="gallery-file">Bildefiler</Label>
             <Input
               id="gallery-file"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              multiple
+              onChange={(e) => setFiles(e.target.files ? Array.from(e.target.files) : [])}
             />
           </div>
           <div className="space-y-2">
