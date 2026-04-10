@@ -58,22 +58,27 @@ export function AdminPlateGalleryTab() {
   });
 
   const handleUpload = async () => {
-    if (!file || !altText.trim()) {
-      toast.error("Velg en fil og skriv inn alt-tekst");
+    if (files.length === 0 || !altText.trim()) {
+      toast.error("Velg minst én fil og skriv inn alt-tekst");
       return;
     }
     setUploading(true);
     try {
-      await createPlateGalleryImage(file, { alt_text: altText.trim(), title: title.trim() || undefined });
-      toast.success("Bilde lastet opp");
-      setFile(null);
+      for (let i = 0; i < files.length; i++) {
+        setUploadProgress(`${i + 1} av ${files.length}`);
+        await createPlateGalleryImage(files[i], { alt_text: altText.trim(), title: title.trim() || undefined });
+      }
+      toast.success(`${files.length} bilde${files.length > 1 ? "r" : ""} lastet opp`);
+      setFiles([]);
       setAltText("");
       setTitle("");
+      setUploadProgress("");
       invalidate();
     } catch {
       toast.error("Feil ved opplasting");
     } finally {
       setUploading(false);
+      setUploadProgress("");
     }
   };
 
