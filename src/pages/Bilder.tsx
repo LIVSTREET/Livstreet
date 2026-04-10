@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { getPublishedPlateGalleryImages } from "@/lib/plateGallery";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Bilder() {
@@ -54,6 +56,20 @@ export default function Bilder() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="py-12 md:py-20 bg-primary">
+        <div className="container px-4 text-center">
+          <h2 className="font-display text-2xl md:text-4xl font-bold text-primary-foreground mb-3 md:mb-4">
+            Klar for å lage din egen gravplate?
+          </h2>
+          <p className="text-primary-foreground/80 text-base md:text-lg max-w-xl mx-auto mb-6 md:mb-8">
+            Bruk vår konfigurator til å designe en unik og personlig gravplate – enkelt og raskt.
+          </p>
+          <Button asChild variant="hero" size="xl">
+            <Link to="/komponer">Lag din gravplate</Link>
+          </Button>
         </div>
       </section>
     </Layout>
