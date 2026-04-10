@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Volume2 } from "lucide-react";
@@ -8,50 +8,48 @@ const VIMEO_ID = "1151281409";
 // Muted autoplay preview that loops and covers the card
 const PREVIEW_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1&playsinline=1&controls=0&title=0&byline=0&portrait=0`;
 
-// Dialog player starts muted + autoplay; we unmute on click via Vimeo Player API
-const SOUND_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&playsinline=1&controls=1`;
+// Dialog player: autoplay WITH sound from the start
+const SOUND_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=0&playsinline=1&controls=1`;
 
 export function VideoSection() {
   const [isOpen, setIsOpen] = useState(false);
   const soundIframeRef = useRef<HTMLIFrameElement | null>(null);
   const playerRef = useRef<Player | null>(null);
 
-  useEffect(() => {
-    if (!soundIframeRef.current) return;
+  // Initialize player and unmute when dialog iframe mounts
+  const setIframeRef = useCallback((node: HTMLIFrameElement | null) => {
+    soundIframeRef.current = node;
+    if (!node) {
+      if (playerRef.current) {
+        void playerRef.current.destroy();
+        playerRef.current = null;
+      }
+      return;
+    }
 
-    const player = new Player(soundIframeRef.current);
+    const player = new Player(node);
     playerRef.current = player;
 
-    void player.setLoop(true);
-    void player.setMuted(true);
-
-    return () => {
-      playerRef.current = null;
-      void player.destroy();
-    };
+    // Ensure unmuted and playing after player is ready
+    void player.ready().then(() => {
+      void player.setMuted(false);
+      void player.setVolume(1);
+      void player.setLoop(true);
+      void player.play();
+    });
   }, []);
 
   const openWithSound = () => {
-    // Open fullscreen
     setIsOpen(true);
-
-    // Unmute + play inside the same click gesture
-    const p = playerRef.current;
-    if (!p) return;
-
-    void p.setMuted(false);
-    void p.setVolume(1);
-    void p.play();
   };
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
 
-    if (!open) {
-      const p = playerRef.current;
-      if (!p) return;
-      void p.pause();
-      void p.setMuted(true);
+    if (!open && playerRef.current) {
+      void playerRef.current.pause();
+      void playerRef.current.destroy();
+      playerRef.current = null;
     }
   };
 
