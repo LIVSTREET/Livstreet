@@ -152,7 +152,7 @@ export default function Baerekraft() {
                     <div className="w-10 h-10 rounded-full bg-forest/10 flex items-center justify-center">
                       <Shield className="w-5 h-5 text-forest" />
                     </div>
-                    <span className="text-sm text-muted-foreground">10 års garanti</span>
+                    <span className="text-sm text-muted-foreground">Utviklet for nordisk klima</span>
                   </div>
                 </div>
               </div>
