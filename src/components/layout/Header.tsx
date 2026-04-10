@@ -31,7 +31,7 @@ export function Header() {
             <div key={link.href} className="relative group">
               <Link
                 to={link.href}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-secondary ${
+                className={`px-4 py-2 text-base font-semibold rounded-md transition-colors hover:bg-secondary ${
                   location.pathname === link.href
                     ? "text-primary bg-secondary"
                     : "text-muted-foreground hover:text-foreground"
