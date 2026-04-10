@@ -38,8 +38,8 @@ export function Footer() {
           <div className="space-y-2 md:space-y-4">
             <h4 className="font-display text-sm md:text-lg font-semibold">Mer</h4>
             <nav className="flex flex-col gap-1.5 md:gap-2">
-              <Link to="/garanti-kvalitet" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                Garanti og kvalitet
+              <Link to="/kvalitet-vedlikehold" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                Kvalitet og vedlikehold
               </Link>
               <Link to="/personvern" className="text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 Personvernerklæring

@@ -405,7 +405,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
           <div className="mt-4 space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-forest">✓</span>
-              <span>10 års kvalitetsgaranti</span>
+              <span>Support og veiledning kun et tastetrykk unna</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-forest">✓</span>

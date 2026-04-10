@@ -18,7 +18,7 @@ import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
 import Personvern from "./pages/Personvern";
 import Kjopsvilkar from "./pages/Kjopsvilkar";
-import GarantiKvalitet from "./pages/GarantiKvalitet";
+import KvalitetVedlikehold from "./pages/KvalitetVedlikehold";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/admin/Admin";
 
@@ -45,7 +45,7 @@ const App = () => (
             <Route path="/bestill" element={<Bestill />} />
             <Route path="/personvern" element={<Personvern />} />
             <Route path="/kjopsvilkar" element={<Kjopsvilkar />} />
-            <Route path="/garanti-kvalitet" element={<GarantiKvalitet />} />
+            <Route path="/kvalitet-vedlikehold" element={<KvalitetVedlikehold />} />
             <Route
               path="/admin"
               element={

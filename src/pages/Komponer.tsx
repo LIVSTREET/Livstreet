@@ -1099,7 +1099,7 @@ export default function Komponer() {
                 <div className="mt-4 space-y-1.5">
                   <div className="flex items-center gap-2 text-xs text-primary-foreground/70">
                     <span className="text-primary-foreground">✓</span>
-                    <span>10 års kvalitetsgaranti</span>
+                    <span>Support og veiledning kun et tastetrykk unna</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-primary-foreground/70">
                     <span className="text-primary-foreground">✓</span>
