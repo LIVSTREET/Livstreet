@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield, CheckCircle2, Wrench, Info, Mail, Phone, AlertCircle } from "lucide-react";
 
-export default function GarantiKvalitet() {
+export default function KvalitetVedlikehold() {
   return (
     <Layout>
       {/* Hero Section */}
@@ -18,16 +18,16 @@ export default function GarantiKvalitet() {
           
           <div className="max-w-3xl">
             <h1 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
-              Garanti og kvalitet
+              Kvalitet og vedlikehold
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/80">
-              Hos Livstreet lager vi gravplater i naturlige materialer, produsert på bestilling og ment å stå ute i mange år. Denne siden forklarer hvilke garantier som gjelder, og hvilke valg du har for vedlikehold over tid.
+              Hos Livstreet lager vi gravplater i naturlige materialer, produsert på bestilling og ment å stå ute i mange år. Denne siden forklarer hva du kan forvente av kvalitet, og hvilke valg du har for vedlikehold over tid.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 10 års garanti */}
+      {/* Kvalitet du kan stole på */}
       <section className="py-12 md:py-16 bg-background">
         <div className="container px-4">
           <div className="max-w-3xl mx-auto">
@@ -35,15 +35,15 @@ export default function GarantiKvalitet() {
               <div className="p-3 bg-forest/10 rounded-full">
                 <Shield className="w-8 h-8 text-forest" />
               </div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold">10 års kvalitetsgaranti</h2>
+              <h2 className="font-display text-2xl md:text-3xl font-bold">Kvalitet du kan stole på</h2>
             </div>
             
             <p className="text-lg text-muted-foreground mb-8">
-              Vi tilbyr 10 års kvalitetsgaranti på våre gravplater.
+              Våre gravplater er utviklet for å tåle nordisk klima, og vi står bak kvaliteten i alt vi leverer.
             </p>
 
             <div className="bg-forest/5 rounded-2xl p-6 md:p-8 mb-8">
-              <h3 className="font-semibold text-lg mb-4">Garantien dekker:</h3>
+              <h3 className="font-semibold text-lg mb-4">Vi tar ansvar for:</h3>
               <ul className="space-y-3">
                 {[
                   "feil i materialer",
@@ -59,7 +59,7 @@ export default function GarantiKvalitet() {
             </div>
 
             <div className="bg-muted rounded-2xl p-6 md:p-8 mb-8">
-              <h3 className="font-semibold text-lg mb-4">Garantien gjelder forutsatt:</h3>
+              <h3 className="font-semibold text-lg mb-4">Dette forutsetter:</h3>
               <ul className="space-y-3">
                 {[
                   "normal bruk",
@@ -84,7 +84,7 @@ export default function GarantiKvalitet() {
         </div>
       </section>
 
-      {/* Hva garantien ikke dekker */}
+      {/* Naturlige endringer over tid */}
       <section className="py-12 md:py-16 bg-secondary/30">
         <div className="container px-4">
           <div className="max-w-3xl mx-auto">
@@ -92,10 +92,10 @@ export default function GarantiKvalitet() {
               <div className="p-3 bg-destructive/10 rounded-full">
                 <AlertCircle className="w-8 h-8 text-destructive" />
               </div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold">Hva garantien ikke dekker</h2>
+              <h2 className="font-display text-2xl md:text-3xl font-bold">Naturlige endringer over tid</h2>
             </div>
 
-            <p className="text-muted-foreground mb-6">Garantien dekker ikke:</p>
+            <p className="text-muted-foreground mb-6">Følgende regnes som normalt og er ikke reklamasjonsgrunnlag:</p>
             
             <ul className="space-y-3 mb-8">
               {[
@@ -153,7 +153,7 @@ export default function GarantiKvalitet() {
             </div>
 
             <p className="text-muted-foreground">
-              Så lenge vedlikeholdet gjøres i tråd med vår veiledning, påvirker dette ikke garantien.
+              Så lenge vedlikeholdet gjøres i tråd med vår veiledning, vil produktet holde seg godt over tid.
             </p>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function GarantiKvalitet() {
                 <ul className="space-y-2">
                   {[
                     "et valgfritt tilbud",
-                    "ikke en del av garantien",
+                    "en tilleggstjeneste",
                     "forbundet med frakt- og servicekostnader"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
@@ -215,7 +215,7 @@ export default function GarantiKvalitet() {
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">Reklamasjon</h2>
 
             <p className="text-muted-foreground mb-6">
-              Dersom du mener produktet har en feil som omfattes av garantien, ber vi deg kontakte oss skriftlig.
+              Hvis produktet ikke er som forventet, kontakt oss skriftlig så finner vi en løsning.
             </p>
 
             <div className="bg-muted rounded-2xl p-6 md:p-8 mb-8">
@@ -259,7 +259,7 @@ export default function GarantiKvalitet() {
               Spørsmål?
             </h2>
             <p className="text-primary-foreground/80 mb-8">
-              Er du usikker på garanti, vedlikehold eller hva som gjelder i ditt tilfelle, er du alltid velkommen til å ta kontakt. Vi svarer gjerne.
+              Er du usikker på vedlikehold eller hva som gjelder i ditt tilfelle, er du alltid velkommen til å ta kontakt. Vi svarer gjerne.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
