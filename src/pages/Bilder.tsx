@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { getPublishedPlateGalleryImages } from "@/lib/plateGallery";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Bilder() {
