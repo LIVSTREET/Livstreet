@@ -99,16 +99,18 @@ export function VideoSection() {
           forceMount
           className="max-w-[95vw] md:max-w-[90vw] w-full h-auto aspect-video p-0 gap-0 border-2 border-primary/50 overflow-hidden rounded-xl bg-background"
         >
-          <iframe
-            ref={soundIframeRef}
-            src={SOUND_SRC}
-            className="w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            title="Produksjonsvideo (med lyd)"
-          />
+          {isOpen && (
+            <iframe
+              ref={setIframeRef}
+              src={SOUND_SRC}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              title="Produksjonsvideo (med lyd)"
+            />
+          )}
         </DialogContent>
       </Dialog>
     </section>
