@@ -15,10 +15,11 @@ import {
 
 export function AdminPlateGalleryTab() {
   const queryClient = useQueryClient();
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [altText, setAltText] = useState("");
   const [title, setTitle] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState("");
 
   const { data: images = [], isLoading } = useQuery({
     queryKey: ["admin-plate-gallery"],
@@ -57,22 +58,27 @@ export function AdminPlateGalleryTab() {
   });
 
   const handleUpload = async () => {
-    if (!file || !altText.trim()) {
-      toast.error("Velg en fil og skriv inn alt-tekst");
+    if (files.length === 0 || !altText.trim()) {
+      toast.error("Velg minst én fil og skriv inn alt-tekst");
       return;
     }
     setUploading(true);
     try {
-      await createPlateGalleryImage(file, { alt_text: altText.trim(), title: title.trim() || undefined });
-      toast.success("Bilde lastet opp");
-      setFile(null);
+      for (let i = 0; i < files.length; i++) {
+        setUploadProgress(`${i + 1} av ${files.length}`);
+        await createPlateGalleryImage(files[i], { alt_text: altText.trim(), title: title.trim() || undefined });
+      }
+      toast.success(`${files.length} bilde${files.length > 1 ? "r" : ""} lastet opp`);
+      setFiles([]);
       setAltText("");
       setTitle("");
+      setUploadProgress("");
       invalidate();
     } catch {
       toast.error("Feil ved opplasting");
     } finally {
       setUploading(false);
+      setUploadProgress("");
     }
   };
 
@@ -83,12 +89,13 @@ export function AdminPlateGalleryTab() {
         <h3 className="font-semibold text-lg">Last opp nytt bilde</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="gallery-file">Bildefil</Label>
+            <Label htmlFor="gallery-file">Bildefiler</Label>
             <Input
               id="gallery-file"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              multiple
+              onChange={(e) => setFiles(e.target.files ? Array.from(e.target.files) : [])}
             />
           </div>
           <div className="space-y-2">
@@ -110,9 +117,9 @@ export function AdminPlateGalleryTab() {
             />
           </div>
         </div>
-        <Button onClick={handleUpload} disabled={uploading || !file || !altText.trim()}>
+        <Button onClick={handleUpload} disabled={uploading || files.length === 0 || !altText.trim()}>
           <Upload className="w-4 h-4 mr-2" />
-          {uploading ? "Laster opp…" : "Last opp"}
+          {uploading ? `Laster opp ${uploadProgress}…` : `Last opp${files.length > 1 ? ` (${files.length} bilder)` : ""}`}
         </Button>
       </div>
 
