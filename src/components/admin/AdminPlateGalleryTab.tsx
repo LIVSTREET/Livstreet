@@ -117,9 +117,9 @@ export function AdminPlateGalleryTab() {
             />
           </div>
         </div>
-        <Button onClick={handleUpload} disabled={uploading || !file || !altText.trim()}>
+        <Button onClick={handleUpload} disabled={uploading || files.length === 0 || !altText.trim()}>
           <Upload className="w-4 h-4 mr-2" />
-          {uploading ? "Laster opp…" : "Last opp"}
+          {uploading ? `Laster opp ${uploadProgress}…` : `Last opp${files.length > 1 ? ` (${files.length} bilder)` : ""}`}
         </Button>
       </div>
 
