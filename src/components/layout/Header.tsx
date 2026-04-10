@@ -19,10 +19,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-24 items-center justify-between">
+      <div className="container flex h-28 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <OptimizedImage src={logo} alt="Livstreet - Bæredyktig Minne" className="h-28 w-auto -my-4" priority={true} />
+          <OptimizedImage src={logo} alt="Livstreet - Bæredyktig Minne" className="h-36 w-auto -my-6" priority={true} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -31,7 +31,7 @@ export function Header() {
             <div key={link.href} className="relative group">
               <Link
                 to={link.href}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-secondary ${
+                className={`px-4 py-2 text-base font-semibold rounded-md transition-colors hover:bg-secondary ${
                   location.pathname === link.href
                     ? "text-primary bg-secondary"
                     : "text-muted-foreground hover:text-foreground"
@@ -53,7 +53,7 @@ export function Header() {
         {/* Phone Number */}
         <a 
           href="tel:+4745251280" 
-          className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          className="hidden md:flex items-center gap-2 text-base font-semibold text-primary hover:text-primary/80 transition-colors"
         >
           <Phone className="h-5 w-5" />
           <span className="flex flex-col leading-tight">
