@@ -4,42 +4,45 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import gravplateHero from "@/assets/gravplate-hero.png";
 
 export function HeroSection() {
-  return <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
+  return (
+    <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <OptimizedImage 
-          src={gravplateHero} 
-          alt="Gravplate i eik på kirkegård" 
+        <OptimizedImage
+          src={gravplateHero}
+          alt="Gravplate i eik på kirkegård"
           className="w-full h-full object-cover"
           priority={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/50 to-primary/20 opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/30" />
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 py-12 md:py-24 px-4">
-        <div className="max-w-2xl space-y-6 md:space-y-8 animate-fade-in">
-          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
+      <div className="container relative z-10 py-16 md:py-28 px-4">
+        <div className="max-w-2xl space-y-5 md:space-y-7 animate-fade-in">
+          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight drop-shadow-lg">
             Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
-          <h2 className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/70">
+          <p className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
-          </h2>
-          <p className="text-sm md:text-base font-semibold text-primary-foreground drop-shadow-md font-serif">
-            Start her – vi hjelper deg hele veien
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex flex-col items-start gap-2">
-              <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+
+          {/* CTA area */}
+          <div className="pt-2 space-y-5">
+            <p className="text-sm md:text-base font-medium text-primary-foreground/80 drop-shadow-sm font-serif">
+              Start her – vi hjelper deg hele veien
+            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl">
                 <Link to="/komponer">Lag min gravplate</Link>
               </Button>
-              <span className="text-sm md:text-base font-medium text-primary-foreground drop-shadow-md max-w-[320px]">
-                Design selv og send inn – vi tar kontakt før produksjon
-              </span>
+              <Button variant="hero-outline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                <Link to="/kontakt">Få hjelp / kontakt oss</Link>
+              </Button>
             </div>
-            <Button variant="hero-outline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/kontakt">Få hjelp / kontakt oss</Link>
-            </Button>
+            <p className="text-xs md:text-sm text-primary-foreground/70 drop-shadow-sm max-w-sm">
+              Design selv og send inn – vi tar kontakt før produksjon
+            </p>
           </div>
         </div>
       </div>
@@ -50,5 +53,6 @@ export function HeroSection() {
           <div className="w-1.5 h-3 bg-primary-foreground/50 rounded-full mt-2" />
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }
