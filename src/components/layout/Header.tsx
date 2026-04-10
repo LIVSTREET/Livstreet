@@ -53,7 +53,7 @@ export function Header() {
         {/* Phone Number */}
         <a 
           href="tel:+4745251280" 
-          className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          className="hidden md:flex items-center gap-2 text-base font-semibold text-primary hover:text-primary/80 transition-colors"
         >
           <Phone className="h-5 w-5" />
           <span className="flex flex-col leading-tight">
