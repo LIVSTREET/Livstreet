@@ -167,10 +167,6 @@ export default function Kontakt() {
                     <span className="text-forest">✓</span>
                     <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="text-forest">✓</span>
-                    <span>Valgfri fabrikkfornyelse tilgjengelig</span>
-                  </div>
                 </div>
               </form>
             </div>
