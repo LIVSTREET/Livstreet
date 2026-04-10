@@ -25,12 +25,20 @@ export function HeroSection() {
           <h2 className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/70">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
           </h2>
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-              <Link to="/komponer">Lag din plate</Link>
-            </Button>
+          <p className="text-sm md:text-base text-primary-foreground/60 font-serif">
+            Start her – vi hjelper deg hele veien
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col items-start gap-2">
+              <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                <Link to="/komponer">Lag min gravplate</Link>
+              </Button>
+              <span className="text-xs md:text-sm text-primary-foreground/50 max-w-[280px]">
+                Design selv og send inn – vi tar kontakt før produksjon
+              </span>
+            </div>
             <Button variant="hero-outline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/kontakt">Kontakt oss</Link>
+              <Link to="/kontakt">Få hjelp / kontakt oss</Link>
             </Button>
           </div>
         </div>
