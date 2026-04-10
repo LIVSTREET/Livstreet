@@ -65,7 +65,7 @@ export function VideoSection() {
 
           <button
             type="button"
-            onClick={openWithSound}
+            onClick={() => setIsOpen(true)}
             className="absolute inset-0 flex items-center justify-center bg-primary/10 opacity-100 md:opacity-0 md:hover:opacity-100 transition-opacity"
             aria-label="Spill av produksjonsvideo med lyd"
           >
@@ -82,9 +82,9 @@ export function VideoSection() {
       {/* Fullscreen */}
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent
-          forceMount
           className="max-w-[95vw] md:max-w-[90vw] w-full h-auto aspect-video p-0 gap-0 border-2 border-primary/50 overflow-hidden rounded-xl bg-background"
         >
+          <VisuallyHidden><DialogTitle>Produksjonsvideo</DialogTitle></VisuallyHidden>
           {isOpen && (
             <iframe
               ref={setIframeRef}
