@@ -23,24 +23,24 @@ export function HeroSection() {
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight drop-shadow-lg">
             Et vakkert og miljøvennlig alternativ for å hedre dine kjære
           </h1>
-          <p className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
+          <p className="hidden md:block text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
             Hver plate er unik – laget med kjærlighet og respekt for naturen.
           </p>
 
           {/* CTA area */}
           <div className="pt-2 space-y-5">
-            <p className="text-sm md:text-base font-medium text-primary-foreground/80 drop-shadow-sm font-serif">
+            <p className="hidden md:block text-sm md:text-base font-medium text-primary-foreground/80 drop-shadow-sm font-serif">
               Start her – vi hjelper deg hele veien
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl">
                 <Link to="/komponer">Lag min gravplate</Link>
               </Button>
-              <Button variant="hero-outline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              <Button variant="hero-outline" size="lg" asChild className="hidden md:inline-flex border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
                 <Link to="/kontakt">Få hjelp / kontakt oss</Link>
               </Button>
             </div>
-            <p className="text-xs md:text-sm text-primary-foreground/70 drop-shadow-sm max-w-sm">
+            <p className="hidden md:block text-xs md:text-sm text-primary-foreground/70 drop-shadow-sm max-w-sm">
               Design selv og send inn – vi tar kontakt før produksjon
             </p>
           </div>
