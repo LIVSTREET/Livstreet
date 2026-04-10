@@ -65,7 +65,7 @@ export default function Bilder() {
             Klar for å lage din egen gravplate?
           </h2>
           <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-6 md:mb-8">
-            Bruk vår konfigurator til å designe en unik og personlig gravplate – enkelt og raskt.
+            Bruk vår designer til å designe en unik og personlig gravplate – enkelt og raskt.
           </p>
           <Button asChild variant="hero" size="xl">
             <Link to="/komponer">Lag din gravplate</Link>
