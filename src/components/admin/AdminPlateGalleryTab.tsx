@@ -15,10 +15,11 @@ import {
 
 export function AdminPlateGalleryTab() {
   const queryClient = useQueryClient();
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [altText, setAltText] = useState("");
   const [title, setTitle] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState("");
 
   const { data: images = [], isLoading } = useQuery({
     queryKey: ["admin-plate-gallery"],
