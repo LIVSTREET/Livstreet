@@ -82,8 +82,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
   const [installationSelected, setInstallationSelected] = useState(false);
 
   const basePrice = PRICING.BASE_PRICE;
-  const maintenancePrice = maintenanceSelected ? PRICING.MAINTENANCE_PRICE : 0;
-  const totalPrice = basePrice + maintenancePrice;
+  const totalPrice = basePrice;
 
   const formatPrice = (amount: number) => {
     return new Intl.NumberFormat('nb-NO', {
