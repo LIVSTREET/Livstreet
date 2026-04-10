@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { LogOut, Inbox, Image, Handshake } from "lucide-react";
+import { LogOut, Inbox, Image, Handshake, GalleryHorizontalEnd } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { AdminInboxTab } from "@/components/admin/AdminInboxTab";
 import { AdminSymbolsTab } from "@/components/admin/AdminSymbolsTab";
 import { AdminPartnershipTab } from "@/components/admin/AdminPartnershipTab";
+import { AdminPlateGalleryTab } from "@/components/admin/AdminPlateGalleryTab";
 
 export default function Admin() {
   const { user, signOut } = useAuth();
@@ -67,6 +68,10 @@ export default function Admin() {
               <Handshake className="w-4 h-4" />
               Samarbeid
             </TabsTrigger>
+            <TabsTrigger value="gallery" className="gap-2">
+              <GalleryHorizontalEnd className="w-4 h-4" />
+              Bilder
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="inbox">
             <AdminInboxTab />
@@ -76,6 +81,9 @@ export default function Admin() {
           </TabsContent>
           <TabsContent value="partnership">
             <AdminPartnershipTab />
+          </TabsContent>
+          <TabsContent value="gallery">
+            <AdminPlateGalleryTab />
           </TabsContent>
         </Tabs>
       </main>
