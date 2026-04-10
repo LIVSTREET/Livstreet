@@ -20,10 +20,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-28 items-center justify-between">
+      <div className="container flex h-16 md:h-28 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <OptimizedImage src={logo} alt="Livstreet - Bæredyktig Minne" className="h-36 w-auto -my-6" priority={true} />
+          <OptimizedImage src={logo} alt="Livstreet - Bærekraftig Minne" className="h-20 md:h-36 w-auto -my-4 md:-my-6" priority={true} />
         </Link>
 
         {/* Desktop Navigation */}
