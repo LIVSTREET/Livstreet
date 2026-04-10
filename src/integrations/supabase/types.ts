@@ -182,6 +182,48 @@ export type Database = {
         }
         Relationships: []
       }
+      plate_gallery_images: {
+        Row: {
+          alt_text: string
+          created_at: string | null
+          height: number | null
+          id: string
+          image_url: string
+          is_published: boolean | null
+          sort_order: number | null
+          storage_path: string
+          title: string | null
+          updated_at: string | null
+          width: number | null
+        }
+        Insert: {
+          alt_text: string
+          created_at?: string | null
+          height?: number | null
+          id?: string
+          image_url: string
+          is_published?: boolean | null
+          sort_order?: number | null
+          storage_path: string
+          title?: string | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string
+          created_at?: string | null
+          height?: number | null
+          id?: string
+          image_url?: string
+          is_published?: boolean | null
+          sort_order?: number | null
+          storage_path?: string
+          title?: string | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
       symbols: {
         Row: {
           category: string

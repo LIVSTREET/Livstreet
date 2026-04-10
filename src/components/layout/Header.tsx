@@ -8,6 +8,7 @@ import logo from "@/assets/livstreet-logo.png";
 const navLinks = [
   { href: "/", label: "Forside" },
   { href: "/komponer", label: "Lag din plate" },
+  { href: "/bilder", label: "Bilder" },
   { href: "/informasjon", label: "Nyttig informasjon" },
   { href: "/om-oss", label: "Om oss" },
   { href: "/kontakt", label: "Kontakt oss" },

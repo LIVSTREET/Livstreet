@@ -16,6 +16,7 @@ import HvaSkjerEtterpa from "./pages/artikler/HvaSkjerEtterpa";
 import OmOss from "./pages/OmOss";
 import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
+import Bilder from "./pages/Bilder";
 import Personvern from "./pages/Personvern";
 import Kjopsvilkar from "./pages/Kjopsvilkar";
 import KvalitetVedlikehold from "./pages/KvalitetVedlikehold";
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/om-oss" element={<OmOss />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/bestill" element={<Bestill />} />
+            <Route path="/bilder" element={<Bilder />} />
             <Route path="/personvern" element={<Personvern />} />
             <Route path="/kjopsvilkar" element={<Kjopsvilkar />} />
             <Route path="/kvalitet-vedlikehold" element={<KvalitetVedlikehold />} />
