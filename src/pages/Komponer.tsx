@@ -1105,10 +1105,6 @@ export default function Komponer() {
                     <span className="text-primary-foreground">✓</span>
                     <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-primary-foreground/70">
-                    <span className="text-primary-foreground">✓</span>
-                    <span>Valgfri fabrikkfornyelse tilgjengelig</span>
-                  </div>
                 </div>
               </div>
             </div>

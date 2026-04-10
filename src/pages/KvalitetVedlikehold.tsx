@@ -164,18 +164,18 @@ export default function KvalitetVedlikehold() {
         <div className="container px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
-              Valgfri fabrikkfornyelse i Danmark
+              Oppfølging ved behov
             </h2>
 
             <p className="text-lg text-muted-foreground mb-8">
-              For kunder som ønsker det, tilbyr vi full fabrikkfornyelse ved vårt verksted i Danmark.
+              Skulle det oppstå noe, er det enkelt å ta kontakt med oss. Vi vurderer saken sammen med deg og finner en god løsning.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="font-semibold mb-4">Dette kan inkludere:</h3>
                 <ul className="space-y-2">
-                  {["sliping", "ny overflatebehandling", "kontroll før retur"].map((item, index) => (
+                  {["innsending til vurdering", "utbedring av produkt", "eventuell erstatning med ny plate"].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-forest" />
                       <span className="text-sm">{item}</span>
@@ -188,9 +188,9 @@ export default function KvalitetVedlikehold() {
                 <h3 className="font-semibold mb-4">Dette er:</h3>
                 <ul className="space-y-2">
                   {[
-                    "et valgfritt tilbud",
-                    "en tilleggstjeneste",
-                    "forbundet med frakt- og servicekostnader"
+                    "en vurdering fra sak til sak",
+                    "en løsning vi blir enige om fortløpende",
+                    "uten fastpris"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-primary" />
@@ -202,7 +202,7 @@ export default function KvalitetVedlikehold() {
             </div>
 
             <p className="text-muted-foreground">
-              Pris og praktisk gjennomføring avtales individuelt ved forespørsel.
+              Omfang og praktisk gjennomføring avtales fortløpende i dialog med deg.
             </p>
           </div>
         </div>

@@ -82,8 +82,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
   const [installationSelected, setInstallationSelected] = useState(false);
 
   const basePrice = PRICING.BASE_PRICE;
-  const maintenancePrice = maintenanceSelected ? PRICING.MAINTENANCE_PRICE : 0;
-  const totalPrice = basePrice + maintenancePrice;
+  const totalPrice = basePrice;
 
   const formatPrice = (amount: number) => {
     return new Intl.NumberFormat('nb-NO', {
@@ -324,12 +323,12 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
                       <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-xs">
-                      <p>Full fabrikkfornyelse ved vårt verksted i Danmark inkluderer sliping, ny overflatebehandling og kontroll før retur. Prisen inkluderer frakt, arbeid i Danmark én gang og mva.</p>
+                      <p>Ved behov vurderer vi innsending, utbedring eller eventuell ny plate. Løsning avtales fortløpende.</p>
                     </TooltipContent>
                   </Tooltip>
                 </div>
                 <p className="text-sm text-accent font-medium mt-0.5">
-                  +{formatPrice(PRICING.MAINTENANCE_PRICE)}
+                  Avtales fortløpende
                 </p>
               </div>
             </div>
@@ -363,7 +362,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             {maintenanceSelected && (
               <div className="flex justify-between text-sm">
                 <span>Fabrikkfornyelse</span>
-                <span>+{formatPrice(PRICING.MAINTENANCE_PRICE)}</span>
+                <span>Avtales fortløpende</span>
               </div>
             )}
             {installationSelected && (
@@ -410,10 +409,6 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-forest">✓</span>
               <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="text-forest">✓</span>
-              <span>Valgfri fabrikkfornyelse tilgjengelig</span>
             </div>
           </div>
         </form>
