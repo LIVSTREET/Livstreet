@@ -19,7 +19,7 @@ export default function Bilder() {
             Bilder av våre gravplater
           </h1>
           <p className="text-base md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-            Her ser du et utvalg av våre gravplater i realistiske omgivelser. Bildene vises i høy kvalitet for å gi et godt inntrykk av uttrykk, materialer og detaljer.
+            Her ser du vår gravplate i naturlige omgivelser.
           </p>
         </div>
       </section>
