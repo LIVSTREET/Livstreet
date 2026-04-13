@@ -667,7 +667,25 @@ export default function Komponer() {
                     />
                   )}
                   
-                  {/* Placed Symbols */}
+                  {/* Snap Guide Lines */}
+                  {activeGuides.x !== undefined && (
+                    <div 
+                      className="absolute top-0 bottom-0 w-px z-40 pointer-events-none"
+                      style={{ 
+                        left: `${activeGuides.x}%`,
+                        background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                      }}
+                    />
+                  )}
+                  {activeGuides.y !== undefined && (
+                    <div 
+                      className="absolute left-0 right-0 h-px z-40 pointer-events-none"
+                      style={{ 
+                        top: `${activeGuides.y}%`,
+                        background: 'linear-gradient(to right, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                      }}
+                    />
+                  )}
                   {placedSymbols.map((placedSymbol) => {
                     const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
                     return (
