@@ -432,7 +432,7 @@ export default function Komponer() {
     setSelectedElement(element);
   }, []);
 
-  // Handle element move
+  // Handle element move (with snap)
   const handleElementMove = useCallback((direction: "up" | "down" | "left" | "right") => {
     if (!selectedElement) return;
     
@@ -448,35 +448,41 @@ export default function Komponer() {
     
     const clamp = (val: number) => Math.max(5, Math.min(95, val));
     
+    const moveAndSnap = (prev: { x: number; y: number }) => {
+      const raw = { x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) };
+      const snapped = applySnap(raw.x, raw.y);
+      // Clear guides after a short delay for button moves
+      setTimeout(() => setActiveGuides({}), 500);
+      return snapped;
+    };
+    
     if (selectedElement.startsWith("symbol-")) {
       const symbolId = selectedElement;
       const symbol = placedSymbols.find(s => s.id === symbolId);
       if (symbol) {
-        updateSymbolPosition(symbolId, {
-          x: clamp(symbol.pos.x + delta.x),
-          y: clamp(symbol.pos.y + delta.y),
-        });
+        const newPos = moveAndSnap(symbol.pos);
+        updateSymbolPosition(symbolId, newPos);
       }
     } else {
       switch (selectedElement) {
         case "name1":
-          setName1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setName1Pos(prev => moveAndSnap(prev));
           break;
         case "dates1":
-          setDates1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setDates1Pos(prev => moveAndSnap(prev));
           break;
         case "name2":
-          setName2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setName2Pos(prev => moveAndSnap(prev));
           break;
         case "dates2":
-          setDates2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setDates2Pos(prev => moveAndSnap(prev));
           break;
         case "etterskrift":
-          setEtterskriftPos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setEtterskriftPos(prev => moveAndSnap(prev));
           break;
       }
     }
-  }, [selectedElement, placedSymbols]);
+  }, [selectedElement, placedSymbols, applySnap]);
 
   // Handle element resize
   const handleElementResize = useCallback((sizeDelta: number) => {
