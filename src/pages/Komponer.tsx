@@ -98,6 +98,9 @@ export default function Komponer() {
   const [dragging, setDragging] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   
+  // Snap guide state
+  const [activeGuides, setActiveGuides] = useState<{ x?: number; y?: number }>({});
+  
   // Selected element for editing
   const [selectedElement, setSelectedElement] = useState<EditableElement | null>(null);
   
@@ -160,6 +163,37 @@ export default function Komponer() {
     }).format(amount);
   };
 
+  // Snap guides configuration
+  const SNAP_THRESHOLD = 3; // percentage proximity to snap
+  const SNAP_LINES = {
+    x: [20, 35, 50, 65, 80], // left, center-left, center, center-right, right
+    y: [15, 25, 33, 50, 67, 75, 85], // top, upper, 1/3, center, 2/3, lower, bottom
+  };
+
+  const applySnap = useCallback((rawX: number, rawY: number) => {
+    let snappedX = rawX;
+    let snappedY = rawY;
+    const guides: { x?: number; y?: number } = {};
+
+    for (const sx of SNAP_LINES.x) {
+      if (Math.abs(rawX - sx) < SNAP_THRESHOLD) {
+        snappedX = sx;
+        guides.x = sx;
+        break;
+      }
+    }
+    for (const sy of SNAP_LINES.y) {
+      if (Math.abs(rawY - sy) < SNAP_THRESHOLD) {
+        snappedY = sy;
+        guides.y = sy;
+        break;
+      }
+    }
+
+    setActiveGuides(guides);
+    return { x: snappedX, y: snappedY };
+  }, []);
+
   // Drag handlers
   const handleMouseDown = (element: string, e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -180,36 +214,40 @@ export default function Komponer() {
     const clampedX = Math.max(15, Math.min(85, x));
     const clampedY = Math.max(12, Math.min(88, y));
     
+    // Apply snapping
+    const snapped = applySnap(clampedX, clampedY);
+    
     // Check if dragging a placed symbol
     if (dragging?.startsWith('placed-')) {
       const symbolId = dragging.replace('placed-', '');
       setPlacedSymbols(prev => prev.map(s => 
-        s.id === symbolId ? { ...s, pos: { x: clampedX, y: clampedY } } : s
+        s.id === symbolId ? { ...s, pos: snapped } : s
       ));
       return;
     }
     
     switch (dragging) {
       case "name1":
-        setName1Pos({ x: clampedX, y: clampedY });
+        setName1Pos(snapped);
         break;
       case "dates1":
-        setDates1Pos({ x: clampedX, y: clampedY });
+        setDates1Pos(snapped);
         break;
       case "name2":
-        setName2Pos({ x: clampedX, y: clampedY });
+        setName2Pos(snapped);
         break;
       case "dates2":
-        setDates2Pos({ x: clampedX, y: clampedY });
+        setDates2Pos(snapped);
         break;
       case "etterskrift":
-        setEtterskriftPos({ x: clampedX, y: clampedY });
+        setEtterskriftPos(snapped);
         break;
     }
   };
 
   const handleMouseUp = () => {
     setDragging(null);
+    setActiveGuides({});
   };
 
   
@@ -394,7 +432,7 @@ export default function Komponer() {
     setSelectedElement(element);
   }, []);
 
-  // Handle element move
+  // Handle element move (with snap)
   const handleElementMove = useCallback((direction: "up" | "down" | "left" | "right") => {
     if (!selectedElement) return;
     
@@ -410,35 +448,41 @@ export default function Komponer() {
     
     const clamp = (val: number) => Math.max(5, Math.min(95, val));
     
+    const moveAndSnap = (prev: { x: number; y: number }) => {
+      const raw = { x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) };
+      const snapped = applySnap(raw.x, raw.y);
+      // Clear guides after a short delay for button moves
+      setTimeout(() => setActiveGuides({}), 500);
+      return snapped;
+    };
+    
     if (selectedElement.startsWith("symbol-")) {
       const symbolId = selectedElement;
       const symbol = placedSymbols.find(s => s.id === symbolId);
       if (symbol) {
-        updateSymbolPosition(symbolId, {
-          x: clamp(symbol.pos.x + delta.x),
-          y: clamp(symbol.pos.y + delta.y),
-        });
+        const newPos = moveAndSnap(symbol.pos);
+        updateSymbolPosition(symbolId, newPos);
       }
     } else {
       switch (selectedElement) {
         case "name1":
-          setName1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setName1Pos(prev => moveAndSnap(prev));
           break;
         case "dates1":
-          setDates1Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setDates1Pos(prev => moveAndSnap(prev));
           break;
         case "name2":
-          setName2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setName2Pos(prev => moveAndSnap(prev));
           break;
         case "dates2":
-          setDates2Pos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setDates2Pos(prev => moveAndSnap(prev));
           break;
         case "etterskrift":
-          setEtterskriftPos(prev => ({ x: clamp(prev.x + delta.x), y: clamp(prev.y + delta.y) }));
+          setEtterskriftPos(prev => moveAndSnap(prev));
           break;
       }
     }
-  }, [selectedElement, placedSymbols]);
+  }, [selectedElement, placedSymbols, applySnap]);
 
   // Handle element resize
   const handleElementResize = useCallback((sizeDelta: number) => {
@@ -623,7 +667,25 @@ export default function Komponer() {
                     />
                   )}
                   
-                  {/* Placed Symbols */}
+                  {/* Snap Guide Lines */}
+                  {activeGuides.x !== undefined && (
+                    <div 
+                      className="absolute top-0 bottom-0 w-px z-40 pointer-events-none"
+                      style={{ 
+                        left: `${activeGuides.x}%`,
+                        background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                      }}
+                    />
+                  )}
+                  {activeGuides.y !== undefined && (
+                    <div 
+                      className="absolute left-0 right-0 h-px z-40 pointer-events-none"
+                      style={{ 
+                        top: `${activeGuides.y}%`,
+                        background: 'linear-gradient(to right, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                      }}
+                    />
+                  )}
                   {placedSymbols.map((placedSymbol) => {
                     const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
                     return (
@@ -1149,7 +1211,25 @@ export default function Komponer() {
                   />
                 )}
                 
-                {/* Placed Symbols - tappable */}
+                {/* Snap Guide Lines */}
+                {activeGuides.x !== undefined && (
+                  <div 
+                    className="absolute top-0 bottom-0 w-px z-40 pointer-events-none"
+                    style={{ 
+                      left: `${activeGuides.x}%`,
+                      background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                    }}
+                  />
+                )}
+                {activeGuides.y !== undefined && (
+                  <div 
+                    className="absolute left-0 right-0 h-px z-40 pointer-events-none"
+                    style={{ 
+                      top: `${activeGuides.y}%`,
+                      background: 'linear-gradient(to right, transparent 0%, hsl(var(--primary) / 0.6) 15%, hsl(var(--primary) / 0.6) 85%, transparent 100%)',
+                    }}
+                  />
+                )}
                 {placedSymbols.map((placedSymbol) => {
                   const symbolImage = getSymbolImage(placedSymbol.categoryId, placedSymbol.symbolId);
                   const isSelected = selectedElement === placedSymbol.id;
