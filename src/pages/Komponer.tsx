@@ -98,6 +98,9 @@ export default function Komponer() {
   const [dragging, setDragging] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   
+  // Snap guide state
+  const [activeGuides, setActiveGuides] = useState<{ x?: number; y?: number }>({});
+  
   // Selected element for editing
   const [selectedElement, setSelectedElement] = useState<EditableElement | null>(null);
   
