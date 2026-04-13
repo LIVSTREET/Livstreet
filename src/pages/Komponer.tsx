@@ -163,6 +163,37 @@ export default function Komponer() {
     }).format(amount);
   };
 
+  // Snap guides configuration
+  const SNAP_THRESHOLD = 3; // percentage proximity to snap
+  const SNAP_LINES = {
+    x: [20, 35, 50, 65, 80], // left, center-left, center, center-right, right
+    y: [15, 25, 33, 50, 67, 75, 85], // top, upper, 1/3, center, 2/3, lower, bottom
+  };
+
+  const applySnap = useCallback((rawX: number, rawY: number) => {
+    let snappedX = rawX;
+    let snappedY = rawY;
+    const guides: { x?: number; y?: number } = {};
+
+    for (const sx of SNAP_LINES.x) {
+      if (Math.abs(rawX - sx) < SNAP_THRESHOLD) {
+        snappedX = sx;
+        guides.x = sx;
+        break;
+      }
+    }
+    for (const sy of SNAP_LINES.y) {
+      if (Math.abs(rawY - sy) < SNAP_THRESHOLD) {
+        snappedY = sy;
+        guides.y = sy;
+        break;
+      }
+    }
+
+    setActiveGuides(guides);
+    return { x: snappedX, y: snappedY };
+  }, []);
+
   // Drag handlers
   const handleMouseDown = (element: string, e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -183,36 +214,40 @@ export default function Komponer() {
     const clampedX = Math.max(15, Math.min(85, x));
     const clampedY = Math.max(12, Math.min(88, y));
     
+    // Apply snapping
+    const snapped = applySnap(clampedX, clampedY);
+    
     // Check if dragging a placed symbol
     if (dragging?.startsWith('placed-')) {
       const symbolId = dragging.replace('placed-', '');
       setPlacedSymbols(prev => prev.map(s => 
-        s.id === symbolId ? { ...s, pos: { x: clampedX, y: clampedY } } : s
+        s.id === symbolId ? { ...s, pos: snapped } : s
       ));
       return;
     }
     
     switch (dragging) {
       case "name1":
-        setName1Pos({ x: clampedX, y: clampedY });
+        setName1Pos(snapped);
         break;
       case "dates1":
-        setDates1Pos({ x: clampedX, y: clampedY });
+        setDates1Pos(snapped);
         break;
       case "name2":
-        setName2Pos({ x: clampedX, y: clampedY });
+        setName2Pos(snapped);
         break;
       case "dates2":
-        setDates2Pos({ x: clampedX, y: clampedY });
+        setDates2Pos(snapped);
         break;
       case "etterskrift":
-        setEtterskriftPos({ x: clampedX, y: clampedY });
+        setEtterskriftPos(snapped);
         break;
     }
   };
 
   const handleMouseUp = () => {
     setDragging(null);
+    setActiveGuides({});
   };
 
   
