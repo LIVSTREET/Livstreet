@@ -24,16 +24,6 @@ export function SeoHead({
   skipCanonical = false,
   jsonLd,
 }: SeoHeadProps) {
-
-export function SeoHead({
-  title,
-  description,
-  path,
-  image,
-  type = "website",
-  noindex = false,
-  jsonLd,
-}: SeoHeadProps) {
   const url = `${SITE_URL}${path}`;
   const ogImage = image
     ? image.startsWith("http")
@@ -47,7 +37,7 @@ export function SeoHead({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+      {!skipCanonical && <link rel="canonical" href={url} />}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       {/* Open Graph */}
