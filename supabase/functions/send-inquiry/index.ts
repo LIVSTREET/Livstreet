@@ -467,6 +467,26 @@ const handler = async (req: Request): Promise<Response> => {
       console.error("Failed to save inquiry to database - continuing with email only");
     }
 
+    // Step 3b: Send internal admin notification via Domene.no SMTP
+    if (saved && ADMIN_NOTIFICATION_EMAIL) {
+      const adminPayload: EmailPayload = {
+        to: [ADMIN_NOTIFICATION_EMAIL],
+        subject: `Ny forespørsel fra ${data.name}`,
+        html: buildAdminNotificationHtml(inquiryId, data),
+        replyTo: data.email || SMTP_USERNAME,
+      };
+
+      const adminJob = (async () => {
+        const result = await sendViaDomainSMTP(adminPayload);
+        safeEmailLog(
+          `Admin notification: ${result.success ? "sent" : "failed"} (provider=${result.provider})${result.error ? ` error=${result.error}` : ""}`,
+        );
+      })();
+
+      // @ts-ignore
+      EdgeRuntime.waitUntil(adminJob);
+    }
+
     // Step 4: Send confirmation email to customer only (no internal email - we use inbox now)
     const customerRecipient = testMode ? [RECIPIENT_EMAIL] : [email];
 
