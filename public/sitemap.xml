@@ -6,32 +6,17 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://livstreet.no/komponer</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://livstreet.no/bestill</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://livstreet.no/bilder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://livstreet.no/informasjon</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://livstreet.no/informasjon/montering-vedlikehold</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://livstreet.no/informasjon/miljovennlig</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://livstreet.no/informasjon/symboler</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -41,9 +26,29 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://livstreet.no/om-oss</loc>
+    <loc>https://livstreet.no/informasjon/miljovennlig</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://livstreet.no/informasjon/montering-vedlikehold</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://livstreet.no/informasjon/symboler</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://livstreet.no/kjopsvilkar</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://livstreet.no/komponer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://livstreet.no/kontakt</loc>
@@ -51,22 +56,17 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://livstreet.no/bilder</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://livstreet.no/kvalitet-vedlikehold</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://livstreet.no/personvern</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://livstreet.no/om-oss</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://livstreet.no/kjopsvilkar</loc>
+    <loc>https://livstreet.no/personvern</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

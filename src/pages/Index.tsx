@@ -8,7 +8,7 @@ import { ArticlesSection } from "@/components/home/ArticlesSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
-import { organizationJsonLd, websiteJsonLd } from "@/seo/jsonLd";
+import { homePageGraphJsonLd } from "@/seo/jsonLd";
 
 const Index = () => {
   const meta = ROUTE_META["/"];
@@ -18,7 +18,7 @@ const Index = () => {
         title={meta.title}
         description={meta.description}
         path={meta.path}
-        jsonLd={[organizationJsonLd, websiteJsonLd]}
+        jsonLd={homePageGraphJsonLd}
       />
       <HeroSection />
       <TestimonialsCarousel />

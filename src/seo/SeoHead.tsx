@@ -11,6 +11,7 @@ export interface SeoHeadProps {
   type?: "website" | "article" | "product";
   noindex?: boolean;
   skipCanonical?: boolean;
+  omitOgUrl?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -22,6 +23,7 @@ export function SeoHead({
   type = "website",
   noindex = false,
   skipCanonical = false,
+  omitOgUrl = false,
   jsonLd,
 }: SeoHeadProps) {
   const url = `${SITE_URL}${path}`;
@@ -44,7 +46,7 @@ export function SeoHead({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
+      {!omitOgUrl && <meta property="og:url" content={url} />}
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />

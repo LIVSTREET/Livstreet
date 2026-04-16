@@ -27,6 +27,34 @@ export const websiteJsonLd = {
   inLanguage: "nb-NO",
 };
 
+// Combined home page graph — cleaner for validators than two separate JSON-LD blocks.
+export const homePageGraphJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "Livstreet",
+      url: SITE_URL,
+      logo: `${SITE_URL}/og-image.jpg`,
+      email: "post@livstreet.no",
+      telephone: "+47 45 25 12 80",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Oslo",
+        addressCountry: "NO",
+      },
+      description:
+        "Livstreet lager bærekraftige gravplater i eik – et naturlig alternativ til stein.",
+    },
+    {
+      "@type": "WebSite",
+      name: "Livstreet",
+      url: SITE_URL,
+      inLanguage: "nb-NO",
+    },
+  ],
+};
+
 // Product JSON-LD with offers — price must mirror what's shown on /bestill.
 export const productJsonLd = {
   "@context": "https://schema.org",
