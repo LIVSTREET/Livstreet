@@ -1,4 +1,5 @@
 import { PRICING } from "@/lib/constants";
+import type { FaqSection } from "@/data/homeFaqContent";
 
 const SITE_URL = "https://livstreet.no";
 
