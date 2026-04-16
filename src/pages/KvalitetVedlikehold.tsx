@@ -95,6 +95,9 @@ export default function KvalitetVedlikehold() {
               <h2 className="font-display text-2xl md:text-3xl font-bold">Naturlige endringer over tid</h2>
             </div>
 
+            <p className="text-muted-foreground mb-4">
+              Treverk er et naturmateriale og vil utvikle seg annerledes enn granitt over tid. Naturlig patina, fargeendringer og normal aldring regnes som forventet utvikling i materialet.
+            </p>
             <p className="text-muted-foreground mb-6">Følgende regnes som normalt og er ikke reklamasjonsgrunnlag:</p>
             
             <ul className="space-y-3 mb-8">
@@ -215,7 +218,7 @@ export default function KvalitetVedlikehold() {
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">Reklamasjon</h2>
 
             <p className="text-muted-foreground mb-6">
-              Hvis produktet ikke er som forventet, kontakt oss skriftlig så finner vi en løsning.
+              Ved produksjonsfeil (for eksempel feil innrissing eller sprekkdannelse kort tid etter levering) behandler vi reklamasjon i tråd med forbrukerkjøpsloven. Naturlig patina, fargeendringer og normal aldring regnes som forventet utvikling i materialet.
             </p>
 
             <div className="bg-muted rounded-2xl p-6 md:p-8 mb-8">

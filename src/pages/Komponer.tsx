@@ -591,11 +591,15 @@ export default function Komponer() {
             </p>
             <p className="flex items-start gap-2">
               <span className="text-primary mt-0.5">•</span>
-              Vi går alltid gjennom designet sammen med deg før bestilling.
+              Vi starter ikke produksjon før designet er avklart med deg.
             </p>
             <p className="flex items-start gap-2">
               <span className="text-primary mt-0.5">•</span>
               Dra elementene for å plassere dem - dette er kun veiledende.
+            </p>
+            <p className="flex items-start gap-2">
+              <span className="text-primary mt-0.5">•</span>
+              Vi svarer så raskt vi kan i våre vanlige åpningstider.
             </p>
           </div>
 

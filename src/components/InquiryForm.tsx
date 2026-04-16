@@ -378,6 +378,9 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             <p className="text-xs text-primary-foreground/70 pt-2">
               Dette er en forespørsel. Endelig bestilling bekreftes etter dialog.
             </p>
+            <p className="text-xs text-primary-foreground/70">
+              Faktura sendes etter levering/montering. Normal leveringstid er 2–4 uker.
+            </p>
           </div>
 
           <Button
@@ -404,11 +407,11 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
           <div className="mt-4 space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-forest">✓</span>
-              <span>Support og veiledning kun et tastetrykk unna</span>
+              <span>Vi er tilgjengelige for veiledning gjennom hele prosessen</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-forest">✓</span>
-              <span>Vedlikehold kan gjøres lokalt eller med vår guide</span>
+              <span>Vedlikehold kan gjøres lokalt eller etter vår veiledning</span>
             </div>
           </div>
         </form>
