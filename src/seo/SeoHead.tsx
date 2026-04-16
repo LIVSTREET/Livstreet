@@ -46,6 +46,8 @@ export function SeoHead({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:locale" content="nb_NO" />
       <meta property="og:site_name" content="Livstreet" />
 

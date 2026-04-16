@@ -9,6 +9,7 @@ import { AdminInboxTab } from "@/components/admin/AdminInboxTab";
 import { AdminSymbolsTab } from "@/components/admin/AdminSymbolsTab";
 import { AdminPartnershipTab } from "@/components/admin/AdminPartnershipTab";
 import { AdminPlateGalleryTab } from "@/components/admin/AdminPlateGalleryTab";
+import { SeoHead } from "@/seo/SeoHead";
 
 export default function Admin() {
   const { user, signOut } = useAuth();
