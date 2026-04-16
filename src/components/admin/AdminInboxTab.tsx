@@ -13,17 +13,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Mail, Phone, MapPin, Calendar, Package, Loader2, Image as ImageIcon } from "lucide-react";
+import { Search, Mail, Phone, MapPin, Calendar, Package, Loader2, Image as ImageIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   getInquiries,
   updateInquiry,
+  deleteInquiry,
   getDesignImageUrl,
   Inquiry,
   InquiryStatus,
