@@ -363,6 +363,77 @@ function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
   `;
 }
 
+function buildAdminNotificationHtml(inquiryId: string, data: InquiryRequest): string {
+  const sourceLabel = data.source === "contact" ? "Kontaktskjema" : "Bestillingsskjema/Konfigurator";
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #2c2c2c; line-height: 1.6; padding: 20px;">
+      <h2 style="color: #5c4a3a; margin-bottom: 16px;">Ny forespørsel fra Livstreet</h2>
+
+      <p style="margin: 4px 0;"><strong>Navn:</strong> ${data.name}</p>
+      <p style="margin: 4px 0;"><strong>Telefon:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
+      <p style="margin: 4px 0;"><strong>E-post:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+      ${data.address ? `<p style="margin: 4px 0;"><strong>Adresse:</strong> ${data.address}</p>` : ""}
+      <p style="margin: 4px 0;"><strong>Kilde:</strong> ${sourceLabel}</p>
+      ${data.totalPrice ? `<p style="margin: 4px 0;"><strong>Totalpris:</strong> ${data.totalPrice.toLocaleString("nb-NO")} kr</p>` : ""}
+      <p style="margin: 4px 0;"><strong>Design vedlagt:</strong> ${data.hasDesign ? "Ja" : "Nei"}</p>
+      <p style="margin: 4px 0; font-size: 12px; color: #888;"><strong>ID:</strong> ${inquiryId}</p>
+
+      <h3 style="color: #5c4a3a; margin-top: 20px; margin-bottom: 8px;">Melding</h3>
+      <p style="white-space: pre-wrap; background-color: #f9f7f5; padding: 12px; border-radius: 6px;">${data.description}</p>
+
+      <p style="margin-top: 24px;">
+        <a href="https://livstreet.org/admin" style="background-color: #5c4a3a; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Åpne admin</a>
+      </p>
+    </div>
+  `;
+}
+
+async function sendViaDomainSMTP(
+  payload: EmailPayload,
+): Promise<{ success: boolean; provider: "domain_smtp"; error?: string }> {
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USERNAME || !SMTP_PASSWORD) {
+    return {
+      success: false,
+      provider: "domain_smtp",
+      error: "SMTP settings are missing",
+    };
+  }
+
+  const client = new SMTPClient({
+    connection: {
+      hostname: SMTP_HOST,
+      port: SMTP_PORT,
+      tls: true,
+      auth: {
+        username: SMTP_USERNAME,
+        password: SMTP_PASSWORD,
+      },
+    },
+  });
+
+  try {
+    await client.send({
+      from: SMTP_FROM,
+      to: payload.to,
+      subject: payload.subject,
+      content: "auto",
+      html: payload.html,
+      replyTo: payload.replyTo || SMTP_USERNAME,
+    });
+
+    return { success: true, provider: "domain_smtp" };
+  } catch (error: any) {
+    console.error("Domain SMTP exception:", error);
+    return { success: false, provider: "domain_smtp", error: error.message };
+  } finally {
+    try {
+      await client.close();
+    } catch {
+      // ignore
+    }
+  }
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
