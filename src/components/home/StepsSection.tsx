@@ -45,15 +45,15 @@ export function StepsSection() {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative group"
+              className="relative group h-full"
             >
               {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-border" />
               )}
 
-              <div className="relative bg-card rounded-xl md:rounded-2xl p-3 md:p-8 text-center shadow-sm hover:shadow-lg transition-shadow border border-border group-hover:border-primary/20">
-                <div className="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <div className="relative h-full flex flex-col items-center bg-card rounded-xl md:rounded-2xl p-3 md:p-8 text-center shadow-sm hover:shadow-lg transition-shadow border border-border group-hover:border-primary/20">
+                <div className="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                   <step.icon className="h-5 w-5 md:h-7 md:w-7" />
                 </div>
                 <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-3">{step.title}</h3>
