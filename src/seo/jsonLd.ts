@@ -1,4 +1,5 @@
 import { PRICING } from "@/lib/constants";
+import type { FaqSection } from "@/data/homeFaqContent";
 
 const SITE_URL = "https://livstreet.no";
 
@@ -123,5 +124,23 @@ export function buildArticleJsonLd(input: ArticleMetaInput) {
         url: `${SITE_URL}/og-image.jpg`,
       },
     },
+  };
+}
+
+export function buildFaqPageJsonLd(
+  sections: FaqSection[],
+): Record<string, unknown> {
+  const flat = sections.flatMap((s) => s.items);
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: flat.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
