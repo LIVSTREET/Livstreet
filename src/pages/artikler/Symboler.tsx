@@ -8,6 +8,12 @@ import { ROUTE_META } from "@/seo/metadata";
 export default function Symboler() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/informasjon/symboler"].title}
+        description={ROUTE_META["/informasjon/symboler"].description}
+        path="/informasjon/symboler"
+        type="article"
+      />
       {/* Hero Section */}
       <section className="relative py-8 md:py-14 bg-gradient-to-b from-primary/5 via-accent/5 to-background overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />

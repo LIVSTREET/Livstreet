@@ -618,6 +618,11 @@ export default function Komponer() {
 
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/komponer"].title}
+        description={ROUTE_META["/komponer"].description}
+        path="/komponer"
+      />
       {/* Welcome Message */}
       <WelcomeMessage />
       

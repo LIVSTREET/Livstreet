@@ -15,6 +15,11 @@ export default function Bilder() {
 
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/bilder"].title}
+        description={ROUTE_META["/bilder"].description}
+        path="/bilder"
+      />
       <section className="py-10 md:py-20 bg-primary">
         <div className="container text-center px-4">
           <h1 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground mb-2 md:mb-4">

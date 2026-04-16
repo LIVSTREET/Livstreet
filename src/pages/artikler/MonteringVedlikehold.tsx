@@ -10,6 +10,12 @@ import { ROUTE_META } from "@/seo/metadata";
 export default function MonteringVedlikehold() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/informasjon/montering-vedlikehold"].title}
+        description={ROUTE_META["/informasjon/montering-vedlikehold"].description}
+        path="/informasjon/montering-vedlikehold"
+        type="article"
+      />
       {/* Hero */}
       <section className="relative py-8 md:py-14 bg-gradient-to-b from-secondary to-background overflow-hidden">
         <div className="absolute inset-0 opacity-5">
