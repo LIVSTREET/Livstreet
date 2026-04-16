@@ -1,0 +1,1 @@
+CREATE POLICY "Authenticated users can delete inquiries" ON public.inquiries FOR DELETE TO authenticated USING (true);
