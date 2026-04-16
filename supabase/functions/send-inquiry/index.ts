@@ -11,8 +11,10 @@ const SMTP_HOST = (Deno.env.get("SMTP_HOST") ?? "").trim();
 const SMTP_PORT = Number(Deno.env.get("SMTP_PORT") ?? "587");
 const SMTP_USERNAME = (Deno.env.get("SMTP_USERNAME") ?? "").trim();
 const SMTP_PASSWORD = (Deno.env.get("SMTP_PASSWORD") ?? "").trim();
-const ADMIN_NOTIFICATION_EMAIL = (Deno.env.get("ADMIN_NOTIFICATION_EMAIL") ?? "").trim();
-const SMTP_FROM = (Deno.env.get("SMTP_FROM") ?? `Livstreet <${SMTP_USERNAME}>`).trim();
+// Hardkodet mottaker for admin-varsler (overstyrer evt. secret)
+const ADMIN_NOTIFICATION_EMAIL = "post@livstreet.no";
+// Hardkodet From-adresse (må være verifisert hos e-postleverandøren / matche SMTP-kontoen)
+const SMTP_FROM = "Livstreet <post@livstreet.no>";
 
 // Supabase credentials for database operations
 const SUPABASE_URL = (Deno.env.get("SUPABASE_URL") ?? "").trim();
