@@ -59,11 +59,12 @@ export function SeoHead({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
-      {jsonLd && (
-        <script type="application/ld+json">
-          {JSON.stringify(jsonLd)}
-        </script>
-      )}
+      {jsonLd &&
+        (Array.isArray(jsonLd) ? jsonLd : [jsonLd]).map((node, i) => (
+          <script key={i} type="application/ld+json">
+            {JSON.stringify(node)}
+          </script>
+        ))}
     </Helmet>
   );
 }
