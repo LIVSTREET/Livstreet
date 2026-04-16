@@ -5,7 +5,7 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import baerekraftHero from "@/assets/baerekraft-hero.png";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
-import { buildArticleJsonLd } from "@/seo/jsonLd";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/seo/jsonLd";
 
 export default function Baerekraft() {
   return (
@@ -16,13 +16,20 @@ export default function Baerekraft() {
         path="/informasjon/miljovennlig"
         type="article"
         image={baerekraftHero}
-        jsonLd={buildArticleJsonLd({
-          title: ROUTE_META["/informasjon/miljovennlig"].title,
-          description: ROUTE_META["/informasjon/miljovennlig"].description,
-          path: "/informasjon/miljovennlig",
-          image: baerekraftHero,
-          datePublished: "2024-12-10",
-        })}
+        jsonLd={[
+          buildArticleJsonLd({
+            title: ROUTE_META["/informasjon/miljovennlig"].title,
+            description: ROUTE_META["/informasjon/miljovennlig"].description,
+            path: "/informasjon/miljovennlig",
+            image: baerekraftHero,
+            datePublished: "2024-12-10",
+          }),
+          buildBreadcrumbJsonLd([
+            { name: "Hjem", path: "/" },
+            { name: "Informasjon", path: "/informasjon" },
+            { name: "Miljøvennlig", path: "/informasjon/miljovennlig" },
+          ]),
+        ]}
       />
       {/* Hero Section */}
       <section className="relative py-8 md:py-14 bg-gradient-to-b from-forest/10 via-moss/5 to-background overflow-hidden">
