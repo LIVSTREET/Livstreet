@@ -2,13 +2,14 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
+import { PRICING } from "@/lib/constants";
 import templateMellom from "@/assets/template-mellom-1.jpg";
 
 const product = {
   id: 1,
   name: "Gravplate Standard",
   size: "Standard størrelse",
-  price: 3990,
+  price: PRICING.BASE_PRICE,
   image: templateMellom,
   features: ["Eik", "1-2 navn inkludert", "Lasergravering", "Valgfritt symbol"],
 };
@@ -46,8 +47,11 @@ export default function Bestill() {
               <div className="p-4 md:p-8">
                 <span className="text-xs md:text-sm text-muted-foreground">{product.size}</span>
                 <h2 className="font-display text-xl md:text-2xl font-bold mt-1 mb-1 md:mb-2">{product.name}</h2>
-                <p className="text-2xl md:text-3xl font-bold text-primary mb-4 md:mb-6">
+                <p className="text-2xl md:text-3xl font-bold text-primary mb-1">
                   {product.price.toLocaleString("nb-NO")} kr
+                </p>
+                <p className="text-xs text-muted-foreground mb-4 md:mb-6">
+                  Virksomheten er foreløpig ikke mva-registrert. Ingen merverdiavgift beregnes.
                 </p>
                 <ul className="space-y-2 md:space-y-3 mb-4 md:mb-8">
                   {product.features.map((feature, i) => (
