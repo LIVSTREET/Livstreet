@@ -50,12 +50,25 @@ function InquiryCard({
   onClick: () => void;
 }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (inquiry.design_image_url) {
       getDesignImageUrl(inquiry.design_image_url).then(setImageUrl);
     }
   }, [inquiry.design_image_url]);
+
+  const statusMutation = useMutation({
+    mutationFn: (newStatus: InquiryStatus) =>
+      updateInquiry(inquiry.id, { status: newStatus }),
+    onSuccess: () => {
+      toast.success("Status oppdatert");
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
+    onError: () => {
+      toast.error("Kunne ikke oppdatere status");
+    },
+  });
 
   return (
     <Card 
@@ -82,13 +95,34 @@ function InquiryCard({
           {/* Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold text-foreground truncate">{inquiry.name}</h3>
                 <p className="text-sm text-muted-foreground truncate">{inquiry.email}</p>
               </div>
-              <Badge className={`${STATUS_COLORS[inquiry.status]} text-white flex-shrink-0`}>
-                {STATUS_LABELS[inquiry.status]}
-              </Badge>
+              <div
+                onClick={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
+                className="flex-shrink-0"
+              >
+                <Select
+                  value={inquiry.status}
+                  onValueChange={(v) => statusMutation.mutate(v as InquiryStatus)}
+                  disabled={statusMutation.isPending}
+                >
+                  <SelectTrigger
+                    className={`h-7 w-auto gap-1 px-2 py-0 border-0 text-white text-xs font-medium ${STATUS_COLORS[inquiry.status]} hover:opacity-90 focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/80`}
+                  >
+                    <SelectValue>{STATUS_LABELS[inquiry.status]}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(STATUS_LABELS).map(([value, label]) => (
+                      <SelectItem key={value} value={value}>
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
