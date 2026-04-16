@@ -38,12 +38,12 @@ export function TestimonialsCarousel() {
         <div className="relative max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
             {/* Image */}
-            <div className="relative aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-xl">
-              <img src={testimonials[current].image} alt="Gravplate fra Livstreet" className="w-full h-full bg-muted transition-opacity duration-500 object-cover" />
+            <div key={`img-${current}`} className="relative aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-xl animate-fade-in">
+              <img src={testimonials[current].image} alt="Gravplate fra Livstreet" className="w-full h-full bg-muted object-cover" />
             </div>
 
             {/* Quote */}
-            <div className="space-y-3 md:space-y-6 p-2 md:p-4">
+            <div key={`quote-${current}`} className="space-y-3 md:space-y-6 p-2 md:p-4 animate-fade-in">
               <Quote className="h-8 w-8 md:h-12 md:w-12 text-accent opacity-50" />
               <blockquote className="text-base md:text-2xl font-display leading-relaxed text-foreground">
                 "{testimonials[current].quote}"
