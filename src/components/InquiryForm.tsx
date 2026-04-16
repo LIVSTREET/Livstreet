@@ -309,32 +309,6 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
           <div className="space-y-3 pt-2">
             <div className="flex items-start space-x-3 p-3 rounded-lg border border-border">
               <Checkbox
-                id="maintenance"
-                checked={maintenanceSelected}
-                onCheckedChange={(checked) => setMaintenanceSelected(checked === true)}
-              />
-              <div className="flex-1">
-              <div className="flex items-center gap-2">
-                  <Label htmlFor="maintenance" className="font-medium cursor-pointer">
-                    Fabrikkfornyelse
-                  </Label>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-xs">
-                      <p>Ved behov vurderer vi innsending, utbedring eller eventuell ny plate. Løsning avtales fortløpende.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-                <p className="text-sm text-accent font-medium mt-0.5">
-                  Avtales fortløpende
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3 p-3 rounded-lg border border-border">
-              <Checkbox
                 id="installation"
                 checked={installationSelected}
                 onCheckedChange={(checked) => setInstallationSelected(checked === true)}
