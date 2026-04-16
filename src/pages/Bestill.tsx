@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import { PRICING } from "@/lib/constants";
 import templateMellom from "@/assets/template-mellom-1.jpg";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
+import { productJsonLd } from "@/seo/jsonLd";
 
 const product = {
   id: 1,
@@ -17,6 +20,13 @@ const product = {
 export default function Bestill() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/bestill"].title}
+        description={ROUTE_META["/bestill"].description}
+        path="/bestill"
+        type="product"
+        jsonLd={productJsonLd}
+      />
       {/* Hero */}
       <section className="py-10 md:py-20 bg-primary">
         <div className="container text-center px-4">

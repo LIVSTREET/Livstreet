@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Leaf, TreeDeciduous, Globe, CheckCircle2, Heart, Truck, Shield, Quote } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import baerekraftHero from "@/assets/baerekraft-hero.png";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function Baerekraft() {
   return (

@@ -4,6 +4,8 @@ import { Layout } from "@/components/layout/Layout";
 import { getPublishedPlateGalleryImages } from "@/lib/plateGallery";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function Bilder() {
   const { data: images = [], isLoading } = useQuery({

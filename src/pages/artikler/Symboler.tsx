@@ -2,6 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sparkles, Heart, Feather, Flower2, TreeDeciduous, Cross, Anchor, CircleDot, Info, PenTool, MessageCircle } from "lucide-react";
 import symbolImage from "@/assets/article-3.jpg";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function Symboler() {
   return (

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare, FileEdit, CheckCircle, CreditCard, Package, HeartHandshake, Clock } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import heroImage from "@/assets/hva-skjer-etterpa.png";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function HvaSkjerEtterpa() {
   return (

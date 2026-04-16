@@ -1,5 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import article2 from "@/assets/baerekraft-hero.png";

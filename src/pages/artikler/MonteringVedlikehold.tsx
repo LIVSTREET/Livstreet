@@ -4,6 +4,8 @@ import { ArrowLeft, Hammer, Droplets, Clock, Leaf, CheckCircle2, AlertCircle, He
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import { Card, CardContent } from "@/components/ui/card";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function MonteringVedlikehold() {
   return (

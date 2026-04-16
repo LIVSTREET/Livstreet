@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { supabase } from "@/integrations/supabase/client";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 export default function Kontakt() {
   const setInquiryFormData = useCartStore(state => state.setInquiryFormData);
   const existingInquiryData = useCartStore(state => state.inquiryFormData);

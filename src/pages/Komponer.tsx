@@ -19,6 +19,8 @@ import frameOrnamental from "@/assets/frame-ornamental.png";
 import frameSimple from "@/assets/frame-simple.png";
 import frameRoses from "@/assets/frame-roses.png";
 import frameSimpleOrnamental from "@/assets/frame-simple-ornamental.png";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 interface Symbol {
   id: string;

@@ -6,6 +6,8 @@ import oakCraftsmanship from "@/assets/oak-craftsmanship.png";
 import foundersImg from "@/assets/founders.png";
 import pederImg from "@/assets/peder.png";
 import { Heart, Leaf, Hammer, TreeDeciduous, Sparkles, CheckCircle2 } from "lucide-react";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 const values = [
   { icon: Heart, title: "Verdige minner" },
