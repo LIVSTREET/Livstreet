@@ -374,7 +374,8 @@ const handler = async (req: Request): Promise<Response> => {
       to: customerRecipient,
       subject: "Takk for at du tok kontakt – vi følger deg videre",
       html: buildConfirmationEmailHtml(name, hasDesign || false),
-      replyTo: SMTP_USERNAME,
+      // Send kundesvar direkte til admin-innboksen (Gmail) i stedet for SMTP-kontoen
+      replyTo: ADMIN_NOTIFICATION_EMAIL || SMTP_USERNAME,
     };
 
     const sendJob = (async () => {
