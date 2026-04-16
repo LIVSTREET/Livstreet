@@ -10,8 +10,20 @@ export interface SeoHeadProps {
   image?: string;
   type?: "website" | "article" | "product";
   noindex?: boolean;
+  skipCanonical?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
+
+export function SeoHead({
+  title,
+  description,
+  path,
+  image,
+  type = "website",
+  noindex = false,
+  skipCanonical = false,
+  jsonLd,
+}: SeoHeadProps) {
 
 export function SeoHead({
   title,
