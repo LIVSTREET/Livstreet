@@ -82,6 +82,17 @@ function InquiryCard({
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteInquiry(inquiry.id),
+    onSuccess: () => {
+      toast.success("Forespørsel slettet");
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
+    onError: () => {
+      toast.error("Kunne ikke slette forespørsel");
+    },
+  });
+
   return (
     <Card 
       className="cursor-pointer hover:shadow-md transition-shadow"
