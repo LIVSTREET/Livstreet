@@ -13,17 +13,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Mail, Phone, MapPin, Calendar, Package, Loader2, Image as ImageIcon } from "lucide-react";
+import { Search, Mail, Phone, MapPin, Calendar, Package, Loader2, Image as ImageIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   getInquiries,
   updateInquiry,
+  deleteInquiry,
   getDesignImageUrl,
   Inquiry,
   InquiryStatus,
@@ -70,6 +82,17 @@ function InquiryCard({
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteInquiry(inquiry.id),
+    onSuccess: () => {
+      toast.success("Forespørsel slettet");
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
+    onError: () => {
+      toast.error("Kunne ikke slette forespørsel");
+    },
+  });
+
   return (
     <Card 
       className="cursor-pointer hover:shadow-md transition-shadow"
@@ -102,7 +125,7 @@ function InquiryCard({
               <div
                 onClick={(e) => e.stopPropagation()}
                 onPointerDown={(e) => e.stopPropagation()}
-                className="flex-shrink-0"
+                className="flex-shrink-0 flex items-center gap-2"
               >
                 <Select
                   value={inquiry.status}
@@ -122,6 +145,42 @@ function InquiryCard({
                     ))}
                   </SelectContent>
                 </Select>
+                {inquiry.status === "archived" && (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        disabled={deleteMutation.isPending}
+                        aria-label="Slett forespørsel"
+                      >
+                        {deleteMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Slette forespørsel?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Forespørselen fra {inquiry.name} vil bli permanent slettet. Denne handlingen kan ikke angres.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Avbryt</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => deleteMutation.mutate()}
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        >
+                          Slett
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                )}
               </div>
             </div>
 

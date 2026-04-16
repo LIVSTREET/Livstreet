@@ -90,6 +90,11 @@ export async function updateInquiry(
   if (error) throw error;
 }
 
+export async function deleteInquiry(id: string): Promise<void> {
+  const { error } = await supabase.from("inquiries").delete().eq("id", id);
+  if (error) throw error;
+}
+
 export async function getDesignImageUrl(imagePath: string): Promise<string | null> {
   if (!imagePath) return null;
   
