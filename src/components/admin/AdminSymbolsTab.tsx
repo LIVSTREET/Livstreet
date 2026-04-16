@@ -6,8 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { getAllSymbols, createSymbol, updateSymbol, deleteSymbol, type Symbol } from "@/lib/symbols";
-import { Plus, Search, Edit, Trash2, Upload, Loader2 } from "lucide-react";
+import { getAllSymbols, createSymbol, updateSymbol, deleteSymbol, recompressSymbol, type Symbol } from "@/lib/symbols";
+import { Plus, Search, Edit, Trash2, Upload, Loader2, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 const categories = ['kors', 'hjerte', 'natur', 'dyr', 'annet'];
@@ -36,6 +36,8 @@ export function AdminSymbolsTab() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState<Symbol | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [recompressing, setRecompressing] = useState(false);
+  const [recompressProgress, setRecompressProgress] = useState<{ done: number; total: number } | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -142,7 +144,35 @@ export function AdminSymbolsTab() {
     }
   };
 
-  const openEditDialog = (symbol: Symbol) => {
+  const handleRecompressAll = async () => {
+    const candidates = symbols.filter(s => s.file_type !== 'svg' && s.preview_url);
+    if (candidates.length === 0) {
+      toast.info("Ingen symboler å komprimere");
+      return;
+    }
+    if (!confirm(`Komprimer ${candidates.length} symboler? Dette kan ta litt tid.`)) return;
+
+    setRecompressing(true);
+    setRecompressProgress({ done: 0, total: candidates.length });
+    let success = 0;
+    let failed = 0;
+
+    for (let i = 0; i < candidates.length; i++) {
+      try {
+        await recompressSymbol(candidates[i]);
+        success++;
+      } catch (err) {
+        console.error("Recompress failed for", candidates[i].id, err);
+        failed++;
+      }
+      setRecompressProgress({ done: i + 1, total: candidates.length });
+    }
+
+    setRecompressing(false);
+    setRecompressProgress(null);
+    toast.success(`Ferdig: ${success} komprimert${failed > 0 ? `, ${failed} feilet` : ''}`);
+    loadSymbols();
+  };
     setSelectedSymbol(symbol);
     setFormData({
       name: symbol.name,
