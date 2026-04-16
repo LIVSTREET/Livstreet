@@ -1,7 +1,8 @@
 import { useRef, useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Volume2 } from "lucide-react";
+import { Volume2, ArrowRight } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const VIMEO_ID = "1151281409";
@@ -100,6 +101,16 @@ export function VideoSection() {
               <p className="text-lg font-medium">Klikk for lyd</p>
             </div>
           </button>
+        </div>
+
+        <div className="text-center mt-6 md:mt-8">
+          <Link
+            to="/bilder"
+            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+          >
+            Se flere bilder
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
 
