@@ -5,6 +5,7 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import heroImage from "@/assets/hva-skjer-etterpa.png";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
+import { buildArticleJsonLd } from "@/seo/jsonLd";
 
 export default function HvaSkjerEtterpa() {
   return (
@@ -14,6 +15,14 @@ export default function HvaSkjerEtterpa() {
         description={ROUTE_META["/informasjon/hva-skjer-etterpa"].description}
         path="/informasjon/hva-skjer-etterpa"
         type="article"
+        image={heroImage}
+        jsonLd={buildArticleJsonLd({
+          title: ROUTE_META["/informasjon/hva-skjer-etterpa"].title,
+          description: ROUTE_META["/informasjon/hva-skjer-etterpa"].description,
+          path: "/informasjon/hva-skjer-etterpa",
+          image: heroImage,
+          datePublished: "2024-12-15",
+        })}
       />
       {/* Hero Section */}
       <section className="relative py-8 md:py-14 bg-secondary overflow-hidden">

@@ -5,7 +5,7 @@ export const organizationJsonLd = {
   "@type": "Organization",
   name: "Livstreet",
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.png`,
+  logo: `${SITE_URL}/og-image.jpg`,
   email: "post@livstreet.no",
   telephone: "+47 45 25 12 80",
   address: {
@@ -25,6 +25,7 @@ export const websiteJsonLd = {
   inLanguage: "nb-NO",
 };
 
+// Product JSON-LD with offers — price must mirror what's shown on /bestill.
 export const productJsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -32,6 +33,50 @@ export const productJsonLd = {
   description:
     "Personlig gravplate i eik. Lasergravering, valgfritt symbol og 1–2 navn inkludert.",
   brand: { "@type": "Brand", name: "Livstreet" },
-  category: "Memorial / Gravplate",
+  category: "Memorial",
   url: `${SITE_URL}/bestill`,
+  image: `${SITE_URL}/og-image.jpg`,
+  offers: {
+    "@type": "Offer",
+    url: `${SITE_URL}/bestill`,
+    priceCurrency: "NOK",
+    price: "19950",
+    availability: "https://schema.org/InStock",
+    seller: { "@type": "Organization", name: "Livstreet" },
+  },
 };
+
+interface ArticleMetaInput {
+  title: string;
+  description: string;
+  path: string;
+  image: string; // absolute or path-relative
+  datePublished: string; // ISO date
+  dateModified?: string;
+}
+
+export function buildArticleJsonLd(input: ArticleMetaInput) {
+  const url = `${SITE_URL}${input.path}`;
+  const image = input.image.startsWith("http")
+    ? input.image
+    : `${SITE_URL}${input.image}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: input.title,
+    description: input.description,
+    image,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified ?? input.datePublished,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Organization", name: "Livstreet" },
+    publisher: {
+      "@type": "Organization",
+      name: "Livstreet",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/og-image.jpg`,
+      },
+    },
+  };
+}

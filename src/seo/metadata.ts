@@ -53,7 +53,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/informasjon/hva-skjer-etterpa": {
     path: "/informasjon/hva-skjer-etterpa",
-    title: "Hva skjer etter bestilling? – prosessen steg for steg",
+    title: "Etter bestilling – prosessen steg for steg",
     description:
       "En trygg prosess: slik foregår design, godkjenning, produksjon og levering av din gravplate.",
   },

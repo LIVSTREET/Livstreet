@@ -10,6 +10,7 @@ export interface SeoHeadProps {
   image?: string;
   type?: "website" | "article" | "product";
   noindex?: boolean;
+  skipCanonical?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -20,6 +21,7 @@ export function SeoHead({
   image,
   type = "website",
   noindex = false,
+  skipCanonical = false,
   jsonLd,
 }: SeoHeadProps) {
   const url = `${SITE_URL}${path}`;
@@ -35,7 +37,7 @@ export function SeoHead({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+      {!skipCanonical && <link rel="canonical" href={url} />}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       {/* Open Graph */}
