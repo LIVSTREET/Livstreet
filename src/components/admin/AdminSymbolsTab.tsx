@@ -173,6 +173,8 @@ export function AdminSymbolsTab() {
     toast.success(`Ferdig: ${success} komprimert${failed > 0 ? `, ${failed} feilet` : ''}`);
     loadSymbols();
   };
+
+  const openEditDialog = (symbol: Symbol) => {
     setSelectedSymbol(symbol);
     setFormData({
       name: symbol.name,
