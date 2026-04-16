@@ -77,6 +77,11 @@ export default function Kontakt() {
     }
   };
   return <Layout>
+      <SeoHead
+        title={ROUTE_META["/kontakt"].title}
+        description={ROUTE_META["/kontakt"].description}
+        path="/kontakt"
+      />
       {/* Hero */}
       <section className="py-10 md:py-20 bg-primary">
         <div className="container text-center px-4">
