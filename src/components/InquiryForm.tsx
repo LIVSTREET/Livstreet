@@ -333,12 +333,6 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
               <span>Standard gravplate</span>
               <span>{formatPrice(basePrice)}</span>
             </div>
-            {maintenanceSelected && (
-              <div className="flex justify-between text-sm">
-                <span>Fabrikkfornyelse</span>
-                <span>Avtales fortløpende</span>
-              </div>
-            )}
             {installationSelected && (
               <div className="flex justify-between text-sm">
                 <span>Montering Oslo</span>
