@@ -17,6 +17,14 @@ const RESEND_FROM = (Deno.env.get("RESEND_FROM") ?? "Livstreet <onboarding@resen
 const GMAIL_APP_PASSWORD = (Deno.env.get("GMAIL_APP_PASSWORD") ?? "").replace(/\s+/g, "");
 const GMAIL_USER = "livstreet.store@gmail.com";
 
+// Domain SMTP (Domene.no) for internal admin notifications
+const SMTP_HOST = (Deno.env.get("SMTP_HOST") ?? "").trim();
+const SMTP_PORT = Number(Deno.env.get("SMTP_PORT") ?? "465");
+const SMTP_USERNAME = (Deno.env.get("SMTP_USERNAME") ?? "").trim();
+const SMTP_PASSWORD = (Deno.env.get("SMTP_PASSWORD") ?? "").trim();
+const ADMIN_NOTIFICATION_EMAIL = (Deno.env.get("ADMIN_NOTIFICATION_EMAIL") ?? "").trim();
+const SMTP_FROM = (Deno.env.get("SMTP_FROM") ?? `Livstreet <${SMTP_USERNAME}>`).trim();
+
 const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
 const REPLY_TO_EMAIL = "livstreet.store@gmail.com";
 
