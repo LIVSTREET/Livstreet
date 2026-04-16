@@ -311,7 +311,7 @@ function InquiryDetail({
 }
 
 export function AdminInboxTab() {
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("new");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
 
