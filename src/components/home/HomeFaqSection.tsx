@@ -20,29 +20,35 @@ export function HomeFaqSection() {
           </p>
         </header>
 
-        <div className="space-y-10">
-          {FAQ_SECTIONS.map((section) => (
-            <div key={section.sectionTitle}>
-              <h3 className="font-serif text-xl md:text-2xl text-foreground mb-3">
+        <Accordion type="multiple" className="w-full space-y-3">
+          {FAQ_SECTIONS.map((section, idx) => (
+            <AccordionItem
+              key={section.sectionTitle}
+              value={`section-${idx}`}
+              className="border rounded-lg bg-background px-4"
+            >
+              <AccordionTrigger className="text-left font-serif text-lg md:text-xl text-foreground hover:no-underline">
                 {section.sectionTitle}
-              </h3>
-              <Accordion type="multiple" className="w-full">
-                {section.items.map((item) => (
-                  <AccordionItem key={item.id} value={item.id}>
-                    <AccordionTrigger className="text-left">
-                      {item.question}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {item.answer}
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <Accordion type="multiple" className="w-full">
+                  {section.items.map((item) => (
+                    <AccordionItem key={item.id} value={item.id}>
+                      <AccordionTrigger className="text-left text-base">
+                        {item.question}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );
