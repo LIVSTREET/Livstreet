@@ -35,8 +35,8 @@ export default function Kjopsvilkar() {
               </h2>
               <div className="text-sm md:text-base text-muted-foreground space-y-3">
                 <p>Alle priser er oppgitt i <strong>norske kroner (NOK)</strong> og inkluderer merverdiavgift der dette er påkrevd.</p>
-                <p>Bestilling via nettsiden innebærer en <strong>forespørsel</strong> og er ikke bindende før kunden har mottatt og akseptert faktura.</p>
-                <p><strong>Betaling skjer utelukkende via faktura</strong>, som sendes til kunden etter bekreftet bestilling. Betalingsfrist fremgår av fakturaen.</p>
+                <p>Bestilling via nettsiden er en <strong>forespørsel</strong> og er ikke bindende før design og omfang er avklart skriftlig.</p>
+                <p><strong>Faktura sendes per e-post etter levering/montering.</strong> Betalingsfrist fremgår av fakturaen.</p>
                 <p>Ingen betaling gjennomføres direkte via nettsiden eller Shopify.</p>
               </div>
             </section>
@@ -48,9 +48,10 @@ export default function Kjopsvilkar() {
               </h2>
               <div className="text-sm md:text-base text-muted-foreground space-y-3">
                 <p>Alle produkter fra Livstreet produseres på bestilling etter kundens spesifikasjoner.</p>
-                <p>Forventet leveringstid er normalt <strong>2–3 uker</strong>. I perioder med høy pågang (for eksempel sommerferie) kan leveringstiden være opptil <strong>4 uker</strong>.</p>
-                <p>Produksjon igangsettes først etter at faktura er akseptert og betaling er mottatt, med mindre annet er avtalt skriftlig.</p>
+                <p>Normal leveringstid er <strong>2–4 uker</strong>. Ved særlig høy pågang kan leveringstiden bli lengre, og du varsles i så fall.</p>
+                <p>Produksjon igangsettes først etter at design er avklart skriftlig med deg.</p>
                 <p>Levering skjer til adressen kunden oppgir. Kunden vil bli informert dersom det oppstår forsinkelser.</p>
+                <p><strong>Gratis montering i Oslo-området tilbys i en introduksjonsperiode og kan avsluttes uten varsel.</strong></p>
               </div>
             </section>
 

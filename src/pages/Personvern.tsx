@@ -47,7 +47,13 @@ export default function Personvern() {
                 <li>Eventuelle meldinger eller tilleggsopplysninger du selv oppgir</li>
               </ul>
               <p className="text-sm md:text-base text-muted-foreground mt-4">
-                Vi samler <strong>ikke</strong> inn personopplysninger via cookies, analyseverktøy eller sporing.
+                Vi bruker ikke egne markedsførings- eller sporingsverktøy for profilering av besøkende.
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground mt-3">
+                Nettbutikkløsningen kan bruke teknisk nødvendige cookies for at funksjoner som handlekurv og utsjekk skal virke.
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground mt-3">
+                Vi bruker eksterne systemer for drift av nettbutikk, henvendelser, lagring og levering av tjenester, kun i nødvendig omfang.
               </p>
             </section>
 

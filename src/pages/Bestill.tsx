@@ -73,7 +73,7 @@ export default function Bestill() {
               Trenger du hjelp med bestillingen?
             </h3>
             <p className="text-muted-foreground text-sm md:text-base mb-4 md:mb-6">
-              Vi hjelper deg gjerne med å designe den perfekte gravplaten. 
+              Vi hjelper deg gjerne med å utforme en gravplate som hedrer dine kjære på en varm og personlig måte.
               Ta kontakt så finner vi løsningen sammen.
             </p>
             <Button variant="outline" size="lg" asChild>
