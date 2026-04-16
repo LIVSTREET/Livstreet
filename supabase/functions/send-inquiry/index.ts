@@ -17,6 +17,14 @@ const RESEND_FROM = (Deno.env.get("RESEND_FROM") ?? "Livstreet <onboarding@resen
 const GMAIL_APP_PASSWORD = (Deno.env.get("GMAIL_APP_PASSWORD") ?? "").replace(/\s+/g, "");
 const GMAIL_USER = "livstreet.store@gmail.com";
 
+// Domain SMTP (Domene.no) for internal admin notifications
+const SMTP_HOST = (Deno.env.get("SMTP_HOST") ?? "").trim();
+const SMTP_PORT = Number(Deno.env.get("SMTP_PORT") ?? "465");
+const SMTP_USERNAME = (Deno.env.get("SMTP_USERNAME") ?? "").trim();
+const SMTP_PASSWORD = (Deno.env.get("SMTP_PASSWORD") ?? "").trim();
+const ADMIN_NOTIFICATION_EMAIL = (Deno.env.get("ADMIN_NOTIFICATION_EMAIL") ?? "").trim();
+const SMTP_FROM = (Deno.env.get("SMTP_FROM") ?? `Livstreet <${SMTP_USERNAME}>`).trim();
+
 const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
 const REPLY_TO_EMAIL = "livstreet.store@gmail.com";
 
@@ -355,6 +363,77 @@ function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
   `;
 }
 
+function buildAdminNotificationHtml(inquiryId: string, data: InquiryRequest): string {
+  const sourceLabel = data.source === "contact" ? "Kontaktskjema" : "Bestillingsskjema/Konfigurator";
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #2c2c2c; line-height: 1.6; padding: 20px;">
+      <h2 style="color: #5c4a3a; margin-bottom: 16px;">Ny forespørsel fra Livstreet</h2>
+
+      <p style="margin: 4px 0;"><strong>Navn:</strong> ${data.name}</p>
+      <p style="margin: 4px 0;"><strong>Telefon:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
+      <p style="margin: 4px 0;"><strong>E-post:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+      ${data.address ? `<p style="margin: 4px 0;"><strong>Adresse:</strong> ${data.address}</p>` : ""}
+      <p style="margin: 4px 0;"><strong>Kilde:</strong> ${sourceLabel}</p>
+      ${data.totalPrice ? `<p style="margin: 4px 0;"><strong>Totalpris:</strong> ${data.totalPrice.toLocaleString("nb-NO")} kr</p>` : ""}
+      <p style="margin: 4px 0;"><strong>Design vedlagt:</strong> ${data.hasDesign ? "Ja" : "Nei"}</p>
+      <p style="margin: 4px 0; font-size: 12px; color: #888;"><strong>ID:</strong> ${inquiryId}</p>
+
+      <h3 style="color: #5c4a3a; margin-top: 20px; margin-bottom: 8px;">Melding</h3>
+      <p style="white-space: pre-wrap; background-color: #f9f7f5; padding: 12px; border-radius: 6px;">${data.description}</p>
+
+      <p style="margin-top: 24px;">
+        <a href="https://livstreet.org/admin" style="background-color: #5c4a3a; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Åpne admin</a>
+      </p>
+    </div>
+  `;
+}
+
+async function sendViaDomainSMTP(
+  payload: EmailPayload,
+): Promise<{ success: boolean; provider: "domain_smtp"; error?: string }> {
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USERNAME || !SMTP_PASSWORD) {
+    return {
+      success: false,
+      provider: "domain_smtp",
+      error: "SMTP settings are missing",
+    };
+  }
+
+  const client = new SMTPClient({
+    connection: {
+      hostname: SMTP_HOST,
+      port: SMTP_PORT,
+      tls: true,
+      auth: {
+        username: SMTP_USERNAME,
+        password: SMTP_PASSWORD,
+      },
+    },
+  });
+
+  try {
+    await client.send({
+      from: SMTP_FROM,
+      to: payload.to,
+      subject: payload.subject,
+      content: "auto",
+      html: payload.html,
+      replyTo: payload.replyTo || SMTP_USERNAME,
+    });
+
+    return { success: true, provider: "domain_smtp" };
+  } catch (error: any) {
+    console.error("Domain SMTP exception:", error);
+    return { success: false, provider: "domain_smtp", error: error.message };
+  } finally {
+    try {
+      await client.close();
+    } catch {
+      // ignore
+    }
+  }
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -386,6 +465,26 @@ const handler = async (req: Request): Promise<Response> => {
       safeEmailLog(`Inquiry saved to database: ${inquiryId}`);
     } else {
       console.error("Failed to save inquiry to database - continuing with email only");
+    }
+
+    // Step 3b: Send internal admin notification via Domene.no SMTP
+    if (saved && ADMIN_NOTIFICATION_EMAIL) {
+      const adminPayload: EmailPayload = {
+        to: [ADMIN_NOTIFICATION_EMAIL],
+        subject: `Ny forespørsel fra ${data.name}`,
+        html: buildAdminNotificationHtml(inquiryId, data),
+        replyTo: data.email || SMTP_USERNAME,
+      };
+
+      const adminJob = (async () => {
+        const result = await sendViaDomainSMTP(adminPayload);
+        safeEmailLog(
+          `Admin notification: ${result.success ? "sent" : "failed"} (provider=${result.provider})${result.error ? ` error=${result.error}` : ""}`,
+        );
+      })();
+
+      // @ts-ignore
+      EdgeRuntime.waitUntil(adminJob);
     }
 
     // Step 4: Send confirmation email to customer only (no internal email - we use inbox now)
