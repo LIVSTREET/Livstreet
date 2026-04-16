@@ -1,10 +1,17 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield, CheckCircle2, Wrench, Info, Mail, Phone, AlertCircle } from "lucide-react";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function KvalitetVedlikehold() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/kvalitet-vedlikehold"].title}
+        description={ROUTE_META["/kvalitet-vedlikehold"].description}
+        path="/kvalitet-vedlikehold"
+      />
       {/* Hero Section */}
       <section className="py-10 md:py-20 bg-primary">
         <div className="container px-4">

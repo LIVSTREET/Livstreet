@@ -6,10 +6,20 @@ import { ConfiguratorTeaser } from "@/components/home/ConfiguratorTeaser";
 import { StepsSection } from "@/components/home/StepsSection";
 import { ArticlesSection } from "@/components/home/ArticlesSection";
 import { ContactSection } from "@/components/home/ContactSection";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
+import { organizationJsonLd, websiteJsonLd } from "@/seo/jsonLd";
 
 const Index = () => {
+  const meta = ROUTE_META["/"];
   return (
     <Layout>
+      <SeoHead
+        title={meta.title}
+        description={meta.description}
+        path={meta.path}
+        jsonLd={[organizationJsonLd, websiteJsonLd]}
+      />
       <HeroSection />
       <TestimonialsCarousel />
       <VideoSection />

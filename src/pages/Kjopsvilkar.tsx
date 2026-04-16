@@ -1,8 +1,15 @@
 import { Layout } from "@/components/layout/Layout";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function Kjopsvilkar() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/kjopsvilkar"].title}
+        description={ROUTE_META["/kjopsvilkar"].description}
+        path="/kjopsvilkar"
+      />
       <div className="container py-10 md:py-20 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-2xl md:text-4xl font-display font-bold text-primary mb-6 md:mb-8">

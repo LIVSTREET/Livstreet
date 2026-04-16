@@ -1,5 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import article2 from "@/assets/baerekraft-hero.png";
@@ -48,6 +50,11 @@ const articles = [
 export default function Informasjon() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/informasjon"].title}
+        description={ROUTE_META["/informasjon"].description}
+        path="/informasjon"
+      />
       {/* Hero */}
       <section className="py-10 md:py-20 bg-secondary">
         <div className="container text-center px-4">

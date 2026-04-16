@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { supabase } from "@/integrations/supabase/client";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 export default function Kontakt() {
   const setInquiryFormData = useCartStore(state => state.setInquiryFormData);
   const existingInquiryData = useCartStore(state => state.inquiryFormData);
@@ -75,6 +77,11 @@ export default function Kontakt() {
     }
   };
   return <Layout>
+      <SeoHead
+        title={ROUTE_META["/kontakt"].title}
+        description={ROUTE_META["/kontakt"].description}
+        path="/kontakt"
+      />
       {/* Hero */}
       <section className="py-10 md:py-20 bg-primary">
         <div className="container text-center px-4">

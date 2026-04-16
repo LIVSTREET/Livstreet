@@ -6,6 +6,8 @@ import oakCraftsmanship from "@/assets/oak-craftsmanship.png";
 import foundersImg from "@/assets/founders.png";
 import pederImg from "@/assets/peder.png";
 import { Heart, Leaf, Hammer, TreeDeciduous, Sparkles, CheckCircle2 } from "lucide-react";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 const values = [
   { icon: Heart, title: "Verdige minner" },
@@ -23,6 +25,11 @@ const gravminnePoints = [
 export default function OmOss() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/om-oss"].title}
+        description={ROUTE_META["/om-oss"].description}
+        path="/om-oss"
+      />
       {/* Hero */}
       <section className="py-12 md:py-24 bg-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/80 to-primary" />

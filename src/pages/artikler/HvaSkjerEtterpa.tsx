@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare, FileEdit, CheckCircle, CreditCard, Package, HeartHandshake, Clock } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import heroImage from "@/assets/hva-skjer-etterpa.png";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
 
 export default function HvaSkjerEtterpa() {
   return (
     <Layout>
+      <SeoHead
+        title={ROUTE_META["/informasjon/hva-skjer-etterpa"].title}
+        description={ROUTE_META["/informasjon/hva-skjer-etterpa"].description}
+        path="/informasjon/hva-skjer-etterpa"
+        type="article"
+      />
       {/* Hero Section */}
       <section className="relative py-8 md:py-14 bg-secondary overflow-hidden">
         <div className="container px-4">

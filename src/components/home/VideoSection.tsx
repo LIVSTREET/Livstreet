@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Volume2 } from "lucide-react";
@@ -12,7 +12,25 @@ const SOUND_SRC = `https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=
 
 export function VideoSection() {
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
+
+  // Lazy-load Vimeo iframe only when near viewport (CWV optimization)
+  useEffect(() => {
+    if (shouldLoadIframe || !containerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShouldLoadIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [shouldLoadIframe]);
 
   const setIframeRef = useCallback((node: HTMLIFrameElement | null) => {
     if (!node) {
@@ -52,16 +70,22 @@ export function VideoSection() {
         </div>
 
         {/* Card */}
-        <div className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/50 focus-within:ring-primary">
-          <iframe
-            src={PREVIEW_SRC}
-            className="w-full h-full pointer-events-none"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            title="Produksjonsvideo (forhåndsvisning)"
-          />
+        <div
+          ref={containerRef}
+          className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/50 focus-within:ring-primary bg-muted"
+        >
+          {shouldLoadIframe && (
+            <iframe
+              src={PREVIEW_SRC}
+              className="w-full h-full pointer-events-none"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              title="Produksjonsvideo (forhåndsvisning)"
+              loading="lazy"
+            />
+          )}
 
           <button
             type="button"
