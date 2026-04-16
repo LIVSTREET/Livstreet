@@ -29,9 +29,6 @@ export function HeroSection() {
 
           {/* CTA area */}
           <div className="pt-2 space-y-5">
-            <p className="hidden md:block text-sm md:text-base font-medium text-primary-foreground/80 drop-shadow-sm font-serif">
-              Start her – vi hjelper deg hele veien
-            </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl">
                 <Link to="/komponer">Lag min gravplate</Link>
@@ -40,9 +37,6 @@ export function HeroSection() {
                 <Link to="/kontakt">Få hjelp / kontakt oss</Link>
               </Button>
             </div>
-            <p className="hidden md:block text-xs md:text-sm text-primary-foreground/70 drop-shadow-sm max-w-sm">
-              Design selv og send inn – vi tar kontakt før produksjon
-            </p>
           </div>
         </div>
       </div>
