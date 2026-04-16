@@ -4,7 +4,7 @@ import { ArrowLeft, Sparkles, Heart, Feather, Flower2, TreeDeciduous, Cross, Anc
 import symbolImage from "@/assets/article-3.jpg";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
-import { buildArticleJsonLd } from "@/seo/jsonLd";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/seo/jsonLd";
 
 export default function Symboler() {
   return (
@@ -15,13 +15,20 @@ export default function Symboler() {
         path="/informasjon/symboler"
         type="article"
         image={symbolImage}
-        jsonLd={buildArticleJsonLd({
-          title: ROUTE_META["/informasjon/symboler"].title,
-          description: ROUTE_META["/informasjon/symboler"].description,
-          path: "/informasjon/symboler",
-          image: symbolImage,
-          datePublished: "2024-12-05",
-        })}
+        jsonLd={[
+          buildArticleJsonLd({
+            title: ROUTE_META["/informasjon/symboler"].title,
+            description: ROUTE_META["/informasjon/symboler"].description,
+            path: "/informasjon/symboler",
+            image: symbolImage,
+            datePublished: "2024-12-05",
+          }),
+          buildBreadcrumbJsonLd([
+            { name: "Hjem", path: "/" },
+            { name: "Informasjon", path: "/informasjon" },
+            { name: "Symboler", path: "/informasjon/symboler" },
+          ]),
+        ]}
       />
       {/* Hero Section */}
       <section className="relative py-8 md:py-14 bg-gradient-to-b from-primary/5 via-accent/5 to-background overflow-hidden">

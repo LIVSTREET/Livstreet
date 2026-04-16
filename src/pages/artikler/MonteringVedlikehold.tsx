@@ -6,7 +6,7 @@ import monteringImg from "@/assets/montering-vedlikehold.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
-import { buildArticleJsonLd } from "@/seo/jsonLd";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/seo/jsonLd";
 
 export default function MonteringVedlikehold() {
   return (
@@ -17,13 +17,20 @@ export default function MonteringVedlikehold() {
         path="/informasjon/montering-vedlikehold"
         type="article"
         image={monteringImg}
-        jsonLd={buildArticleJsonLd({
-          title: ROUTE_META["/informasjon/montering-vedlikehold"].title,
-          description: ROUTE_META["/informasjon/montering-vedlikehold"].description,
-          path: "/informasjon/montering-vedlikehold",
-          image: monteringImg,
-          datePublished: "2025-01-07",
-        })}
+        jsonLd={[
+          buildArticleJsonLd({
+            title: ROUTE_META["/informasjon/montering-vedlikehold"].title,
+            description: ROUTE_META["/informasjon/montering-vedlikehold"].description,
+            path: "/informasjon/montering-vedlikehold",
+            image: monteringImg,
+            datePublished: "2025-01-07",
+          }),
+          buildBreadcrumbJsonLd([
+            { name: "Hjem", path: "/" },
+            { name: "Informasjon", path: "/informasjon" },
+            { name: "Montering og vedlikehold", path: "/informasjon/montering-vedlikehold" },
+          ]),
+        ]}
       />
       {/* Hero */}
       <section className="relative py-8 md:py-14 bg-gradient-to-b from-secondary to-background overflow-hidden">
