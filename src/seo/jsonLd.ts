@@ -126,3 +126,21 @@ export function buildArticleJsonLd(input: ArticleMetaInput) {
     },
   };
 }
+
+export function buildFaqPageJsonLd(
+  sections: FaqSection[],
+): Record<string, unknown> {
+  const flat = sections.flatMap((s) => s.items);
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: flat.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
