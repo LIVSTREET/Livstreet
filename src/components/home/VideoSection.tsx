@@ -103,13 +103,13 @@ export function VideoSection() {
           </button>
         </div>
 
-        <div className="text-center mt-6 md:mt-8">
+        <div className="text-center mt-8 md:mt-10">
           <Link
             to="/bilder"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full bg-primary text-primary-foreground font-medium text-base md:text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all"
           >
             Se flere bilder
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
