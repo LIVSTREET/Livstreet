@@ -317,6 +317,7 @@ export function AdminSymbolsTab() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Filters */}
