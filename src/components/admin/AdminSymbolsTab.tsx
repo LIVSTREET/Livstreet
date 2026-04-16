@@ -6,8 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { getAllSymbols, createSymbol, updateSymbol, deleteSymbol, type Symbol } from "@/lib/symbols";
-import { Plus, Search, Edit, Trash2, Upload, Loader2 } from "lucide-react";
+import { getAllSymbols, createSymbol, updateSymbol, deleteSymbol, recompressSymbol, type Symbol } from "@/lib/symbols";
+import { Plus, Search, Edit, Trash2, Upload, Loader2, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 const categories = ['kors', 'hjerte', 'natur', 'dyr', 'annet'];
@@ -36,6 +36,8 @@ export function AdminSymbolsTab() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState<Symbol | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [recompressing, setRecompressing] = useState(false);
+  const [recompressProgress, setRecompressProgress] = useState<{ done: number; total: number } | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -142,6 +144,36 @@ export function AdminSymbolsTab() {
     }
   };
 
+  const handleRecompressAll = async () => {
+    const candidates = symbols.filter(s => s.file_type !== 'svg' && s.preview_url);
+    if (candidates.length === 0) {
+      toast.info("Ingen symboler å komprimere");
+      return;
+    }
+    if (!confirm(`Komprimer ${candidates.length} symboler? Dette kan ta litt tid.`)) return;
+
+    setRecompressing(true);
+    setRecompressProgress({ done: 0, total: candidates.length });
+    let success = 0;
+    let failed = 0;
+
+    for (let i = 0; i < candidates.length; i++) {
+      try {
+        await recompressSymbol(candidates[i]);
+        success++;
+      } catch (err) {
+        console.error("Recompress failed for", candidates[i].id, err);
+        failed++;
+      }
+      setRecompressProgress({ done: i + 1, total: candidates.length });
+    }
+
+    setRecompressing(false);
+    setRecompressProgress(null);
+    toast.success(`Ferdig: ${success} komprimert${failed > 0 ? `, ${failed} feilet` : ''}`);
+    loadSymbols();
+  };
+
   const openEditDialog = (symbol: Symbol) => {
     setSelectedSymbol(symbol);
     setFormData({
@@ -176,14 +208,30 @@ export function AdminSymbolsTab() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-xl font-semibold">Symbol-bibliotek</h2>
-        
-        <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => resetForm()}>
-              <Plus className="w-4 h-4 mr-2" />
-              Last opp symbol
-            </Button>
-          </DialogTrigger>
+
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            variant="outline"
+            onClick={handleRecompressAll}
+            disabled={recompressing || loading}
+          >
+            {recompressing ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Zap className="w-4 h-4 mr-2" />
+            )}
+            {recompressing && recompressProgress
+              ? `Komprimerer ${recompressProgress.done}/${recompressProgress.total}`
+              : "Komprimer alle"}
+          </Button>
+
+          <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => resetForm()}>
+                <Plus className="w-4 h-4 mr-2" />
+                Last opp symbol
+              </Button>
+            </DialogTrigger>
           <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>Last opp symbol</DialogTitle>
@@ -269,6 +317,7 @@ export function AdminSymbolsTab() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Filters */}

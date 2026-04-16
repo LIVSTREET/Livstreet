@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { compressImageFile } from "@/lib/imageCompression";
 
 export interface Symbol {
   id: string;
@@ -106,16 +107,20 @@ export async function getAllSymbols(): Promise<Symbol[]> {
   return (data || []) as Symbol[];
 }
 
-// Admin: Last opp symbol fil til Storage
+// Admin: Last opp symbol fil til Storage (med komprimering)
 export async function uploadSymbolFile(file: File, symbolId: string): Promise<string> {
-  const fileExt = file.name.split('.').pop();
+  // Komprimer bildet først for raskere lasting i konfiguratoren
+  const compressed = await compressImageFile(file);
+
+  const fileExt = compressed.name.split('.').pop();
   const fileName = `${symbolId}/preview.${fileExt}`;
 
   const { data, error } = await supabase.storage
     .from('symbols')
-    .upload(fileName, file, {
-      cacheControl: '3600',
+    .upload(fileName, compressed, {
+      cacheControl: '31536000', // 1 år – symbolene er immutable per id
       upsert: true,
+      contentType: compressed.type,
     });
 
   if (error) {
@@ -127,6 +132,27 @@ export async function uploadSymbolFile(file: File, symbolId: string): Promise<st
     .getPublicUrl(data.path);
 
   return urlData.publicUrl;
+}
+
+// Admin: Komprimer et eksisterende symbol (laster ned, komprimerer, laster opp på nytt)
+export async function recompressSymbol(symbol: Symbol): Promise<Symbol> {
+  if (!symbol.preview_url) return symbol;
+  if (symbol.file_type === 'svg') return symbol;
+
+  const res = await fetch(symbol.preview_url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Kunne ikke hente bilde: ${res.status}`);
+  const blob = await res.blob();
+  const originalName = symbol.preview_url.split('/').pop() || `${symbol.id}.png`;
+  const file = new File([blob], originalName, { type: blob.type || 'image/png' });
+
+  const newUrl = await uploadSymbolFile(file, symbol.id);
+  // Cache-bust ved å legge på timestamp
+  const bustedUrl = `${newUrl}?v=${Date.now()}`;
+
+  return await updateSymbol(symbol.id, {
+    preview_url: bustedUrl,
+    source_url: bustedUrl,
+  });
 }
 
 // Admin: Last opp symbol med metadata
