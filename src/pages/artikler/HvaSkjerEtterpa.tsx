@@ -127,10 +127,13 @@ export default function HvaSkjerEtterpa() {
                 </div>
                 <div>
                   <h2 className="font-display text-xl md:text-2xl font-semibold mb-3">
-                    4. Faktura og oppstart av produksjon
+                    4. Produksjon starter etter avklart design
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Etter godkjenning sender vi faktura. Når betalingen er mottatt, settes gravplaten i produksjon. Hver plate lages i massivt eiketre og ferdigstilles med stor nøyaktighet og omtanke.
+                    Produksjon starter etter at design er avklart med deg. Hver plate lages i massivt eiketre og ferdigstilles med stor nøyaktighet og omtanke.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mt-3">
+                    Faktura sendes per e-post etter levering/montering.
                   </p>
                 </div>
               </div>
@@ -147,10 +150,10 @@ export default function HvaSkjerEtterpa() {
                     5. Produksjon og levering
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Normal produksjonstid er 2–3 uker fra betalingen er registrert. Dersom du har behov for raskere levering, kan du ta kontakt med oss – så ser vi på mulighetene.
+                    Normal leveringstid er 2–4 uker. Ved særlig høy pågang kan leveringstiden bli lengre, og du varsles i så fall.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mt-3">
-                    Når gravplaten er ferdig, avtaler vi levering videre med deg.
+                    Når gravplaten er ferdig, avtaler vi levering videre med deg. Faktura sendes per e-post etter levering/montering.
                   </p>
                 </div>
               </div>
