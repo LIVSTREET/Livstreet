@@ -9,6 +9,7 @@ import { AdminInboxTab } from "@/components/admin/AdminInboxTab";
 import { AdminSymbolsTab } from "@/components/admin/AdminSymbolsTab";
 import { AdminPartnershipTab } from "@/components/admin/AdminPartnershipTab";
 import { AdminPlateGalleryTab } from "@/components/admin/AdminPlateGalleryTab";
+import { SeoHead } from "@/seo/SeoHead";
 
 export default function Admin() {
   const { user, signOut } = useAuth();
@@ -34,6 +35,13 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead
+        title="Admin"
+        description="Admin-portal for Livstreet."
+        path="/admin"
+        noindex
+        skipCanonical
+      />
       {/* Header */}
       <header className="border-b bg-card sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">

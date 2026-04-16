@@ -1,3 +1,5 @@
+import { PRICING } from "@/lib/constants";
+
 const SITE_URL = "https://livstreet.no";
 
 export const organizationJsonLd = {
@@ -40,7 +42,7 @@ export const productJsonLd = {
     "@type": "Offer",
     url: `${SITE_URL}/bestill`,
     priceCurrency: "NOK",
-    price: "19950",
+    price: String(PRICING.BASE_PRICE),
     availability: "https://schema.org/InStock",
     seller: { "@type": "Organization", name: "Livstreet" },
   },
