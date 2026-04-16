@@ -24,7 +24,7 @@ const steps = [
   {
     icon: Truck,
     title: "5. Levering",
-    description: "Innen 2–3 uker. Vi hjelper deg videre ved behov.",
+    description: "Normalt 2–4 uker. Ved høy pågang kan levering ta lengre tid, og du varsles.",
   },
 ];
 
