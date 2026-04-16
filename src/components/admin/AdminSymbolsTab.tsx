@@ -208,14 +208,30 @@ export function AdminSymbolsTab() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-xl font-semibold">Symbol-bibliotek</h2>
-        
-        <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => resetForm()}>
-              <Plus className="w-4 h-4 mr-2" />
-              Last opp symbol
-            </Button>
-          </DialogTrigger>
+
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            variant="outline"
+            onClick={handleRecompressAll}
+            disabled={recompressing || loading}
+          >
+            {recompressing ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Zap className="w-4 h-4 mr-2" />
+            )}
+            {recompressing && recompressProgress
+              ? `Komprimerer ${recompressProgress.done}/${recompressProgress.total}`
+              : "Komprimer alle"}
+          </Button>
+
+          <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => resetForm()}>
+                <Plus className="w-4 h-4 mr-2" />
+                Last opp symbol
+              </Button>
+            </DialogTrigger>
           <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>Last opp symbol</DialogTitle>
