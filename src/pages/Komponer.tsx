@@ -152,7 +152,7 @@ export default function Komponer() {
     })?.node || product.node.variants.edges[0]?.node;
   }, [product, selectedNameCount]);
 
-  const price = selectedVariant ? parseFloat(selectedVariant.price.amount) : 3990;
+  const price = PRICING.BASE_PRICE;
   const currencyCode = selectedVariant?.price.currencyCode || "NOK";
 
   const formatPrice = (amount: number) => {
@@ -1146,10 +1146,13 @@ export default function Komponer() {
 
               {/* Price & Submit */}
               <div className="bg-primary text-primary-foreground p-6 rounded-xl shadow-xl">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-1">
                   <span className="text-lg">Veiledende pris:</span>
                   <span className="text-3xl font-bold">{formatPrice(PRICING.BASE_PRICE)}</span>
                 </div>
+                <p className="text-xs text-primary-foreground/70 mb-4">
+                  Virksomheten er foreløpig ikke mva-registrert. Ingen merverdiavgift beregnes.
+                </p>
                 <Button 
                   onClick={handleSendInquiry}
                   variant="secondary"
@@ -1717,10 +1720,13 @@ export default function Komponer() {
 
                 {/* Price & Submit */}
                 <div className="bg-primary text-primary-foreground p-4 rounded-xl">
-                  <div className="flex justify-between items-center mb-3">
+                  <div className="flex justify-between items-center mb-1">
                     <span className="font-semibold">Gravplate</span>
                     <span className="text-xl font-bold">{formatPrice(PRICING.BASE_PRICE)}</span>
                   </div>
+                  <p className="text-xs text-primary-foreground/70 mb-3">
+                    Virksomheten er foreløpig ikke mva-registrert. Ingen merverdiavgift beregnes.
+                  </p>
                   <Button
                     onClick={handleSendInquiry}
                     variant="secondary"

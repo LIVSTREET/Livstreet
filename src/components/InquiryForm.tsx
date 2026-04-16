@@ -340,7 +340,7 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
               </div>
             )}
             <div className="flex justify-between pt-2 border-t border-primary-foreground/20">
-              <span className="font-semibold">Total forespørselspris</span>
+              <span className="font-semibold">Total pris</span>
               <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
             </div>
             <p className="text-xs text-primary-foreground/70 pt-2">
@@ -348,6 +348,9 @@ export function InquiryForm({ designData, onClose, isOpen }: InquiryFormProps) {
             </p>
             <p className="text-xs text-primary-foreground/70">
               Faktura sendes etter levering/montering. Normal leveringstid er 2–4 uker.
+            </p>
+            <p className="text-xs text-primary-foreground/70">
+              Virksomheten er foreløpig ikke mva-registrert. Ingen merverdiavgift beregnes.
             </p>
           </div>
 

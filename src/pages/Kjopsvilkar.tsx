@@ -34,7 +34,8 @@ export default function Kjopsvilkar() {
                 2. Priser og betaling
               </h2>
               <div className="text-sm md:text-base text-muted-foreground space-y-3">
-                <p>Alle priser er oppgitt i <strong>norske kroner (NOK)</strong> og inkluderer merverdiavgift der dette er påkrevd.</p>
+                <p>Alle priser er oppgitt i <strong>norske kroner (NOK)</strong>.</p>
+                <p><strong>Virksomheten er foreløpig ikke merverdiavgiftsregistrert. Ingen merverdiavgift beregnes.</strong></p>
                 <p>Bestilling via nettsiden er en <strong>forespørsel</strong> og er ikke bindende før design og omfang er avklart skriftlig.</p>
                 <p><strong>Faktura sendes per e-post etter levering/montering.</strong> Betalingsfrist fremgår av fakturaen.</p>
                 <p>Ingen betaling gjennomføres direkte via nettsiden eller Shopify.</p>
