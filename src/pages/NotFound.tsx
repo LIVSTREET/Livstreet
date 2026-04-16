@@ -14,9 +14,10 @@ const NotFound = () => {
       <SeoHead
         title="Siden finnes ikke (404)"
         description="Beklager, denne siden finnes ikke."
-        path="/"
+        path={location.pathname}
         noindex
         skipCanonical
+        omitOgUrl
       />
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
