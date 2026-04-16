@@ -2,35 +2,20 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 /**
- * Email sending mode:
- * - Prefer Resend (recommended for transactional email)
- * - Fallback to Gmail SMTP if Resend fails
+ * Email sending uses Domene.no SMTP exclusively for both customer
+ * confirmation and internal admin notifications.
  */
-const FORCE_GMAIL_ONLY = false;
 
-// Resend
-const RESEND_API_KEY = (Deno.env.get("RESEND_API_KEY") ?? "").trim();
-const RESEND_FROM = (Deno.env.get("RESEND_FROM") ?? "Livstreet <onboarding@resend.dev>").trim();
-
-// Gmail SMTP
-// App passwords are often shown with spaces. We normalize to avoid auth failures.
-const GMAIL_APP_PASSWORD = (Deno.env.get("GMAIL_APP_PASSWORD") ?? "").replace(/\s+/g, "");
-const GMAIL_USER = "livstreet.store@gmail.com";
-
-// Domain SMTP (Domene.no) for internal admin notifications
+// Domain SMTP (Domene.no)
 const SMTP_HOST = (Deno.env.get("SMTP_HOST") ?? "").trim();
-const SMTP_PORT = Number(Deno.env.get("SMTP_PORT") ?? "465");
+const SMTP_PORT = Number(Deno.env.get("SMTP_PORT") ?? "587");
 const SMTP_USERNAME = (Deno.env.get("SMTP_USERNAME") ?? "").trim();
 const SMTP_PASSWORD = (Deno.env.get("SMTP_PASSWORD") ?? "").trim();
 const ADMIN_NOTIFICATION_EMAIL = (Deno.env.get("ADMIN_NOTIFICATION_EMAIL") ?? "").trim();
 const SMTP_FROM = (Deno.env.get("SMTP_FROM") ?? `Livstreet <${SMTP_USERNAME}>`).trim();
 
-const RECIPIENT_EMAIL = "livstreet.store@gmail.com";
-const REPLY_TO_EMAIL = "livstreet.store@gmail.com";
-
 // Supabase credentials for database operations
 const SUPABASE_URL = (Deno.env.get("SUPABASE_URL") ?? "").trim();
-// Keys can sometimes contain newlines/spaces when pasted into secrets
 const SUPABASE_SERVICE_ROLE_KEY =
   (Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "").replace(/\s+/g, "");
 
@@ -62,7 +47,7 @@ interface InquiryRequest {
   source: "contact" | "inquiry";
 
   /**
-   * When true, sends BOTH internal + confirmation to RECIPIENT_EMAIL for verification.
+   * When true, sends customer confirmation to ADMIN_NOTIFICATION_EMAIL for verification.
    */
   testMode?: boolean;
 }
@@ -75,7 +60,6 @@ interface EmailPayload {
 }
 
 function safeEmailLog(str: string) {
-  // Avoid leaking full HTML to logs
   console.log(str);
 }
 
@@ -90,7 +74,6 @@ async function uploadDesignImage(
   }
 
   try {
-    // Detect mime from data URL (defaults to png)
     let contentType = "image/png";
     let ext = "png";
 
@@ -102,12 +85,10 @@ async function uploadDesignImage(
       else if (contentType === "image/png") ext = "png";
     }
 
-    // Extract base64 data (remove data:*;base64, prefix if present)
     const base64Data = imageBase64.includes(",")
       ? imageBase64.split(",")[1]
       : imageBase64;
 
-    // Decode base64 to binary
     const binaryString = atob(base64Data);
     const bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
@@ -136,7 +117,6 @@ async function uploadDesignImage(
       return null;
     }
 
-    // Return the storage path (UI generates signed URLs when viewing)
     return fileName;
   } catch (error) {
     console.error("Error uploading design image:", error);
@@ -146,9 +126,9 @@ async function uploadDesignImage(
 
 // Save inquiry to database
 async function saveInquiryToDatabase(
-  inquiryId: string, 
-  data: InquiryRequest, 
-  designImagePath: string | null
+  inquiryId: string,
+  data: InquiryRequest,
+  designImagePath: string | null,
 ): Promise<boolean> {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     console.error("Supabase credentials missing for database insert");
@@ -162,7 +142,7 @@ async function saveInquiryToDatabase(
         "Content-Type": "application/json",
         "apikey": SUPABASE_SERVICE_ROLE_KEY,
         "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        "Prefer": "return=representation"
+        "Prefer": "return=representation",
       },
       body: JSON.stringify({
         id: inquiryId,
@@ -181,8 +161,8 @@ async function saveInquiryToDatabase(
         installation_price: data.installationPrice || null,
         total_price: data.totalPrice || null,
         source: data.source,
-        status: "new"
-      })
+        status: "new",
+      }),
     });
 
     if (!response.ok) {
@@ -199,43 +179,46 @@ async function saveInquiryToDatabase(
   }
 }
 
-async function sendViaGmailSMTP(
+async function sendViaDomainSMTP(
   payload: EmailPayload,
-): Promise<{ success: boolean; provider: "gmail_smtp"; error?: string }> {
-  if (!GMAIL_APP_PASSWORD) {
+): Promise<{ success: boolean; provider: "domain_smtp"; error?: string }> {
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USERNAME || !SMTP_PASSWORD) {
     return {
       success: false,
-      provider: "gmail_smtp",
-      error: "GMAIL_APP_PASSWORD is missing",
+      provider: "domain_smtp",
+      error: "SMTP settings are missing",
     };
   }
 
+  // Port 465 uses implicit TLS; 587 uses STARTTLS
+  const useImplicitTls = SMTP_PORT === 465;
+
   const client = new SMTPClient({
     connection: {
-      hostname: "smtp.gmail.com",
-      port: 465,
-      tls: true,
+      hostname: SMTP_HOST,
+      port: SMTP_PORT,
+      tls: useImplicitTls,
       auth: {
-        username: GMAIL_USER,
-        password: GMAIL_APP_PASSWORD,
+        username: SMTP_USERNAME,
+        password: SMTP_PASSWORD,
       },
     },
   });
 
   try {
     await client.send({
-      from: `Livstreet <${GMAIL_USER}>`,
+      from: SMTP_FROM,
       to: payload.to,
       subject: payload.subject,
       content: "auto",
       html: payload.html,
-      replyTo: payload.replyTo || REPLY_TO_EMAIL,
+      replyTo: payload.replyTo || SMTP_USERNAME,
     });
 
-    return { success: true, provider: "gmail_smtp" };
+    return { success: true, provider: "domain_smtp" };
   } catch (error: any) {
-    console.error("Gmail SMTP exception:", error);
-    return { success: false, provider: "gmail_smtp", error: error.message };
+    console.error("Domain SMTP exception:", error);
+    return { success: false, provider: "domain_smtp", error: error.message };
   } finally {
     try {
       await client.close();
@@ -245,63 +228,10 @@ async function sendViaGmailSMTP(
   }
 }
 
-// Resend sender
-async function sendViaResend(
-  payload: EmailPayload,
-): Promise<{ success: boolean; provider: "resend"; error?: string }> {
-  if (!RESEND_API_KEY) {
-    return { success: false, provider: "resend", error: "RESEND_API_KEY is missing" };
-  }
-
-  try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: RESEND_FROM,
-        to: payload.to,
-        subject: payload.subject,
-        html: payload.html,
-        reply_to: payload.replyTo || REPLY_TO_EMAIL,
-      }),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      const errorMessage = result?.message || result?.error || "Unknown Resend error";
-      console.error("Resend API error:", result);
-      return { success: false, provider: "resend", error: errorMessage };
-    }
-
-    return { success: true, provider: "resend" };
-  } catch (error: any) {
-    console.error("Resend exception:", error);
-    return { success: false, provider: "resend", error: error.message };
-  }
-}
-
 async function sendEmail(
   payload: EmailPayload,
 ): Promise<{ success: boolean; provider: string; error?: string }> {
-  if (FORCE_GMAIL_ONLY) {
-    return await sendViaGmailSMTP(payload);
-  }
-
-  const resend = await sendViaResend(payload);
-  if (resend.success) return resend;
-
-  const gmail = await sendViaGmailSMTP(payload);
-  if (gmail.success) return gmail;
-
-  return {
-    success: false,
-    provider: "none",
-    error: `resend: ${resend.error || "unknown"}; gmail: ${gmail.error || "unknown"}`,
-  };
+  return await sendViaDomainSMTP(payload);
 }
 
 function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
@@ -350,8 +280,8 @@ function buildConfirmationEmailHtml(name: string, hasDesign: boolean): string {
         <p style="font-size: 17px; font-weight: bold; color: #5c4a3a; margin-bottom: 16px;">Peder August Halvorsen – Livstreet</p>
         <p style="font-size: 14px; color: #666; line-height: 1.6;">
           <a href="tel:45251280" style="color: #5c4a3a; text-decoration: none;">452 51 280</a><br>
-          <a href="mailto:livstreet.store@gmail.com" style="color: #5c4a3a; text-decoration: none;">livstreet.store@gmail.com</a><br>
-          <a href="https://livstreet.org" style="color: #5c4a3a; text-decoration: none;">livstreet.org</a>
+          <a href="mailto:post@livstreet.no" style="color: #5c4a3a; text-decoration: none;">post@livstreet.no</a><br>
+          <a href="https://livstreet.no" style="color: #5c4a3a; text-decoration: none;">livstreet.no</a>
         </p>
       </div>
 
@@ -382,60 +312,13 @@ function buildAdminNotificationHtml(inquiryId: string, data: InquiryRequest): st
       <p style="white-space: pre-wrap; background-color: #f9f7f5; padding: 12px; border-radius: 6px;">${data.description}</p>
 
       <p style="margin-top: 24px;">
-        <a href="https://livstreet.org/admin" style="background-color: #5c4a3a; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Åpne admin</a>
+        <a href="https://livstreet.no/admin" style="background-color: #5c4a3a; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Åpne admin</a>
       </p>
     </div>
   `;
 }
 
-async function sendViaDomainSMTP(
-  payload: EmailPayload,
-): Promise<{ success: boolean; provider: "domain_smtp"; error?: string }> {
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USERNAME || !SMTP_PASSWORD) {
-    return {
-      success: false,
-      provider: "domain_smtp",
-      error: "SMTP settings are missing",
-    };
-  }
-
-  const client = new SMTPClient({
-    connection: {
-      hostname: SMTP_HOST,
-      port: SMTP_PORT,
-      tls: true,
-      auth: {
-        username: SMTP_USERNAME,
-        password: SMTP_PASSWORD,
-      },
-    },
-  });
-
-  try {
-    await client.send({
-      from: SMTP_FROM,
-      to: payload.to,
-      subject: payload.subject,
-      content: "auto",
-      html: payload.html,
-      replyTo: payload.replyTo || SMTP_USERNAME,
-    });
-
-    return { success: true, provider: "domain_smtp" };
-  } catch (error: any) {
-    console.error("Domain SMTP exception:", error);
-    return { success: false, provider: "domain_smtp", error: error.message };
-  } finally {
-    try {
-      await client.close();
-    } catch {
-      // ignore
-    }
-  }
-}
-
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -446,28 +329,25 @@ const handler = async (req: Request): Promise<Response> => {
       `Received inquiry (source=${data.source}, hasDesign=${!!data.hasDesign}, testMode=${!!data.testMode})`,
     );
 
-    const { name, email, hasDesign, source, testMode, designImageBase64 } = data;
+    const { name, email, hasDesign, testMode, designImageBase64 } = data;
 
-    // Step 1: Generate inquiry ID and save to database
     let designImagePath: string | null = null;
     const inquiryId = crypto.randomUUID();
 
-    // Step 2: Upload design image to storage if present
     if (designImageBase64) {
       designImagePath = await uploadDesignImage(designImageBase64, inquiryId);
       safeEmailLog(`Design image upload: ${designImagePath ? "success" : "failed"}`);
     }
 
-    // Step 3: Save inquiry to database (this is the primary data store now)
     const saved = await saveInquiryToDatabase(inquiryId, data, designImagePath);
-    
+
     if (saved) {
       safeEmailLog(`Inquiry saved to database: ${inquiryId}`);
     } else {
       console.error("Failed to save inquiry to database - continuing with email only");
     }
 
-    // Step 3b: Send internal admin notification via Domene.no SMTP
+    // Internal admin notification
     if (saved && ADMIN_NOTIFICATION_EMAIL) {
       const adminPayload: EmailPayload = {
         to: [ADMIN_NOTIFICATION_EMAIL],
@@ -487,17 +367,16 @@ const handler = async (req: Request): Promise<Response> => {
       EdgeRuntime.waitUntil(adminJob);
     }
 
-    // Step 4: Send confirmation email to customer only (no internal email - we use inbox now)
-    const customerRecipient = testMode ? [RECIPIENT_EMAIL] : [email];
+    // Customer confirmation
+    const customerRecipient = testMode ? [ADMIN_NOTIFICATION_EMAIL || SMTP_USERNAME] : [email];
 
     const confirmationPayload: EmailPayload = {
       to: customerRecipient,
       subject: "Takk for at du tok kontakt – vi følger deg videre",
       html: buildConfirmationEmailHtml(name, hasDesign || false),
-      replyTo: REPLY_TO_EMAIL,
+      replyTo: SMTP_USERNAME,
     };
 
-    // Non-blocking: send in background
     const sendJob = (async () => {
       const confirmation = await sendEmail(confirmationPayload);
       safeEmailLog(
@@ -505,7 +384,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     })();
 
-    // EdgeRuntime.waitUntil exists in the runtime; this keeps sending after response.
     // @ts-ignore
     EdgeRuntime.waitUntil(sendJob);
 
@@ -519,7 +397,6 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in send-inquiry function:", error);
 
-    // Never break form submission; never expose internal errors.
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
