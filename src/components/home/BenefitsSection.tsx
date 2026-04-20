@@ -98,15 +98,6 @@ export function BenefitsSection() {
           style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 30%" }}
         />
         {/* Dark vignette + bottom wash for strong text contrast */}
-        {/* Lighter, warmer wash for uplifting mood while keeping legibility */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/70"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_45%,_hsl(var(--background)/0.55)_100%)]"
-        />
 
         {/* Slides — only text/icon swaps */}
         <div className="relative h-full w-full">
