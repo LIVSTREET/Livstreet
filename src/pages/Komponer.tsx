@@ -166,10 +166,12 @@ export default function Komponer() {
   };
 
   // Snap guides configuration
-  const SNAP_THRESHOLD = 3; // percentage proximity to snap
+  // NB: terskel må være liten ellers "fanges" fingeren på mobil og det føles
+  // som at draget stopper. Guides er kun visuelle hint – ikke harde stopp.
+  const SNAP_THRESHOLD = 1.2; // percentage proximity to snap
   const SNAP_LINES = {
-    x: [20, 35, 50, 65, 80], // left, center-left, center, center-right, right
-    y: [15, 25, 33, 50, 67, 75, 85], // top, upper, 1/3, center, 2/3, lower, bottom
+    x: [50], // kun midtlinjen – mindre "klissete" på mobil
+    y: [50],
   };
 
   const applySnap = useCallback((rawX: number, rawY: number) => {
@@ -195,6 +197,7 @@ export default function Komponer() {
     setActiveGuides(guides);
     return { x: snappedX, y: snappedY };
   }, []);
+
 
   // Drag handlers
   const handleMouseDown = (element: string, e: React.MouseEvent | React.TouchEvent) => {
