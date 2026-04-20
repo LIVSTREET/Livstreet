@@ -118,7 +118,7 @@ export function VideoSection() {
         <DialogContent
           className="max-w-[95vw] md:max-w-[90vw] w-full h-auto aspect-video p-0 gap-0 border-2 border-primary/50 overflow-hidden rounded-xl bg-background"
         >
-          <VisuallyHidden><DialogTitle>Produksjonsvideo</DialogTitle></VisuallyHidden>
+          <DialogTitle className="sr-only">Produksjonsvideo</DialogTitle>
           {isOpen && (
             <iframe
               ref={setIframeRef}
