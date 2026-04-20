@@ -1,4 +1,4 @@
-import { HeartHandshake, Trees, PhoneCall, ChevronDown, type LucideIcon } from "lucide-react";
+import { HeartHandshake, Trees, PhoneCall, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import benefitsBg from "@/assets/benefits-oak-bg.jpg";
 
@@ -46,150 +46,139 @@ const benefits: Benefit[] = [
   },
 ];
 
-function BenefitPanel({
-  benefit,
-  index,
-  total,
-}: {
-  benefit: Benefit;
-  index: number;
-  total: number;
-}) {
-  const ref = useRef<HTMLElement | null>(null);
-  const [active, setActive] = useState(false);
-  const Icon = benefit.icon;
+/**
+ * Pinned-scroll benefits:
+ * - Outer wrapper is tall (one viewport per benefit + one extra for exit).
+ * - Sticky inner stage stays fixed while user scrolls.
+ * - We compute progress through the wrapper to swap the active slide.
+ * - Last slide scrolls OUT with the container at the end.
+ */
+export function BenefitsSection() {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => setActive(e.intersectionRatio > 0.5));
-      },
-      { threshold: [0, 0.5, 0.75, 1] },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
+    const onScroll = () => {
+      const node = wrapperRef.current;
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Total scrollable distance while pinned = (benefits.length) * vh
+      // (wrapper height is (benefits.length + 1) * vh, sticky stage = 1vh)
+      const scrolled = -rect.top;
+      const perSlide = vh;
+      const raw = scrolled / perSlide;
+      const idx = Math.min(
+        benefits.length - 1,
+        Math.max(0, Math.floor(raw + 0.001)),
+      );
+      setActiveIndex(idx);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  const isLast = index === total - 1;
-
   return (
-    <section
-      ref={ref}
-      className="relative h-screen min-h-[600px] w-full snap-start flex items-center justify-center overflow-hidden"
-      aria-labelledby={`benefit-${index}-title`}
+    <div
+      ref={wrapperRef}
+      className="relative"
+      style={{ height: `${(benefits.length + 1) * 100}vh` }}
+      aria-label="Hvorfor velge Livstreet"
     >
-      {/* Background image (shared feel, slight parallax-like zoom on active) */}
-      <div
-        aria-hidden
-        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] ease-out ${
-          active ? "scale-105" : "scale-100"
-        }`}
-        style={{ backgroundImage: `url(${benefitsBg})` }}
-      />
-      {/* Dark warm wash for legibility */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background/95"
-      />
-      {/* Accent glow that shifts per panel */}
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute -top-32 ${
-          index % 2 === 0 ? "-right-32" : "-left-32"
-        } w-[32rem] h-[32rem] rounded-full ${benefit.bgSoft} blur-3xl`}
-      />
-
-      <div className="container relative px-6 text-center max-w-3xl">
-        {/* Step counter */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {/* Shared background — never changes */}
         <div
-          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ${benefit.ring} ${benefit.text} text-sm md:text-base font-medium tracking-wide mb-8 transition-all duration-700 ${
-            active ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-          }`}
-        >
-          {benefit.eyebrow}
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${benefitsBg})` }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background/95"
+        />
+
+        {/* Slides — only text/icon swaps */}
+        <div className="relative h-full w-full">
+          {benefits.map((b, i) => {
+            const Icon = b.icon;
+            const state =
+              i === activeIndex ? "active" : i < activeIndex ? "past" : "next";
+            const translate =
+              state === "active"
+                ? "translate-y-0 opacity-100"
+                : state === "past"
+                ? "-translate-y-10 opacity-0"
+                : "translate-y-10 opacity-0";
+
+            return (
+              <div
+                key={b.title}
+                aria-hidden={state !== "active"}
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out ${translate}`}
+              >
+                {/* Per-slide accent glow */}
+                <div
+                  aria-hidden
+                  className={`pointer-events-none absolute -top-32 ${
+                    i % 2 === 0 ? "-right-32" : "-left-32"
+                  } w-[32rem] h-[32rem] rounded-full ${b.bgSoft} blur-3xl transition-opacity duration-700 ${
+                    state === "active" ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+
+                <div className="container relative px-6 text-center max-w-3xl">
+                  <div
+                    className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ${b.ring} ${b.text} text-sm md:text-base font-medium tracking-wide mb-8`}
+                  >
+                    {b.eyebrow}
+                  </div>
+
+                  <div
+                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
+                  >
+                    <span
+                      aria-hidden
+                      className={`absolute inset-0 rounded-full ${b.bgSoft} ${
+                        state === "active" ? "animate-ping" : ""
+                      }`}
+                      style={{ animationDuration: "2.5s" }}
+                    />
+                    <Icon
+                      className={`relative h-12 w-12 md:h-16 md:w-16 ${b.text}`}
+                      strokeWidth={1.5}
+                    />
+                  </div>
+
+                  <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                    {b.title}
+                  </h2>
+
+                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                    {b.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Icon */}
-        <div
-          className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ${benefit.ring} flex items-center justify-center shadow-2xl transition-all duration-700 delay-100 ${
-            active ? "opacity-100 scale-100" : "opacity-0 scale-75"
-          }`}
-        >
-          <span
-            aria-hidden
-            className={`absolute inset-0 rounded-full ${benefit.bgSoft} ${
-              active ? "animate-ping" : ""
-            }`}
-            style={{ animationDuration: "2.5s" }}
-          />
-          <Icon
-            className={`relative h-12 w-12 md:h-16 md:w-16 ${benefit.text}`}
-            strokeWidth={1.5}
-          />
-        </div>
-
-        {/* Title */}
-        <h2
-          id={`benefit-${index}-title`}
-          className={`font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight transition-all duration-700 delay-200 ${
-            active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          {benefit.title}
-        </h2>
-
-        {/* Description */}
-        <p
-          className={`text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto transition-all duration-700 delay-300 ${
-            active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          {benefit.desc}
-        </p>
-
-        {/* Progress dots */}
-        <div className="flex items-center justify-center gap-2 mt-12">
-          {Array.from({ length: total }).map((_, i) => (
+        {/* Progress dots — fixed inside the stage */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+          {benefits.map((b, i) => (
             <span
-              key={i}
+              key={b.title}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === index ? `w-8 ${benefit.dot}` : "w-1.5 bg-foreground/25"
+                i === activeIndex ? `w-8 ${b.dot}` : "w-1.5 bg-foreground/30"
               }`}
             />
           ))}
         </div>
       </div>
-
-      {/* Scroll hint */}
-      {!isLast && (
-        <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground transition-opacity duration-700 ${
-            active ? "opacity-90" : "opacity-0"
-          }`}
-        >
-          <span className="text-xs md:text-sm uppercase tracking-widest">
-            Scroll videre
-          </span>
-          <ChevronDown className="h-6 w-6 animate-bounce" />
-        </div>
-      )}
-    </section>
-  );
-}
-
-export function BenefitsSection() {
-  return (
-    <div className="relative bg-background">
-      {benefits.map((b, i) => (
-        <BenefitPanel
-          key={b.title}
-          benefit={b}
-          index={i}
-          total={benefits.length}
-        />
-      ))}
     </div>
   );
 }
