@@ -49,7 +49,7 @@ function TestimonialCard({
 
 export function HomeTestimonialsSection() {
   return (
-    <section className="py-12 md:py-20 bg-secondary">
+    <section className="py-12 md:py-20">
       <div className="container px-4">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="font-display text-2xl md:text-4xl font-bold text-foreground">

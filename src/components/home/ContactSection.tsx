@@ -43,7 +43,7 @@ function ContactCard({
 export function ContactSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
-    <section className="py-12 md:py-20 bg-background">
+    <section className="py-12 md:py-20">
       <div className="container px-4">
         <div className="max-w-5xl mx-auto">
           <div
@@ -78,7 +78,7 @@ export function ContactSection() {
             />
           </div>
 
-          <div className="mt-6 md:mt-8 p-5 md:p-6 bg-muted rounded-2xl flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 text-center md:text-left">
+          <div className="mt-6 md:mt-8 p-5 md:p-6 bg-card/70 backdrop-blur-sm border border-border/40 rounded-2xl flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 text-center md:text-left">
             <MapPin className="h-6 w-6 md:h-7 md:w-7 text-accent shrink-0" />
             <p className="text-muted-foreground text-base md:text-lg">Oslo, Norge</p>
           </div>

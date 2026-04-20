@@ -13,7 +13,7 @@ export function PeopleBehindSection() {
   const { ref: textRef, inView: textInView } = useInView<HTMLDivElement>();
 
   return (
-    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
+    <section className="relative py-12 md:py-20 overflow-hidden">
       {/* Subtle accent glow that draws the eye to this section */}
       <div
         aria-hidden

@@ -2,7 +2,7 @@ import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck, ArrowRight, type L
 import { Link } from "react-router-dom";
 import { useInView } from "@/hooks/useInView";
 import { SectionDivider } from "./SectionDivider";
-import benefitsBg from "@/assets/benefits-oak-bg.jpg";
+
 
 const steps = [
   {
@@ -75,20 +75,6 @@ export function StepsSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-cover"
-        style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 40%" }}
-      />
-      {/* Lighter, warmer wash so text reads but mood lifts */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background/80"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_hsl(var(--background)/0.5)_100%)]"
-      />
       <div className="container relative px-4">
         <div
           ref={headRef}
