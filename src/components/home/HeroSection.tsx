@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import gravplateHero from "@/assets/gravplate-hero.png";
 import plateOddarMarie from "@/assets/plate-oddar-marie.jpg";
 import plateDetailOak from "@/assets/plate-detail-oak.jpg";
@@ -54,18 +54,11 @@ export function HeroSection() {
         <div className="grid md:grid-cols-12 gap-8 items-center">
           {/* Text */}
           <div className="md:col-span-7 text-center md:text-left space-y-5 md:space-y-7 animate-fade-in">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground/90 text-xs md:text-sm font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-accent" />
-              Håndlaget i nordisk eik
-            </span>
-            <h1 className="font-display text-[2.3rem] leading-[1.05] md:text-5xl lg:text-7xl font-bold text-primary-foreground md:leading-[1.05] drop-shadow-lg">
-              Et varmere alternativ til{" "}
-              <span className="relative inline-block">
-                <span className="relative text-accent">gravstein</span>
-              </span>
+            <h1 className="font-display text-[2.3rem] leading-[1.05] md:text-5xl lg:text-7xl font-bold text-white md:leading-[1.05] drop-shadow-lg">
+              Et varmere alternativ til gravstein
             </h1>
-            <p className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md max-w-xl mx-auto md:mx-0">
-              Personlige minnesmerker i heltre eik — varmt, naturlig og laget for å vare.
+            <p className="font-display text-base md:text-xl leading-relaxed text-white/90 drop-shadow-md max-w-xl mx-auto md:mx-0">
+              Personlige minnesmerker i heltre eik.
             </p>
 
             <div className="pt-2 space-y-3">
@@ -73,7 +66,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   asChild
-                  className="group h-14 px-8 text-base font-semibold tracking-wide bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_14px_40px_-10px_hsl(var(--accent)/0.7)] hover:shadow-[0_18px_46px_-10px_hsl(var(--accent)/0.85)] hover:-translate-y-0.5 transition-all duration-300 rounded-full w-full sm:w-auto"
+                  className="group h-14 px-8 text-base font-semibold tracking-wide bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_14px_40px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_18px_46px_-10px_hsl(var(--primary)/0.75)] hover:-translate-y-0.5 transition-all duration-300 rounded-full w-full sm:w-auto"
                 >
                   <Link to="/komponer" className="inline-flex items-center justify-center gap-2">
                     Design gravplaten
