@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Volume2, ArrowRight } from "lucide-react";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const VIMEO_ID = "1151281409";
 
@@ -119,7 +118,7 @@ export function VideoSection() {
         <DialogContent
           className="max-w-[95vw] md:max-w-[90vw] w-full h-auto aspect-video p-0 gap-0 border-2 border-primary/50 overflow-hidden rounded-xl bg-background"
         >
-          <VisuallyHidden><DialogTitle>Produksjonsvideo</DialogTitle></VisuallyHidden>
+          <DialogTitle className="sr-only">Produksjonsvideo</DialogTitle>
           {isOpen && (
             <iframe
               ref={setIframeRef}
