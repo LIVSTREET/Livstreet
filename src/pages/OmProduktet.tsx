@@ -37,28 +37,23 @@ const facts = [
   },
   {
     icon: Sun,
-    title: "Behandlet for utendørs bruk",
+    title: "Utendørs behandling",
     desc: "UV-bestandig båtlakk beskytter mot sol, regn og vind.",
+  },
+  {
+    icon: Droplets,
+    title: "Vedlikehold",
+    desc: "Sjeldent og overkommelig – et lett strøk lakk ved behov.",
+  },
+  {
+    icon: Clock,
+    title: "Levetid",
+    desc: "Med enkelt vedlikehold står platen vakkert i mange år.",
   },
   {
     icon: PenTool,
     title: "Personlig gravering",
     desc: "Navn, datoer og symboler graveres med presisjon i treet.",
-  },
-  {
-    icon: Clock,
-    title: "Lang levetid",
-    desc: "Med enkelt vedlikehold står platen vakkert i mange år.",
-  },
-  {
-    icon: Droplets,
-    title: "Enkelt vedlikehold",
-    desc: "Sjeldent og overkommelig – et lett strøk lakk ved behov.",
-  },
-  {
-    icon: Heart,
-    title: "Varmt og naturlig uttrykk",
-    desc: "Et levende minne som eldes naturlig sammen med stedet.",
   },
 ];
 
