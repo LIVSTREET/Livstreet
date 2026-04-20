@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
+import { ArrowRight } from "lucide-react";
 import gravplateHero from "@/assets/gravplate-hero.png";
 
 const HERO_VIMEO_ID = "1184738419";
