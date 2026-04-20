@@ -40,6 +40,7 @@ export function PeopleBehindSection() {
                 <ProductVideoPlayer
                   src={STORY_VIDEO_SRC}
                   title="Folka bak Livstreet"
+                  aspectRatio="portrait"
                 />
               </div>
             </div>

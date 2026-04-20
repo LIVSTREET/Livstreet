@@ -17,6 +17,8 @@ interface ProductVideoPlayerProps {
    * where users may want to seek/pause.
    */
   showControls?: boolean;
+  /** Aspect ratio of the video frame. Defaults to landscape 16:9. */
+  aspectRatio?: "landscape" | "portrait";
 }
 
 export function ProductVideoPlayer({
@@ -24,6 +26,7 @@ export function ProductVideoPlayer({
   title,
   autoPlayInView = true,
   showControls = false,
+  aspectRatio = "landscape",
 }: ProductVideoPlayerProps) {
   // Force controls visibility via URL flag so it overrides whatever the caller passed.
   const finalSrc = (() => {
@@ -137,7 +140,7 @@ export function ProductVideoPlayer({
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in"
+      className={`relative ${aspectRatio === "portrait" ? "aspect-[9/16]" : "aspect-video"} rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in`}
     >
       <iframe
         ref={setIframeRef}

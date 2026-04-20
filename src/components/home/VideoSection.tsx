@@ -32,7 +32,7 @@ export function VideoSection() {
         {/* Video — auto-play with sound when in view, pauses when scrolled past */}
         <div
           ref={revealRef}
-          className={`relative max-w-md mx-auto opacity-0 ${
+          className={`relative max-w-3xl mx-auto opacity-0 ${
             revealInView ? "animate-reveal-zoom" : ""
           }`}
         >
