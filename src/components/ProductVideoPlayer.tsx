@@ -17,6 +17,8 @@ interface ProductVideoPlayerProps {
    * where users may want to seek/pause.
    */
   showControls?: boolean;
+  /** Aspect ratio of the video frame. Defaults to landscape 16:9. */
+  aspectRatio?: "landscape" | "portrait";
 }
 
 export function ProductVideoPlayer({
@@ -24,6 +26,7 @@ export function ProductVideoPlayer({
   title,
   autoPlayInView = true,
   showControls = false,
+  aspectRatio = "landscape",
 }: ProductVideoPlayerProps) {
   // Force controls visibility via URL flag so it overrides whatever the caller passed.
   const finalSrc = (() => {
