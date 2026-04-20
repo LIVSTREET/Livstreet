@@ -634,7 +634,7 @@ export default function Komponer() {
         <div className="container max-w-7xl mx-auto px-4 pt-2 pb-1 lg:pt-8 lg:pb-4">
           <div className="text-center">
             <h1 className="font-display text-xl lg:text-3xl font-bold text-foreground">
-              Lag din gravplate
+              Design gravplaten
             </h1>
           </div>
         </div>
