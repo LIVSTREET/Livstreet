@@ -138,7 +138,7 @@ export function BenefitsSection() {
 
                 <div className="container relative px-6 text-center max-w-3xl">
                   <div
-                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-black/40 backdrop-blur-md ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
+                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-black/40 ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
                   >
                     <Icon
                       className={`relative h-12 w-12 md:h-16 md:w-16 ${b.text}`}
