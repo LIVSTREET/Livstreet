@@ -1,105 +1,185 @@
-import { Heart, TreePine, Sparkles, type LucideIcon } from "lucide-react";
-import { useInView } from "@/hooks/useInView";
+import { HeartHandshake, Trees, PhoneCall, ChevronDown, type LucideIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import benefitsBg from "@/assets/benefits-oak-bg.jpg";
 
-const benefits: { icon: LucideIcon; title: string; desc: string }[] = [
+type Benefit = {
+  icon: LucideIcon;
+  eyebrow: string;
+  title: string;
+  desc: string;
+  accentClass: string; // tailwind text/bg accent variation
+};
+
+const benefits: Benefit[] = [
   {
-    icon: Heart,
+    icon: HeartHandshake,
+    eyebrow: "01 — Personlig",
     title: "Personlig uttrykk",
-    desc: "Et gravminne med varme, nærhet og personlighet.",
+    desc: "Ikke alle kjenner seg igjen i tradisjonell granittstein.",
+    accentClass: "accent",
   },
   {
-    icon: TreePine,
-    title: "Heltre eik",
-    desc: "Laget i solid eik og behandlet for utendørs bruk.",
+    icon: Trees,
+    eyebrow: "02 — Bærekraft",
+    title: "Et bærekraftig minne",
+    desc: "Laget i nordisk eik av erfarne danske håndverkere.",
+    accentClass: "wood",
   },
   {
-    icon: Sparkles,
-    title: "Enkelt å bestille",
-    desc: "Vi hjelper deg hele veien – fra idé til ferdig gravplate.",
+    icon: PhoneCall,
+    eyebrow: "03 — Omsorg",
+    title: "Personlig oppfølging",
+    desc: "Vi er her for deg – også etter levering.",
+    accentClass: "forest",
   },
 ];
 
-function BenefitCard({
-  icon: Icon,
-  title,
-  desc,
+function BenefitPanel({
+  benefit,
   index,
+  total,
 }: {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
+  benefit: Benefit;
   index: number;
+  total: number;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  return (
-    <div
-      ref={ref}
-      style={{ animationDelay: `${index * 120}ms` }}
-      className={`group relative overflow-hidden rounded-2xl border border-white/30 bg-background/70 backdrop-blur-md p-6 md:p-8 text-center shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:border-accent/60 transition-all duration-500 opacity-0 ${
-        inView ? "animate-reveal-up" : ""
-      }`}
-    >
-      {/* Top accent bar */}
-      <span className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+  const ref = useRef<HTMLElement | null>(null);
+  const [active, setActive] = useState(false);
+  const Icon = benefit.icon;
 
-      <div className="relative mx-auto mb-4 md:mb-5 w-14 h-14 md:w-16 md:h-16 rounded-full bg-accent/20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:bg-accent/30 ring-1 ring-accent/30">
-        <span className="absolute inset-0 rounded-full bg-accent/15 scale-0 group-hover:scale-150 transition-transform duration-700 ease-out" />
-        <Icon className="relative h-7 w-7 md:h-8 md:w-8 text-accent" />
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => setActive(e.intersectionRatio > 0.5));
+      },
+      { threshold: [0, 0.5, 0.75, 1] },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  const isLast = index === total - 1;
+
+  return (
+    <section
+      ref={ref}
+      className="relative h-screen min-h-[600px] w-full snap-start flex items-center justify-center overflow-hidden"
+      aria-labelledby={`benefit-${index}-title`}
+    >
+      {/* Background image (shared feel, slight parallax-like zoom on active) */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] ease-out ${
+          active ? "scale-105" : "scale-100"
+        }`}
+        style={{ backgroundImage: `url(${benefitsBg})` }}
+      />
+      {/* Dark warm wash for legibility */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background/95"
+      />
+      {/* Accent glow that shifts per panel */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute -top-32 ${
+          index % 2 === 0 ? "-right-32" : "-left-32"
+        } w-[32rem] h-[32rem] rounded-full bg-${benefit.accentClass}/20 blur-3xl`}
+      />
+
+      <div className="container relative px-6 text-center max-w-3xl">
+        {/* Step counter */}
+        <div
+          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ring-${benefit.accentClass}/40 text-${benefit.accentClass} text-sm md:text-base font-medium tracking-wide mb-8 transition-all duration-700 ${
+            active ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+          }`}
+        >
+          {benefit.eyebrow}
+        </div>
+
+        {/* Icon */}
+        <div
+          className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ring-${benefit.accentClass}/50 flex items-center justify-center shadow-2xl transition-all duration-700 delay-100 ${
+            active ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+        >
+          <span
+            aria-hidden
+            className={`absolute inset-0 rounded-full bg-${benefit.accentClass}/15 ${
+              active ? "animate-ping" : ""
+            }`}
+            style={{ animationDuration: "2.5s" }}
+          />
+          <Icon
+            className={`relative h-12 w-12 md:h-16 md:w-16 text-${benefit.accentClass}`}
+            strokeWidth={1.5}
+          />
+        </div>
+
+        {/* Title */}
+        <h2
+          id={`benefit-${index}-title`}
+          className={`font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight transition-all duration-700 delay-200 ${
+            active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          {benefit.title}
+        </h2>
+
+        {/* Description */}
+        <p
+          className={`text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto transition-all duration-700 delay-300 ${
+            active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          {benefit.desc}
+        </p>
+
+        {/* Progress dots */}
+        <div className="flex items-center justify-center gap-2 mt-12">
+          {Array.from({ length: total }).map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                i === index
+                  ? `w-8 bg-${benefit.accentClass}`
+                  : "w-1.5 bg-foreground/25"
+              }`}
+            />
+          ))}
+        </div>
       </div>
-      <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-2">
-        {title}
-      </h3>
-      <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-        {desc}
-      </p>
-    </div>
+
+      {/* Scroll hint */}
+      {!isLast && (
+        <div
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground transition-opacity duration-700 ${
+            active ? "opacity-90" : "opacity-0"
+          }`}
+        >
+          <span className="text-xs md:text-sm uppercase tracking-widest">
+            Scroll videre
+          </span>
+          <ChevronDown className="h-6 w-6 animate-bounce" />
+        </div>
+      )}
+    </section>
   );
 }
 
 export function BenefitsSection() {
-  const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
-      {/* Oak photo background */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${benefitsBg})` }}
-      />
-      {/* Warm wash for legibility + brand mood */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/55 to-background/85"
-      />
-      {/* Soft accent glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-20 -right-20 w-72 h-72 md:w-[28rem] md:h-[28rem] rounded-full bg-accent/15 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-24 -left-24 w-72 h-72 md:w-[28rem] md:h-[28rem] rounded-full bg-wood/15 blur-3xl"
-      />
-
-      <div className="container relative px-4">
-        <div
-          ref={headRef}
-          className={`text-center max-w-2xl mx-auto mb-10 md:mb-14 opacity-0 ${
-            headInView ? "animate-reveal-up" : ""
-          }`}
-        >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-background/70 backdrop-blur text-accent text-sm md:text-base font-medium ring-1 ring-accent/30 shadow-sm">
-            Hvorfor velge Livstreet
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 max-w-5xl mx-auto">
-          {benefits.map((b, i) => (
-            <BenefitCard key={b.title} {...b} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="relative bg-background">
+      {benefits.map((b, i) => (
+        <BenefitPanel
+          key={b.title}
+          benefit={b}
+          index={i}
+          total={benefits.length}
+        />
+      ))}
+    </div>
   );
 }
