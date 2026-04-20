@@ -1,5 +1,8 @@
-import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck, ArrowRight } from "lucide-react";
+import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck, ArrowRight, type LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
+import { SectionDivider } from "./SectionDivider";
+
 const steps = [
   {
     icon: MessageCircle,
@@ -28,54 +31,88 @@ const steps = [
   },
 ];
 
-export function StepsSection() {
+function StepCard({
+  icon: Icon,
+  title,
+  description,
+  index,
+  isLast,
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  index: number;
+  isLast: boolean;
+}) {
+  const { ref, inView } = useInView<HTMLDivElement>();
   return (
-    <section className="py-10 md:py-20 bg-background">
-      <div className="container px-4">
-        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-16">
-          <h2 className="font-display text-2xl md:text-4xl font-bold mb-2 md:mb-4">
+    <div
+      ref={ref}
+      style={{ animationDelay: `${index * 100}ms` }}
+      className={`relative group h-full opacity-0 ${inView ? "animate-reveal-up" : ""}`}
+    >
+      {!isLast && (
+        <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-accent/40 to-transparent" />
+      )}
+      <div className="relative h-full flex flex-col items-center bg-card rounded-2xl p-4 md:p-8 text-center shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-accent/40 transition-all duration-500 border border-border/60 overflow-hidden">
+        <span className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-accent/15 text-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:scale-110 transition-all duration-500 shrink-0">
+          <Icon className="h-6 w-6 md:h-7 md:w-7" />
+        </div>
+        <h3 className="font-display text-base md:text-xl font-semibold mb-2 md:mb-3 text-foreground">
+          {title}
+        </h3>
+        <p className="text-sm md:text-base text-muted-foreground leading-relaxed hidden md:block">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function StepsSection() {
+  const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
+  return (
+    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
+      <div className="container relative px-4">
+        <div
+          ref={headRef}
+          className={`text-center max-w-3xl mx-auto mb-8 md:mb-16 opacity-0 ${
+            headInView ? "animate-reveal-up" : ""
+          }`}
+        >
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4">
             Fra bestilling til montering
           </h2>
-          <p className="text-muted-foreground text-sm md:text-lg">
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
             En enkel prosess som ivaretar deg hele veien.
           </p>
+          <SectionDivider className="mt-5" />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
           {steps.map((step, index) => (
-            <div
-              key={index}
-              className="relative group h-full"
-            >
-              {/* Connector line */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-border" />
-              )}
-
-              <div className="relative h-full flex flex-col items-center bg-card rounded-xl md:rounded-2xl p-3 md:p-8 text-center shadow-sm hover:shadow-lg transition-shadow border border-border group-hover:border-primary/20">
-                <div className="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
-                  <step.icon className="h-5 w-5 md:h-7 md:w-7" />
-                </div>
-                <h3 className="font-display text-sm md:text-xl font-semibold mb-1 md:mb-3">{step.title}</h3>
-                <p className="text-muted-foreground text-xs md:text-sm leading-relaxed hidden md:block">
-                  {step.description}
-                </p>
-              </div>
-            </div>
+            <StepCard
+              key={step.title}
+              icon={step.icon}
+              title={step.title}
+              description={step.description}
+              index={index}
+              isLast={index === steps.length - 1}
+            />
           ))}
         </div>
 
-        {/* Micro CTA */}
-        <div className="text-center mt-8 md:mt-12">
-          <p className="text-muted-foreground text-sm md:text-base mb-2">
+        <div className="text-center mt-10 md:mt-12">
+          <p className="text-muted-foreground text-base md:text-lg mb-2">
             Vil du vite mer om hva som skjer videre?
           </p>
-          <Link 
-            to="/informasjon/hva-skjer-etterpa" 
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm md:text-base"
+          <Link
+            to="/informasjon/hva-skjer-etterpa"
+            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-base md:text-lg"
           >
             Les mer om prosessen
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       </div>
