@@ -160,7 +160,7 @@ export function ProductVideoPlayer({
       cancelled = true;
       observer.disconnect();
     };
-  }, [autoPlayInView, playerVersion]);
+  }, [autoPlayInView, iframeNode]);
 
   const handleReplay = async () => {
     const player = playerRef.current;
