@@ -31,7 +31,7 @@ export default function Kjopsvilkar() {
                 <p>Organisasjonsnummer: <strong>927 309 114</strong></p>
                 <p>Sted: <strong>Oslo, Norge</strong></p>
                 <p>Telefon: <strong>45 25 12 80</strong></p>
-                <p>E-post: <a href="mailto:livstreet.store@gmail.com" className="text-accent hover:underline">livstreet.store@gmail.com</a></p>
+                <p>E-post: <a href="mailto:post@livstreet.no" className="text-accent hover:underline">post@livstreet.no</a></p>
               </div>
             </section>
 
@@ -81,7 +81,7 @@ export default function Kjopsvilkar() {
               </h2>
               <div className="text-sm md:text-base text-muted-foreground space-y-3">
                 <p>Dersom produktet har en feil eller mangel, gjelder reglene i <strong>forbrukerkjøpsloven</strong>.</p>
-                <p>Reklamasjon må meldes skriftlig til: <a href="mailto:livstreet.store@gmail.com" className="text-accent hover:underline">livstreet.store@gmail.com</a></p>
+                <p>Reklamasjon må meldes skriftlig til: <a href="mailto:post@livstreet.no" className="text-accent hover:underline">post@livstreet.no</a></p>
                 <p>Reklamasjonen skal inneholde:</p>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li>Beskrivelse av feilen</li>
@@ -138,7 +138,7 @@ export default function Kjopsvilkar() {
               </h2>
               <div className="text-sm md:text-base text-muted-foreground space-y-2">
                 <p>Har du spørsmål om bestilling, betaling eller levering, kan du kontakte oss på:</p>
-                <p>📧 <a href="mailto:livstreet.store@gmail.com" className="text-accent hover:underline">livstreet.store@gmail.com</a></p>
+                <p>📧 <a href="mailto:post@livstreet.no" className="text-accent hover:underline">post@livstreet.no</a></p>
                 <p>📞 <a href="tel:+4745251280" className="text-accent hover:underline">45 25 12 80</a></p>
               </div>
             </section>

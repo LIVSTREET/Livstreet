@@ -244,11 +244,11 @@ export default function KvalitetVedlikehold() {
             </div>
 
             <a 
-              href="mailto:livstreet.store@gmail.com"
+              href="mailto:post@livstreet.no"
               className="inline-flex items-center gap-2 text-primary font-medium hover:underline mb-6"
             >
               <Mail className="w-4 h-4" />
-              livstreet.store@gmail.com
+              post@livstreet.no
             </a>
 
             <p className="text-sm text-muted-foreground">
@@ -274,11 +274,11 @@ export default function KvalitetVedlikehold() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a 
-                href="mailto:livstreet.store@gmail.com"
+                href="mailto:post@livstreet.no"
                 className="inline-flex items-center gap-2 bg-primary-foreground text-primary px-6 py-3 rounded-full font-medium hover:bg-primary-foreground/90 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                livstreet.store@gmail.com
+                post@livstreet.no
               </a>
               <a 
                 href="tel:+4745251280"

@@ -57,9 +57,9 @@ export function Footer() {
           <div className="space-y-2 md:space-y-4">
             <h4 className="font-display text-sm md:text-lg font-semibold">Kontakt oss</h4>
             <div className="space-y-2 md:space-y-3">
-              <a href="mailto:livstreet.store@gmail.com" className="flex items-center gap-2 md:gap-3 text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="mailto:post@livstreet.no" className="flex items-center gap-2 md:gap-3 text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Mail className="h-3.5 w-3.5 md:h-4 md:w-4 shrink-0" />
-                <span className="break-all">livstreet.store@gmail.com</span>
+                <span className="break-all">post@livstreet.no</span>
               </a>
               <a href="tel:+4745251280" className="flex items-center gap-2 md:gap-3 text-xs md:text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Phone className="h-3.5 w-3.5 md:h-4 md:w-4 shrink-0" />
