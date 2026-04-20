@@ -98,13 +98,13 @@ function BenefitPanel({
         aria-hidden
         className={`pointer-events-none absolute -top-32 ${
           index % 2 === 0 ? "-right-32" : "-left-32"
-        } w-[32rem] h-[32rem] rounded-full bg-${benefit.accentClass}/20 blur-3xl`}
+        } w-[32rem] h-[32rem] rounded-full ${benefit.bgSoft} blur-3xl`}
       />
 
       <div className="container relative px-6 text-center max-w-3xl">
         {/* Step counter */}
         <div
-          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ring-${benefit.accentClass}/40 text-${benefit.accentClass} text-sm md:text-base font-medium tracking-wide mb-8 transition-all duration-700 ${
+          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ${benefit.ring} ${benefit.text} text-sm md:text-base font-medium tracking-wide mb-8 transition-all duration-700 ${
             active ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
           }`}
         >
@@ -113,19 +113,19 @@ function BenefitPanel({
 
         {/* Icon */}
         <div
-          className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ring-${benefit.accentClass}/50 flex items-center justify-center shadow-2xl transition-all duration-700 delay-100 ${
+          className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ${benefit.ring} flex items-center justify-center shadow-2xl transition-all duration-700 delay-100 ${
             active ? "opacity-100 scale-100" : "opacity-0 scale-75"
           }`}
         >
           <span
             aria-hidden
-            className={`absolute inset-0 rounded-full bg-${benefit.accentClass}/15 ${
+            className={`absolute inset-0 rounded-full ${benefit.bgSoft} ${
               active ? "animate-ping" : ""
             }`}
             style={{ animationDuration: "2.5s" }}
           />
           <Icon
-            className={`relative h-12 w-12 md:h-16 md:w-16 text-${benefit.accentClass}`}
+            className={`relative h-12 w-12 md:h-16 md:w-16 ${benefit.text}`}
             strokeWidth={1.5}
           />
         </div>
@@ -155,9 +155,7 @@ function BenefitPanel({
             <span
               key={i}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === index
-                  ? `w-8 bg-${benefit.accentClass}`
-                  : "w-1.5 bg-foreground/25"
+                i === index ? `w-8 ${benefit.dot}` : "w-1.5 bg-foreground/25"
               }`}
             />
           ))}
