@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Volume2, ArrowRight } from "lucide-react";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const VIMEO_ID = "1151281409";
 
