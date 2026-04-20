@@ -25,8 +25,9 @@ export function HeroSection() {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[100vh] min-w-full min-h-full pointer-events-none border-0"
             />
           </div>
-          {/* Lighter warm overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/10 to-primary/55" />
+          {/* Warm saturated overlay — wood + amber glow */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-wood/20 to-primary/65 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,_hsl(var(--accent)/0.35),_transparent_60%)]" />
         </div>
 
         {/* Desktop image */}
@@ -37,16 +38,17 @@ export function HeroSection() {
             className="w-full h-full object-cover"
             priority={true}
           />
-          {/* Warm directional gradient — left readable, right airy */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/55 via-primary/20 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-transparent" />
+          {/* Warm saturated wash — primary + wood + accent glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/65 via-wood/30 to-transparent mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_45%,_hsl(var(--accent)/0.3),_transparent_55%)]" />
         </div>
       </div>
 
       {/* Warm accent glow — adds the "uplifting" warmth */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/4 w-[36rem] h-[36rem] rounded-full bg-accent/20 blur-[120px]"
+        className="pointer-events-none absolute -top-24 left-1/4 w-[36rem] h-[36rem] rounded-full bg-accent/35 blur-[120px]"
       />
 
       {/* Content */}
