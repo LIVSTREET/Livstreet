@@ -111,17 +111,13 @@ export default {
           from: { opacity: "0", transform: "scale(0.95)" },
           to: { opacity: "1", transform: "scale(1)" },
         },
-      },
-      keyframes: {
-        ...{
-          "reveal-up": {
-            from: { opacity: "0", transform: "translateY(28px)" },
-            to: { opacity: "1", transform: "translateY(0)" },
-          },
-          "reveal-zoom": {
-            from: { opacity: "0", transform: "scale(0.96)" },
-            to: { opacity: "1", transform: "scale(1)" },
-          },
+        "reveal-up": {
+          from: { opacity: "0", transform: "translateY(28px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "reveal-zoom": {
+          from: { opacity: "0", transform: "scale(0.96)" },
+          to: { opacity: "1", transform: "scale(1)" },
         },
       },
       animation: {
