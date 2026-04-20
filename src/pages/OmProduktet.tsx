@@ -10,7 +10,6 @@ import {
   PenTool,
   Clock,
   Droplets,
-  Heart,
 } from "lucide-react";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
