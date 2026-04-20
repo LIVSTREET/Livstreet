@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Player from "@vimeo/player";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Volume2, ArrowRight } from "lucide-react";
+import { useInView } from "@/hooks/useInView";
+import { SectionDivider } from "./SectionDivider";
 
 const VIMEO_ID = "1151281409";
 
@@ -15,6 +17,8 @@ export function VideoSection() {
   const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
+  const { ref: revealRef, inView: revealInView } = useInView<HTMLDivElement>();
+  const { ref: headingRef, inView: headingInView } = useInView<HTMLDivElement>();
 
   // Lazy-load Vimeo iframe only when near viewport (CWV optimization)
   useEffect(() => {
@@ -58,54 +62,77 @@ export function VideoSection() {
   };
 
   return (
-    <section className="py-10 md:py-20 bg-background">
-      <div className="container px-4">
-        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-12">
-          <h2 className="font-display text-2xl md:text-4xl font-bold mb-2 md:mb-4">
+    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
+      {/* Subtle accent glow for visual flow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-1/3 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent/10 blur-3xl"
+      />
+
+      <div className="container relative px-4">
+        <div
+          ref={headingRef}
+          className={`text-center max-w-3xl mx-auto mb-8 md:mb-12 opacity-0 ${
+            headingInView ? "animate-reveal-up" : ""
+          }`}
+        >
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4">
             Håndverk med sjel
           </h2>
-          <p className="text-muted-foreground text-sm md:text-lg">
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
             Se hvordan vi skaper hver gravplate med presisjon og omsorg i vårt verksted.
           </p>
+          <SectionDivider className="mt-5" />
         </div>
 
-        {/* Card */}
+        {/* Card with reveal + accent frame */}
         <div
-          ref={containerRef}
-          className="relative aspect-video max-w-5xl mx-auto rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/50 focus-within:ring-primary bg-muted"
+          ref={revealRef}
+          className={`relative max-w-5xl mx-auto opacity-0 ${
+            revealInView ? "animate-reveal-zoom" : ""
+          }`}
         >
-          {shouldLoadIframe && (
-            <iframe
-              src={PREVIEW_SRC}
-              className="w-full h-full pointer-events-none"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              title="Produksjonsvideo (forhåndsvisning)"
-              loading="lazy"
-            />
-          )}
-
-          <button
-            type="button"
-            onClick={() => setIsOpen(true)}
-            className="absolute inset-0 flex items-center justify-center bg-primary/10 opacity-100 md:opacity-0 md:hover:opacity-100 transition-opacity"
-            aria-label="Spill av produksjonsvideo med lyd"
+          <span
+            aria-hidden
+            className="absolute -inset-2 md:-inset-3 rounded-3xl bg-gradient-to-br from-accent/25 via-wood/15 to-transparent blur-lg"
+          />
+          <div
+            ref={containerRef}
+            className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/40 focus-within:ring-primary bg-muted"
           >
-            <div className="text-center text-primary-foreground">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-background/20 backdrop-blur flex items-center justify-center">
-                <Volume2 className="w-8 h-8" />
+            {shouldLoadIframe && (
+              <iframe
+                src={PREVIEW_SRC}
+                className="w-full h-full pointer-events-none"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                title="Produksjonsvideo (forhåndsvisning)"
+                loading="lazy"
+              />
+            )}
+
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="absolute inset-0 flex items-center justify-center bg-primary/10 opacity-100 md:opacity-0 md:hover:opacity-100 transition-opacity"
+              aria-label="Spill av produksjonsvideo med lyd"
+            >
+              <div className="text-center text-primary-foreground">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-background/20 backdrop-blur flex items-center justify-center">
+                  <Volume2 className="w-8 h-8" />
+                </div>
+                <p className="text-lg md:text-xl font-medium">Klikk for lyd</p>
               </div>
-              <p className="text-lg font-medium">Klikk for lyd</p>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
 
         <div className="text-center mt-8 md:mt-10">
           <Link
             to="/bilder"
-            className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full bg-primary text-primary-foreground font-medium text-base md:text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+            className="inline-flex items-center gap-2 px-7 py-3.5 md:px-8 md:py-4 rounded-full bg-primary text-primary-foreground font-medium text-lg md:text-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
           >
             Se flere bilder
             <ArrowRight className="w-5 h-5" />
