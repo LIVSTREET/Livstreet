@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { buildCanonicalPath } from "./canonical";
 
 const SITE_URL = "https://livstreet.no";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
@@ -26,7 +27,12 @@ export function SeoHead({
   omitOgUrl = false,
   jsonLd,
 }: SeoHeadProps) {
-  const url = `${SITE_URL}${path}`;
+  // Split path + query so we can strip tracking params (utm_*, fbclid, ?SD, ?MD …)
+  // before building canonical / og:url. This collapses indexed duplicates like
+  // /?SD, /?MD, /?ND, /?NA, /?MA, /?SA back to the clean canonical URL.
+  const [rawPath, rawQuery = ""] = path.split("?");
+  const cleanPath = buildCanonicalPath(rawPath, rawQuery ? `?${rawQuery}` : "");
+  const url = `${SITE_URL}${cleanPath}`;
   const ogImage = image
     ? image.startsWith("http")
       ? image
