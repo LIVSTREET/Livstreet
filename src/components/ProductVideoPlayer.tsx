@@ -141,7 +141,7 @@ export function ProductVideoPlayer({
     >
       <iframe
         ref={setIframeRef}
-        src={src}
+        src={finalSrc}
         title={title}
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
         allowFullScreen
