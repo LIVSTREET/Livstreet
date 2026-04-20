@@ -63,19 +63,15 @@ export function VideoSection() {
   };
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
+    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
+      {/* Subtle warm accent glow for visual flow */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-cover"
-        style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 35%" }}
+        className="pointer-events-none absolute -top-24 left-1/3 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent/15 blur-3xl"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/80"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.6)_100%)]"
+        className="pointer-events-none absolute -bottom-24 -right-24 w-72 h-72 md:w-96 md:h-96 rounded-full bg-wood/10 blur-3xl"
       />
 
       <div className="container relative px-4">
@@ -85,10 +81,10 @@ export function VideoSection() {
             headingInView ? "animate-reveal-up" : ""
           }`}
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-white drop-shadow-lg">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4">
             Håndverk med sjel
           </h2>
-          <p className="text-white/85 text-lg md:text-xl leading-relaxed drop-shadow">
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
             Se hvordan vi skaper hver gravplate med presisjon og omsorg i vårt verksted.
           </p>
           <SectionDivider className="mt-5" />

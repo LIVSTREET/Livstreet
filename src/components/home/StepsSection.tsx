@@ -55,7 +55,7 @@ function StepCard({
       {!isLast && (
         <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-white/40 to-transparent" />
       )}
-      <div className="relative h-full flex flex-col items-center bg-background/95 backdrop-blur-sm rounded-2xl p-4 md:p-8 text-center shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:border-accent/60 transition-all duration-500 border border-white/20 overflow-hidden">
+      <div className="relative h-full flex flex-col items-center bg-card/95 backdrop-blur-sm rounded-2xl p-4 md:p-8 text-center shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:border-accent/50 transition-all duration-500 border border-border/60 overflow-hidden">
         <span className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-accent/15 text-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:scale-110 transition-all duration-500 shrink-0">
           <Icon className="h-6 w-6 md:h-7 md:w-7" />
@@ -80,13 +80,14 @@ export function StepsSection() {
         className="absolute inset-0 bg-cover"
         style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 40%" }}
       />
+      {/* Lighter, warmer wash so text reads but mood lifts */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/75"
+        className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background/80"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.55)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_hsl(var(--background)/0.5)_100%)]"
       />
       <div className="container relative px-4">
         <div
@@ -95,10 +96,10 @@ export function StepsSection() {
             headInView ? "animate-reveal-up" : ""
           }`}
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-white drop-shadow-lg">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-foreground">
             Fra bestilling til montering
           </h2>
-          <p className="text-white/85 text-lg md:text-xl leading-relaxed drop-shadow">
+          <p className="text-foreground/75 text-lg md:text-xl leading-relaxed">
             En enkel prosess som ivaretar deg hele veien.
           </p>
           <SectionDivider className="mt-5" />
@@ -118,12 +119,12 @@ export function StepsSection() {
         </div>
 
         <div className="text-center mt-10 md:mt-12">
-          <p className="text-white/80 text-base md:text-lg mb-2 drop-shadow">
+          <p className="text-foreground/75 text-base md:text-lg mb-2">
             Vil du vite mer om hva som skjer videre?
           </p>
           <Link
             to="/informasjon/hva-skjer-etterpa"
-            className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all text-base md:text-lg drop-shadow"
+            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-base md:text-lg"
           >
             Les mer om prosessen
             <ArrowRight className="h-5 w-5" />
