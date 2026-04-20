@@ -210,16 +210,8 @@ export default function OmProduktet() {
                 Et kort innblikk i hvorfor vi lager gravplater i tre – og hva som driver oss.
               </p>
             </div>
-            <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl ring-1 ring-border bg-muted animate-scale-in">
-              <iframe
-                src={STORY_VIDEO_SRC}
-                title="Historien bak Livstreet"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full border-0"
-              />
+            <div className="max-w-sm md:max-w-md mx-auto">
+              <ProductVideoPlayer src={STORY_VIDEO_SRC} title="Historien bak Livstreet" />
             </div>
           </div>
         </div>
