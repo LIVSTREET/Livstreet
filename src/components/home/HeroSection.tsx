@@ -51,25 +51,30 @@ export function HeroSection() {
           </p>
 
           {/* CTA area */}
-          <div className="pt-2 space-y-5">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+          <div className="pt-3 space-y-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-3">
               <Button
-                variant="hero"
                 size="lg"
                 asChild
-                className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl w-full sm:w-auto"
+                className="group h-14 px-8 text-base font-semibold tracking-wide bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_10px_30px_-10px_hsl(var(--accent)/0.6)] hover:shadow-[0_14px_36px_-10px_hsl(var(--accent)/0.7)] hover:-translate-y-0.5 transition-all duration-300 rounded-full w-full sm:w-auto"
               >
-                <Link to="/komponer">Design gravplate</Link>
+                <Link to="/komponer" className="inline-flex items-center justify-center gap-2">
+                  Design gravplaten
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
               <Button
-                variant="hero-outline"
+                variant="ghost"
                 size="lg"
                 asChild
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto"
+                className="h-14 px-6 text-base font-medium text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-full w-full sm:w-auto"
               >
                 <Link to="/om-produktet">Lær mer</Link>
               </Button>
             </div>
+            <p className="text-xs md:text-sm text-primary-foreground/80 drop-shadow">
+              Gratis design – uforpliktende. Personlig svar innen 24 timer.
+            </p>
           </div>
         </div>
       </div>
