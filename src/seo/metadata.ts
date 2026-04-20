@@ -63,6 +63,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     description:
       "Livstreet lager bærekraftige gravplater i eik med håndverk, omtanke og naturlige materialer.",
   },
+  "/om-produktet": {
+    path: "/om-produktet",
+    title: "Om produktet – gravplate i heltre eik | Livstreet",
+    description:
+      "Lær mer om materialet, uttrykket og kvaliteten. Heltre eik, behandlet for utendørs bruk og laget for å vare.",
+  },
   "/kontakt": {
     path: "/kontakt",
     title: "Kontakt Livstreet – vi svarer raskt",

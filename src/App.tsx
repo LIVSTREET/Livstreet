@@ -14,6 +14,7 @@ import Baerekraft from "./pages/artikler/Baerekraft";
 import Symboler from "./pages/artikler/Symboler";
 import HvaSkjerEtterpa from "./pages/artikler/HvaSkjerEtterpa";
 import OmOss from "./pages/OmOss";
+import OmProduktet from "./pages/OmProduktet";
 import Kontakt from "./pages/Kontakt";
 import Bestill from "./pages/Bestill";
 import Bilder from "./pages/Bilder";
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/informasjon/symboler" element={<Symboler />} />
             <Route path="/informasjon/hva-skjer-etterpa" element={<HvaSkjerEtterpa />} />
             <Route path="/om-oss" element={<OmOss />} />
+            <Route path="/om-produktet" element={<OmProduktet />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/bestill" element={<Bestill />} />
             <Route path="/bilder" element={<Bilder />} />

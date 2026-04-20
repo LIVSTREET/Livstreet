@@ -3,38 +3,70 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import gravplateHero from "@/assets/gravplate-hero.png";
 
+const HERO_VIMEO_ID = "1184738419";
+const HERO_VIDEO_SRC = `https://player.vimeo.com/video/${HERO_VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&playsinline=1&controls=0&title=0&byline=0&portrait=0&badge=0&app_id=58479`;
+
 export function HeroSection() {
   return (
-    <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section className="relative min-h-[88vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden bg-primary">
+      {/* Background: Video on mobile, image on desktop (perf + premium-ro på desktop) */}
       <div className="absolute inset-0">
-        <OptimizedImage
-          src={gravplateHero}
-          alt="Gravplate i eik på kirkegård"
-          className="w-full h-full object-cover"
-          priority={true}
-        />
-        
+        {/* Mobile video */}
+        <div className="md:hidden absolute inset-0">
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            {/* 16:9 iframe scaled to cover */}
+            <iframe
+              src={HERO_VIDEO_SRC}
+              title="Livstreet – gravplate i eik"
+              allow="autoplay; fullscreen; picture-in-picture"
+              loading="eager"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[100vh] min-w-full min-h-full pointer-events-none border-0"
+            />
+          </div>
+          {/* Warm/dark overlay for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/55 via-primary/40 to-primary/75" />
+        </div>
+
+        {/* Desktop image */}
+        <div className="hidden md:block absolute inset-0">
+          <OptimizedImage
+            src={gravplateHero}
+            alt="Gravplate i eik på kirkegård"
+            className="w-full h-full object-cover"
+            priority={true}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/40 via-primary/20 to-transparent" />
+        </div>
       </div>
 
       {/* Content */}
       <div className="container relative z-10 py-16 md:py-28 px-4">
         <div className="max-w-2xl space-y-5 md:space-y-7 animate-fade-in">
-          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight drop-shadow-lg">
-            Et vakkert og miljøvennlig alternativ for å hedre dine kjære
+          <h1 className="font-display text-[2.1rem] leading-[1.1] md:text-5xl lg:text-6xl font-bold text-primary-foreground md:leading-tight drop-shadow-lg">
+            Et varmere alternativ til gravstein
           </h1>
-          <p className="hidden md:block text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
-            Hver plate er unik – laget med kjærlighet og respekt for naturen.
+          <p className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
+            Laget i heltre eik – et mer personlig alternativ til tradisjonelle gravsteiner.
           </p>
 
           {/* CTA area */}
           <div className="pt-2 space-y-5">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <Button variant="hero" size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl">
-                <Link to="/komponer">Lag min gravplate</Link>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              <Button
+                variant="hero"
+                size="lg"
+                asChild
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl w-full sm:w-auto"
+              >
+                <Link to="/komponer">Design gravplate</Link>
               </Button>
-              <Button variant="hero-outline" size="lg" asChild className="hidden md:inline-flex border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                <Link to="/kontakt">Få hjelp / kontakt oss</Link>
+              <Button
+                variant="hero-outline"
+                size="lg"
+                asChild
+                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto"
+              >
+                <Link to="/om-produktet">Lær mer</Link>
               </Button>
             </div>
           </div>
