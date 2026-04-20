@@ -61,11 +61,11 @@ export function ContactSection() {
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <ContactCard
-              href="mailto:livstreet.store@gmail.com"
+              href="mailto:post@livstreet.no"
               icon={Mail}
               title="E-post"
               description="Send oss en melding når som helst"
-              value="livstreet.store@gmail.com"
+              value="post@livstreet.no"
               index={0}
             />
             <ContactCard

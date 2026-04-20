@@ -183,13 +183,13 @@ export default function Kontakt() {
               <h2 className="font-display text-xl md:text-2xl font-bold mb-4 md:mb-6">Kontaktinformasjon</h2>
               
               <div className="space-y-3 md:space-y-6">
-                <a href="mailto:livstreet.store@gmail.com" className="flex items-start gap-3 md:gap-4 p-4 md:p-6 bg-card rounded-lg md:rounded-xl border border-border hover:border-primary/30 transition-all">
+                <a href="mailto:post@livstreet.no" className="flex items-start gap-3 md:gap-4 p-4 md:p-6 bg-card rounded-lg md:rounded-xl border border-border hover:border-primary/30 transition-all">
                   <div className="p-2 md:p-3 bg-primary/10 rounded-lg">
                     <Mail className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-semibold mb-0.5 md:mb-1 text-sm md:text-base">E-post</h3>
-                    <p className="text-muted-foreground text-sm md:text-base">livstreet.store@gmail.com</p>
+                    <p className="text-muted-foreground text-sm md:text-base">post@livstreet.no</p>
                   </div>
                 </a>
 

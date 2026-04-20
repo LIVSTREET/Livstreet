@@ -31,7 +31,7 @@ export default function Personvern() {
                 <p>Organisasjonsnummer: <strong>927 309 114</strong></p>
                 <p>Sted: <strong>Oslo, Norge</strong></p>
                 <p>Telefon: <strong>45 25 12 80</strong></p>
-                <p>E-post: <a href="mailto:livstreet.store@gmail.com" className="text-accent hover:underline">livstreet.store@gmail.com</a></p>
+                <p>E-post: <a href="mailto:post@livstreet.no" className="text-accent hover:underline">post@livstreet.no</a></p>
               </div>
               <p className="text-sm md:text-base text-muted-foreground mt-4">
                 Livstreet er behandlingsansvarlig for personopplysningene som behandles via nettsiden.
@@ -146,7 +146,7 @@ export default function Personvern() {
                 <li>Å klage til Datatilsynet dersom du mener personopplysninger behandles i strid med regelverket</li>
               </ul>
               <p className="text-sm md:text-base text-muted-foreground mt-4">
-                Henvendelser kan sendes til: <a href="mailto:livstreet.store@gmail.com" className="text-accent hover:underline">livstreet.store@gmail.com</a>
+                Henvendelser kan sendes til: <a href="mailto:post@livstreet.no" className="text-accent hover:underline">post@livstreet.no</a>
               </p>
             </section>
 
