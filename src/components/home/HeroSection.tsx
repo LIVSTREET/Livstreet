@@ -83,6 +83,7 @@ export function HeroSection() {
                 >
                   <Link to="/om-produktet">Lær mer</Link>
                 </Button>
+              </div>
             </div>
           </div>
 
