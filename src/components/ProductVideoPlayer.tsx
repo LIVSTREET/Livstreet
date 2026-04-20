@@ -137,7 +137,7 @@ export function ProductVideoPlayer({
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in"
+      className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in"
     >
       <iframe
         ref={setIframeRef}
