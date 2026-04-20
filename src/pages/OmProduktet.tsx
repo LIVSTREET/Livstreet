@@ -23,9 +23,11 @@ import symbolerImg from "@/assets/article-3.jpg";
 import hvaSkjerImg from "@/assets/hva-skjer-etterpa.png";
 
 const PRODUCT_VIMEO_ID = "1184743331";
+const STORY_VIMEO_ID = "1184891710";
 // dnt=1 + endscreen=0 hides "more from author" recommendations after playback.
 // Combined with our custom replay button this lets the user restart from start.
 const PRODUCT_VIDEO_SRC = `https://player.vimeo.com/video/${PRODUCT_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&endscreen=0`;
+const STORY_VIDEO_SRC = `https://player.vimeo.com/video/${STORY_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&endscreen=0`;
 
 const facts = [
   {
