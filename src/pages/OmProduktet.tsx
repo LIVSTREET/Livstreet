@@ -213,6 +213,15 @@ export default function OmProduktet() {
             <div className="max-w-sm md:max-w-md mx-auto">
               <ProductVideoPlayer src={STORY_VIDEO_SRC} title="Historien bak Livstreet" />
             </div>
+            <div className="text-center mt-6 md:mt-8">
+              <Link
+                to="/om-oss"
+                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm md:text-base"
+              >
+                Les mer om dem som står bak
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
