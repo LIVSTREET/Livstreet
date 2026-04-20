@@ -45,7 +45,7 @@ export function ConfiguratorTeaser() {
   const { ref: imgRef, inView: imgInView } = useInView<HTMLDivElement>();
   const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
-    <section className="relative py-12 md:py-20 bg-muted overflow-hidden">
+    <section className="relative py-12 md:py-20 overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent/10 blur-3xl"
