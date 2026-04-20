@@ -45,30 +45,44 @@ export function ProductVideoPlayer({
   const [ended, setEnded] = useState(false);
   const [needsTapForSound, setNeedsTapForSound] = useState(false);
   const inViewRef = useRef(false);
-  const [playerVersion, setPlayerVersion] = useState(0);
+  const [iframeNode, setIframeNode] = useState<HTMLIFrameElement | null>(null);
 
   const setIframeRef = useCallback((node: HTMLIFrameElement | null) => {
-    if (!node) {
+    setIframeNode((prev) => (prev === node ? prev : node));
+  }, []);
+
+  useEffect(() => {
+    if (!iframeNode) {
       playerRef.current = null;
       playerReadyRef.current = null;
       return;
     }
-    const player = new Player(node);
+    const player = new Player(iframeNode);
     playerRef.current = player;
     playerReadyRef.current = player.ready();
-    player.on("ended", () => setEnded(true));
-    player.on("play", () => setEnded(false));
-    player.on("volumechange", async () => {
+    const onEnded = () => setEnded(true);
+    const onPlay = () => setEnded(false);
+    const onVolume = async () => {
       try {
         const muted = await player.getMuted();
         if (!muted) setNeedsTapForSound(false);
       } catch {
         /* noop */
       }
-    });
-    // Trigger observer effect re-run so it can act on initial visibility
-    setPlayerVersion((v) => v + 1);
-  }, []);
+    };
+    player.on("ended", onEnded);
+    player.on("play", onPlay);
+    player.on("volumechange", onVolume);
+    return () => {
+      try {
+        player.off("ended", onEnded);
+        player.off("play", onPlay);
+        player.off("volumechange", onVolume);
+      } catch {
+        /* noop */
+      }
+    };
+  }, [iframeNode]);
 
   // Auto play/pause based on viewport visibility
   useEffect(() => {
