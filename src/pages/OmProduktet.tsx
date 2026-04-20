@@ -131,8 +131,8 @@ export default function OmProduktet() {
       {/* Video */}
       <section className="bg-background py-8 md:py-12">
         <div className="container px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
+          <div className="max-w-sm md:max-w-md mx-auto">
+            <div className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
               <iframe
                 src={PRODUCT_VIDEO_SRC}
                 title="Om produktet – Livstreet"
@@ -144,7 +144,6 @@ export default function OmProduktet() {
               />
             </div>
           </div>
-        </div>
       </section>
 
       {/* Fakta */}
