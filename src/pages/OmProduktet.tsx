@@ -16,13 +16,16 @@ import {
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
 import { buildBreadcrumbJsonLd } from "@/seo/jsonLd";
+import { ProductVideoPlayer } from "@/components/ProductVideoPlayer";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import baerekraftImg from "@/assets/baerekraft-hero.png";
 import symbolerImg from "@/assets/article-3.jpg";
 import hvaSkjerImg from "@/assets/hva-skjer-etterpa.png";
 
 const PRODUCT_VIMEO_ID = "1184743331";
-const PRODUCT_VIDEO_SRC = `https://player.vimeo.com/video/${PRODUCT_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`;
+// dnt=1 + endscreen=0 hides "more from author" recommendations after playback.
+// Combined with our custom replay button this lets the user restart from start.
+const PRODUCT_VIDEO_SRC = `https://player.vimeo.com/video/${PRODUCT_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&endscreen=0`;
 
 const facts = [
   {
@@ -132,17 +135,7 @@ export default function OmProduktet() {
       <section className="bg-background py-8 md:py-12">
         <div className="container px-4">
           <div className="max-w-sm md:max-w-md mx-auto">
-            <div className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
-              <iframe
-                src={PRODUCT_VIDEO_SRC}
-                title="Om produktet – Livstreet"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full border-0"
-              />
-            </div>
+            <ProductVideoPlayer src={PRODUCT_VIDEO_SRC} title="Om produktet – Livstreet" />
           </div>
         </div>
       </section>
