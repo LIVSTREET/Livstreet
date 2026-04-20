@@ -144,6 +144,7 @@ export default function OmProduktet() {
               />
             </div>
           </div>
+        </div>
       </section>
 
       {/* Fakta */}
