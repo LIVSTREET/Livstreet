@@ -41,17 +41,17 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="container relative z-10 py-16 md:py-28 px-4">
-        <div className="max-w-2xl space-y-5 md:space-y-7 animate-fade-in">
+        <div className="max-w-2xl mx-auto text-center space-y-5 md:space-y-7 animate-fade-in">
           <h1 className="font-display text-[2.1rem] leading-[1.1] md:text-5xl lg:text-6xl font-bold text-primary-foreground md:leading-tight drop-shadow-lg">
             Et varmere alternativ til gravstein
           </h1>
-          <p className="text-base md:text-xl leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
+          <p className="text-sm md:text-lg leading-relaxed font-serif text-primary-foreground/90 drop-shadow-md">
             Laget i heltre eik – et mer personlig alternativ til tradisjonelle gravsteiner.
           </p>
 
           {/* CTA area */}
           <div className="pt-2 space-y-5">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
               <Button
                 variant="hero"
                 size="lg"
