@@ -7,22 +7,31 @@ import plateOddarMarie from "@/assets/plate-oddar-marie.jpg";
 import plateDetailOak from "@/assets/plate-detail-oak.jpg";
 
 const HERO_VIMEO_ID = "1184738419";
-const HERO_VIDEO_SRC = `https://player.vimeo.com/video/${HERO_VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&playsinline=1&controls=0&title=0&byline=0&portrait=0&badge=0&app_id=58479`;
+// quality=540p + dnt=1 + transparent=0 → raskere førstelasting på mobil
+const HERO_VIDEO_SRC = `https://player.vimeo.com/video/${HERO_VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&playsinline=1&controls=0&title=0&byline=0&portrait=0&badge=0&dnt=1&quality=540p&app_id=58479`;
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[88vh] md:min-h-[92vh] flex items-center overflow-hidden bg-primary">
       {/* Background: Video on mobile, image on desktop */}
       <div className="absolute inset-0">
-        {/* Mobile video */}
-        <div className="md:hidden absolute inset-0">
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {/* Mobile video — fyller alltid rammen via object-fit på wrapper */}
+        <div className="md:hidden absolute inset-0 overflow-hidden bg-primary">
+          {/* Poster bak — vises mens video laster så det aldri ser "innsnevret" ut */}
+          <OptimizedImage
+            src={gravplateHero}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            priority={true}
+          />
+          {/* Video-laget — bruker aspect-ratio wrapper som garantert dekker viewport */}
+          <div className="absolute inset-0 w-full h-full">
             <iframe
               src={HERO_VIDEO_SRC}
               title="Livstreet – gravplate i eik"
               allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[100vh] min-w-full min-h-full pointer-events-none border-0"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[max(100vw,177.78vh)] h-[max(100vh,56.25vw)] pointer-events-none border-0"
             />
           </div>
           {/* Light, summery overlay — soft golden warmth, not heavy autumn */}
