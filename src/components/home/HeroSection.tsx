@@ -25,9 +25,9 @@ export function HeroSection() {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[100vh] min-w-full min-h-full pointer-events-none border-0"
             />
           </div>
-          {/* Warm saturated overlay — wood + amber glow */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-wood/20 to-primary/65 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,_hsl(var(--accent)/0.35),_transparent_60%)]" />
+          {/* Light, summery overlay — soft golden warmth, not heavy autumn */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-primary/40" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_35%,_hsl(var(--accent)/0.25),_transparent_65%)]" />
         </div>
 
         {/* Desktop image */}
@@ -38,17 +38,17 @@ export function HeroSection() {
             className="w-full h-full object-cover"
             priority={true}
           />
-          {/* Warm saturated wash — primary + wood + accent glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/65 via-wood/30 to-transparent mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_45%,_hsl(var(--accent)/0.3),_transparent_55%)]" />
+          {/* Light summery wash — soft golden glow, airier feel */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/45 via-primary/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-white/10" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_40%,_hsl(var(--accent)/0.22),_transparent_60%)]" />
         </div>
       </div>
 
       {/* Warm accent glow — adds the "uplifting" warmth */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/4 w-[36rem] h-[36rem] rounded-full bg-accent/35 blur-[120px]"
+        className="pointer-events-none absolute -top-24 left-1/4 w-[36rem] h-[36rem] rounded-full bg-accent/25 blur-[120px]"
       />
 
       {/* Content */}
@@ -84,9 +84,6 @@ export function HeroSection() {
                   <Link to="/om-produktet">Lær mer</Link>
                 </Button>
               </div>
-              <p className="text-xs md:text-sm text-primary-foreground/80 drop-shadow text-center md:text-left">
-                Gratis design – uforpliktende. Personlig svar innen 24 timer.
-              </p>
             </div>
           </div>
 
