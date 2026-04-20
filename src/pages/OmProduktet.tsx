@@ -150,24 +150,25 @@ export default function OmProduktet() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {facts.map((fact) => (
-                <Card
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
+              {facts.map((fact, i) => (
+                <div
                   key={fact.title}
-                  className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/60"
+                  className="group flex sm:flex-col items-center sm:text-center gap-3 sm:gap-3 p-4 md:p-5 rounded-xl bg-card border border-border/60 hover:border-primary/30 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 animate-fade-in"
+                  style={{ animationDelay: `${i * 80}ms` }}
                 >
-                  <CardContent className="p-5 md:p-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <fact.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="font-display text-lg font-semibold mb-1.5">
+                  <div className="shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all">
+                    <fact.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-display text-sm md:text-base font-semibold mb-0.5 md:mb-1">
                       {fact.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-xs md:text-sm text-muted-foreground leading-snug">
                       {fact.desc}
                     </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
