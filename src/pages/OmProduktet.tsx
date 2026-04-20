@@ -1,0 +1,264 @@
+import { Link } from "react-router-dom";
+import { Layout } from "@/components/layout/Layout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
+import {
+  ArrowLeft,
+  ArrowRight,
+  TreePine,
+  Sun,
+  PenTool,
+  Clock,
+  Droplets,
+  Heart,
+} from "lucide-react";
+import { SeoHead } from "@/seo/SeoHead";
+import { ROUTE_META } from "@/seo/metadata";
+import { buildBreadcrumbJsonLd } from "@/seo/jsonLd";
+import monteringImg from "@/assets/montering-vedlikehold.png";
+import baerekraftImg from "@/assets/baerekraft-hero.png";
+import symbolerImg from "@/assets/article-3.jpg";
+import hvaSkjerImg from "@/assets/hva-skjer-etterpa.png";
+
+const PRODUCT_VIMEO_ID = "1184743331";
+const PRODUCT_VIDEO_SRC = `https://player.vimeo.com/video/${PRODUCT_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`;
+
+const facts = [
+  {
+    icon: TreePine,
+    title: "Heltre eik",
+    desc: "Massiv, nordisk eik med naturlig styrke og varm tone.",
+  },
+  {
+    icon: Sun,
+    title: "Behandlet for utendørs bruk",
+    desc: "UV-bestandig båtlakk beskytter mot sol, regn og vind.",
+  },
+  {
+    icon: PenTool,
+    title: "Personlig gravering",
+    desc: "Navn, datoer og symboler graveres med presisjon i treet.",
+  },
+  {
+    icon: Clock,
+    title: "Lang levetid",
+    desc: "Med enkelt vedlikehold står platen vakkert i mange år.",
+  },
+  {
+    icon: Droplets,
+    title: "Enkelt vedlikehold",
+    desc: "Sjeldent og overkommelig – et lett strøk lakk ved behov.",
+  },
+  {
+    icon: Heart,
+    title: "Varmt og naturlig uttrykk",
+    desc: "Et levende minne som eldes naturlig sammen med stedet.",
+  },
+];
+
+const articles = [
+  {
+    image: monteringImg,
+    category: "Vedlikehold",
+    title: "Montering og vedlikehold",
+    excerpt: "Enkelt å ta vare på – et trygt og varig valg.",
+    slug: "montering-vedlikehold",
+  },
+  {
+    image: baerekraftImg,
+    category: "Bærekraft",
+    title: "Miljøvennlige alternativer",
+    excerpt: "Hvorfor trebaserte gravplater er et godt valg for naturen.",
+    slug: "miljovennlig",
+  },
+  {
+    image: symbolerImg,
+    category: "Symboler",
+    title: "Betydningen av ulike symboler",
+    excerpt: "Lær om tradisjoner og symbolikk i gravminnedesign.",
+    slug: "symboler",
+  },
+  {
+    image: hvaSkjerImg,
+    category: "Prosess",
+    title: "Hva skjer etter bestilling?",
+    excerpt: "En trygg prosess – steg for steg.",
+    slug: "hva-skjer-etterpa",
+  },
+];
+
+export default function OmProduktet() {
+  const meta = ROUTE_META["/om-produktet"];
+  return (
+    <Layout>
+      <SeoHead
+        title={meta.title}
+        description={meta.description}
+        path={meta.path}
+        jsonLd={[
+          buildBreadcrumbJsonLd([
+            { name: "Hjem", path: "/" },
+            { name: "Om produktet", path: "/om-produktet" },
+          ]),
+        ]}
+      />
+
+      {/* Intro */}
+      <section className="relative py-8 md:py-14 bg-gradient-to-b from-secondary to-background overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-accent rounded-full blur-3xl" />
+        </div>
+        <div className="container px-4 relative">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 md:mb-8 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Tilbake til forsiden
+          </Link>
+          <h1 className="font-display text-3xl md:text-6xl font-bold max-w-4xl animate-fade-in leading-tight">
+            Om produktet
+          </h1>
+          <p className="text-base md:text-2xl text-muted-foreground mt-4 md:mt-6 max-w-2xl animate-fade-in font-light leading-relaxed">
+            Her kan du lære mer om materialet, uttrykket og hvordan gravplaten er
+            laget for å vare ute over tid.
+          </p>
+        </div>
+      </section>
+
+      {/* Video */}
+      <section className="bg-background py-8 md:py-12">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
+              <iframe
+                src={PRODUCT_VIDEO_SRC}
+                title="Om produktet – Livstreet"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fakta */}
+      <section className="py-12 md:py-20 bg-secondary/40">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="font-display text-2xl md:text-4xl font-bold mb-2 md:mb-4">
+                Materialet og kvaliteten
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
+                Hver plate er laget med omtanke for materiale, holdbarhet og uttrykk.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {facts.map((fact) => (
+                <Card
+                  key={fact.title}
+                  className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/60"
+                >
+                  <CardContent className="p-5 md:p-6">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <fact.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-display text-lg font-semibold mb-1.5">
+                      {fact.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {fact.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-12 md:py-20 bg-background">
+        <div className="container px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-display text-2xl md:text-4xl font-bold mb-3 md:mb-4">
+              Klar til å lage din egen?
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-lg mb-6 md:mb-8 max-w-xl mx-auto">
+              Design en personlig gravplate i eik – eller ta kontakt om du ønsker hjelp på veien.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center">
+              <Button variant="hero" size="lg" asChild className="w-full sm:w-auto">
+                <Link to="/komponer">Lag din gravplate</Link>
+              </Button>
+              <Button variant="hero-outline" size="lg" asChild className="w-full sm:w-auto">
+                <Link to="/kontakt">Kontakt oss</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nyttig informasjon */}
+      <section className="py-10 md:py-20 bg-secondary">
+        <div className="container px-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4 mb-6 md:mb-12">
+            <div>
+              <h2 className="font-display text-2xl md:text-4xl font-bold mb-1 md:mb-2">
+                Nyttig informasjon
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-lg">
+                Artikler og veiledninger for å hjelpe deg på veien.
+              </p>
+            </div>
+            <Link
+              to="/informasjon"
+              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm md:text-base"
+            >
+              Se alle artikler
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {articles.map((article) => (
+              <Link
+                key={article.slug}
+                to={`/informasjon/${article.slug}`}
+                className="group"
+              >
+                <article className="bg-card rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-border group-hover:border-primary/20">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <OptimizedImage
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-3 md:p-5">
+                    <span className="text-[10px] md:text-xs font-medium text-accent uppercase tracking-wider">
+                      {article.category}
+                    </span>
+                    <h3 className="font-display text-sm md:text-lg font-semibold mt-1 md:mt-2 mb-1 md:mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 hidden md:block">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+}
