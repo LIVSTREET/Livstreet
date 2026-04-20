@@ -25,7 +25,8 @@ export function HeroSection() {
               title="Livstreet – gravplate i eik"
               allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78svh] h-[100svh] min-w-[100vw] min-h-full pointer-events-none border-0"
+              style={{ transform: "translate(-50%, -50%) scale(1.12)" }}
+              className="absolute top-1/2 left-1/2 w-[177.78svh] h-[100svh] min-w-[120vw] min-h-[110svh] pointer-events-none border-0 will-change-transform"
             />
           </div>
         </div>
