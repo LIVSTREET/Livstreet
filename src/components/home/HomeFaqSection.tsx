@@ -12,7 +12,7 @@ export function HomeFaqSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLElement>();
   const { ref: listRef, inView: listInView } = useInView<HTMLDivElement>();
   return (
-    <section className="bg-secondary py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <div className="container max-w-3xl px-4">
         <header
           ref={headRef}
@@ -37,7 +37,7 @@ export function HomeFaqSection() {
               <AccordionItem
                 key={section.sectionTitle}
                 value={`section-${idx}`}
-                className="border border-border/60 rounded-2xl bg-background px-5 hover:border-accent/40 transition-colors"
+                className="border border-border/60 rounded-2xl bg-card/80 backdrop-blur-sm px-5 hover:border-accent/40 transition-colors"
               >
                 <AccordionTrigger className="text-left font-display text-xl md:text-2xl text-foreground hover:no-underline py-5">
                   {section.sectionTitle}

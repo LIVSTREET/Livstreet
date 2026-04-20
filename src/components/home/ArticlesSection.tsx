@@ -86,7 +86,7 @@ function ArticleCard({
 export function ArticlesSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
-    <section className="py-12 md:py-20 bg-secondary">
+    <section className="py-12 md:py-20">
       <div className="container px-4">
         <div
           ref={headRef}
