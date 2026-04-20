@@ -24,7 +24,7 @@ export function HeroSection() {
             />
           </div>
           {/* Warm/dark overlay for legibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/55 via-primary/40 to-primary/75" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/15 to-primary/55" />
         </div>
 
         {/* Desktop image */}
