@@ -97,7 +97,11 @@ export function BenefitsSection() {
           className="absolute inset-0 bg-cover"
           style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 30%" }}
         />
-        {/* Dark vignette + bottom wash for strong text contrast */}
+        {/* Subtle dark wash — like a video overlay — for light text/icons */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/45"
+        />
 
         {/* Slides — only text/icon swaps */}
         <div className="relative h-full w-full">
@@ -131,16 +135,16 @@ export function BenefitsSection() {
                 <div className="container relative px-6 text-center max-w-3xl">
                   <div className="relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
                     <Icon
-                      className={`relative h-20 w-20 md:h-28 md:w-28 ${b.text} drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]`}
+                      className="relative h-20 w-20 md:h-28 md:w-28 text-white drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)]"
                       strokeWidth={1.5}
                     />
                   </div>
 
-                  <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                  <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
                     {b.title}
                   </h2>
 
-                  <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto drop-shadow">
                     {b.desc}
                   </p>
                 </div>
@@ -155,7 +159,7 @@ export function BenefitsSection() {
             <span
               key={b.title}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === activeIndex ? `w-8 ${b.dot}` : "w-1.5 bg-foreground/25"
+                i === activeIndex ? `w-8 ${b.dot}` : "w-1.5 bg-white/40"
               }`}
             />
           ))}
