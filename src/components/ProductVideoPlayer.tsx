@@ -40,18 +40,22 @@ export function ProductVideoPlayer({
     }
   })();
   const playerRef = useRef<Player | null>(null);
+  const playerReadyRef = useRef<Promise<void> | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [ended, setEnded] = useState(false);
   const [needsTapForSound, setNeedsTapForSound] = useState(false);
   const inViewRef = useRef(false);
+  const [playerVersion, setPlayerVersion] = useState(0);
 
   const setIframeRef = useCallback((node: HTMLIFrameElement | null) => {
     if (!node) {
       playerRef.current = null;
+      playerReadyRef.current = null;
       return;
     }
     const player = new Player(node);
     playerRef.current = player;
+    playerReadyRef.current = player.ready();
     player.on("ended", () => setEnded(true));
     player.on("play", () => setEnded(false));
     player.on("volumechange", async () => {
@@ -62,6 +66,8 @@ export function ProductVideoPlayer({
         /* noop */
       }
     });
+    // Trigger observer effect re-run so it can act on initial visibility
+    setPlayerVersion((v) => v + 1);
   }, []);
 
   // Auto play/pause based on viewport visibility
@@ -70,44 +76,77 @@ export function ProductVideoPlayer({
     const node = containerRef.current;
     if (!node || typeof IntersectionObserver === "undefined") return;
 
+    let cancelled = false;
+
+    const handleVisible = async () => {
+      const player = playerRef.current;
+      if (!player) return;
+      try {
+        await playerReadyRef.current;
+      } catch {
+        /* noop */
+      }
+      if (cancelled) return;
+      try {
+        await player.setMuted(false);
+        await player.setVolume(1);
+        await player.play();
+        setNeedsTapForSound(false);
+      } catch {
+        try {
+          await player.setMuted(true);
+          await player.play();
+          setNeedsTapForSound(true);
+        } catch {
+          /* noop */
+        }
+      }
+    };
+
+    const handleHidden = async () => {
+      const player = playerRef.current;
+      if (!player) return;
+      try {
+        await playerReadyRef.current;
+        await player.pause();
+      } catch {
+        /* noop */
+      }
+    };
+
     const observer = new IntersectionObserver(
-      async (entries) => {
+      (entries) => {
         const entry = entries[0];
         if (!entry) return;
-        const player = playerRef.current;
-        if (!player) return;
-
         if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
           inViewRef.current = true;
-          try {
-            await player.setMuted(false);
-            await player.setVolume(1);
-            await player.play();
-            setNeedsTapForSound(false);
-          } catch {
-            // Autoplay with sound was blocked – fall back to muted autoplay
-            try {
-              await player.setMuted(true);
-              await player.play();
-              setNeedsTapForSound(true);
-            } catch {
-              /* noop */
-            }
-          }
+          void handleVisible();
         } else {
           inViewRef.current = false;
-          try {
-            await player.pause();
-          } catch {
-            /* noop */
-          }
+          void handleHidden();
         }
       },
-      { threshold: [0, 0.5, 1] },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
     observer.observe(node);
-    return () => observer.disconnect();
-  }, [autoPlayInView]);
+
+    // If element is already in view when player mounts, kick playback immediately
+    const rect = node.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const visibleRatio =
+      rect.height > 0
+        ? Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0)) / rect.height
+        : 0;
+    if (visibleRatio >= 0.5) {
+      inViewRef.current = true;
+      void handleVisible();
+    }
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+  }, [autoPlayInView, playerVersion]);
 
   const handleReplay = async () => {
     const player = playerRef.current;
