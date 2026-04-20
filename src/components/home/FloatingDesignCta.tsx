@@ -34,10 +34,10 @@ export function FloatingDesignCta() {
     >
       <Link
         to="/komponer"
-        className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3.5 md:px-7 md:py-4 text-base md:text-lg font-semibold shadow-[0_14px_40px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_18px_46px_-10px_hsl(var(--primary)/0.8)] hover:-translate-y-0.5 transition-all"
+        className="group inline-flex items-center gap-1.5 rounded-full bg-primary/95 backdrop-blur text-primary-foreground pl-4 pr-3 py-2 text-sm font-medium tracking-wide shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.5)] hover:shadow-[0_10px_28px_-8px_hsl(var(--primary)/0.7)] hover:-translate-y-0.5 transition-all ring-1 ring-primary-foreground/10"
       >
         Design gravplaten
-        <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
       </Link>
     </div>
   );

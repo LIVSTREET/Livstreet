@@ -130,7 +130,7 @@ export default function OmProduktet() {
       <section className="bg-background py-8 md:py-12">
         <div className="container px-4">
           <div className="max-w-sm md:max-w-md mx-auto">
-            <ProductVideoPlayer src={PRODUCT_VIDEO_SRC} title="Om produktet – Livstreet" />
+            <ProductVideoPlayer src={PRODUCT_VIDEO_SRC} title="Om produktet – Livstreet" aspectRatio="portrait" />
           </div>
         </div>
       </section>
