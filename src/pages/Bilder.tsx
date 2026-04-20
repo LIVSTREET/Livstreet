@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
+import { FloatingDesignCta } from "@/components/home/FloatingDesignCta";
 
 export default function Bilder() {
   const { data: images = [], isLoading } = useQuery({
@@ -79,6 +80,7 @@ export default function Bilder() {
           </Button>
         </div>
       </section>
+      <FloatingDesignCta />
     </Layout>
   );
 }
