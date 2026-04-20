@@ -211,7 +211,7 @@ export default function OmProduktet() {
               </p>
             </div>
             <div className="max-w-sm md:max-w-md mx-auto">
-              <ProductVideoPlayer src={STORY_VIDEO_SRC} title="Historien bak Livstreet" />
+              <ProductVideoPlayer src={STORY_VIDEO_SRC} title="Historien bak Livstreet" showControls />
             </div>
             <div className="text-center mt-6 md:mt-8">
               <Link

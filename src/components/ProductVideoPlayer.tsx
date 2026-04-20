@@ -11,9 +11,31 @@ interface ProductVideoPlayerProps {
    * subtle "tap for sound" overlay as fallback when that happens.
    */
   autoPlayInView?: boolean;
+  /**
+   * Show Vimeo's native player controls (play/pause, scrubber, duration).
+   * Off by default for short product clips; turn on for longer story videos
+   * where users may want to seek/pause.
+   */
+  showControls?: boolean;
 }
 
-export function ProductVideoPlayer({ src, title, autoPlayInView = true }: ProductVideoPlayerProps) {
+export function ProductVideoPlayer({
+  src,
+  title,
+  autoPlayInView = true,
+  showControls = false,
+}: ProductVideoPlayerProps) {
+  // Force controls visibility via URL flag so it overrides whatever the caller passed.
+  const finalSrc = (() => {
+    try {
+      const url = new URL(src);
+      url.searchParams.set("controls", showControls ? "1" : "0");
+      return url.toString();
+    } catch {
+      const sep = src.includes("?") ? "&" : "?";
+      return `${src}${sep}controls=${showControls ? "1" : "0"}`;
+    }
+  })();
   const playerRef = useRef<Player | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [ended, setEnded] = useState(false);
@@ -119,7 +141,7 @@ export function ProductVideoPlayer({ src, title, autoPlayInView = true }: Produc
     >
       <iframe
         ref={setIframeRef}
-        src={src}
+        src={finalSrc}
         title={title}
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
         allowFullScreen
