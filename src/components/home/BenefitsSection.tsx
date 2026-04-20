@@ -94,12 +94,17 @@ export function BenefitsSection() {
         {/* Shared background — never changes */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${benefitsBg})` }}
+          className="absolute inset-0 bg-cover"
+          style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 30%" }}
+        />
+        {/* Dark vignette + bottom wash for strong text contrast */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/75"
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background/95"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.55)_100%)]"
         />
 
         {/* Slides — only text/icon swaps */}
@@ -133,26 +138,19 @@ export function BenefitsSection() {
 
                 <div className="container relative px-6 text-center max-w-3xl">
                   <div
-                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
+                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-black/40 backdrop-blur-md ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
                   >
-                    <span
-                      aria-hidden
-                      className={`absolute inset-0 rounded-full ${b.bgSoft} ${
-                        state === "active" ? "animate-ping" : ""
-                      }`}
-                      style={{ animationDuration: "2.5s" }}
-                    />
                     <Icon
                       className={`relative h-12 w-12 md:h-16 md:w-16 ${b.text}`}
                       strokeWidth={1.5}
                     />
                   </div>
 
-                  <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                  <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
                     {b.title}
                   </h2>
 
-                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-xl md:text-2xl text-white/85 leading-relaxed max-w-2xl mx-auto drop-shadow">
                     {b.desc}
                   </p>
                 </div>
