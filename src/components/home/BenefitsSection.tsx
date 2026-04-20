@@ -7,7 +7,10 @@ type Benefit = {
   eyebrow: string;
   title: string;
   desc: string;
-  accentClass: string; // tailwind text/bg accent variation
+  text: string;
+  ring: string;
+  bgSoft: string;
+  dot: string;
 };
 
 const benefits: Benefit[] = [
@@ -16,21 +19,30 @@ const benefits: Benefit[] = [
     eyebrow: "01 — Personlig",
     title: "Personlig uttrykk",
     desc: "Ikke alle kjenner seg igjen i tradisjonell granittstein.",
-    accentClass: "accent",
+    text: "text-accent",
+    ring: "ring-accent/50",
+    bgSoft: "bg-accent/15",
+    dot: "bg-accent",
   },
   {
     icon: Trees,
     eyebrow: "02 — Bærekraft",
     title: "Et bærekraftig minne",
     desc: "Laget i nordisk eik av erfarne danske håndverkere.",
-    accentClass: "wood",
+    text: "text-wood",
+    ring: "ring-wood/50",
+    bgSoft: "bg-wood/15",
+    dot: "bg-wood",
   },
   {
     icon: PhoneCall,
     eyebrow: "03 — Omsorg",
     title: "Personlig oppfølging",
     desc: "Vi er her for deg – også etter levering.",
-    accentClass: "forest",
+    text: "text-forest",
+    ring: "ring-forest/50",
+    bgSoft: "bg-forest/15",
+    dot: "bg-forest",
   },
 ];
 
