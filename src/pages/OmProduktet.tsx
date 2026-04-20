@@ -21,7 +21,7 @@ import symbolerImg from "@/assets/article-3.jpg";
 import hvaSkjerImg from "@/assets/hva-skjer-etterpa.png";
 
 const PRODUCT_VIMEO_ID = "1184743331";
-const STORY_VIMEO_ID = "1184891710";
+const STORY_VIMEO_ID = "1184891780";
 // dnt=1 + endscreen=0 hides "more from author" recommendations after playback.
 // Combined with our custom replay button this lets the user restart from start.
 const PRODUCT_VIDEO_SRC = `https://player.vimeo.com/video/${PRODUCT_VIMEO_ID}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&endscreen=0`;
@@ -210,16 +210,8 @@ export default function OmProduktet() {
                 Et kort innblikk i hvorfor vi lager gravplater i tre – og hva som driver oss.
               </p>
             </div>
-            <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl ring-1 ring-border bg-muted animate-scale-in">
-              <iframe
-                src={STORY_VIDEO_SRC}
-                title="Historien bak Livstreet"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full border-0"
-              />
+            <div className="max-w-sm md:max-w-md mx-auto">
+              <ProductVideoPlayer src={STORY_VIDEO_SRC} title="Historien bak Livstreet" />
             </div>
           </div>
         </div>
