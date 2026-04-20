@@ -16,6 +16,7 @@ import {
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
 import { buildBreadcrumbJsonLd } from "@/seo/jsonLd";
+import { ProductVideoPlayer } from "@/components/ProductVideoPlayer";
 import monteringImg from "@/assets/montering-vedlikehold.png";
 import baerekraftImg from "@/assets/baerekraft-hero.png";
 import symbolerImg from "@/assets/article-3.jpg";
@@ -134,17 +135,7 @@ export default function OmProduktet() {
       <section className="bg-background py-8 md:py-12">
         <div className="container px-4">
           <div className="max-w-sm md:max-w-md mx-auto">
-            <div className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
-              <iframe
-                src={PRODUCT_VIDEO_SRC}
-                title="Om produktet – Livstreet"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full border-0"
-              />
-            </div>
+            <ProductVideoPlayer src={PRODUCT_VIDEO_SRC} title="Om produktet – Livstreet" />
           </div>
         </div>
       </section>
