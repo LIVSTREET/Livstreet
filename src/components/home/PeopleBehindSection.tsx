@@ -78,7 +78,7 @@ export function PeopleBehindSection() {
                 size="lg"
                 className="rounded-full"
               >
-                <Link to="/komponer">Lag din gravplate</Link>
+                <Link to="/komponer">Design gravplaten</Link>
               </Button>
             </div>
           </div>

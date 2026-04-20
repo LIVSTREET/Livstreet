@@ -185,7 +185,7 @@ export default function OmProduktet() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center">
               <Button variant="hero" size="lg" asChild className="w-full sm:w-auto">
-                <Link to="/komponer">Lag din gravplate</Link>
+                <Link to="/komponer">Design gravplaten</Link>
               </Button>
               <Button variant="hero-outline" size="lg" asChild className="w-full sm:w-auto">
                 <Link to="/kontakt">Kontakt oss</Link>

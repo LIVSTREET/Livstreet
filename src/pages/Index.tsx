@@ -9,6 +9,7 @@ import { StepsSection } from "@/components/home/StepsSection";
 import { ArticlesSection } from "@/components/home/ArticlesSection";
 import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { ContactSection } from "@/components/home/ContactSection";
+import { FloatingDesignCta } from "@/components/home/FloatingDesignCta";
 import { SeoHead } from "@/seo/SeoHead";
 import { ROUTE_META } from "@/seo/metadata";
 import { homePageGraphJsonLd, buildFaqPageJsonLd } from "@/seo/jsonLd";
@@ -35,6 +36,7 @@ const Index = () => {
       <ArticlesSection />
       <HomeFaqSection />
       <ContactSection />
+      <FloatingDesignCta />
     </Layout>
   );
 };

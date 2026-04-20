@@ -75,7 +75,7 @@ export default function Bilder() {
             Bruk vår designer til å designe en unik og personlig gravplate – enkelt og raskt.
           </p>
           <Button asChild variant="hero" size="xl">
-            <Link to="/komponer">Lag din gravplate</Link>
+            <Link to="/komponer">Design gravplaten</Link>
           </Button>
         </div>
       </section>
