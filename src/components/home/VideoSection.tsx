@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Volume2, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { SectionDivider } from "./SectionDivider";
+import benefitsBg from "@/assets/benefits-oak-bg.jpg";
 
 const VIMEO_ID = "1151281409";
 
@@ -62,11 +63,19 @@ export function VideoSection() {
   };
 
   return (
-    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
-      {/* Subtle accent glow for visual flow */}
+    <section className="relative py-16 md:py-24 overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/3 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent/10 blur-3xl"
+        className="absolute inset-0 bg-cover"
+        style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 35%" }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/80"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.6)_100%)]"
       />
 
       <div className="container relative px-4">
@@ -76,10 +85,10 @@ export function VideoSection() {
             headingInView ? "animate-reveal-up" : ""
           }`}
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-white drop-shadow-lg">
             Håndverk med sjel
           </h2>
-          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+          <p className="text-white/85 text-lg md:text-xl leading-relaxed drop-shadow">
             Se hvordan vi skaper hver gravplate med presisjon og omsorg i vårt verksted.
           </p>
           <SectionDivider className="mt-5" />

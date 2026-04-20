@@ -12,20 +12,20 @@ export function HomeFaqSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLElement>();
   const { ref: listRef, inView: listInView } = useInView<HTMLDivElement>();
   return (
-    <section className="bg-muted/30 py-16 md:py-24">
+    <section className="bg-secondary py-20 md:py-28">
       <div className="container max-w-3xl px-4">
         <header
           ref={headRef}
-          className={`mb-10 text-center opacity-0 ${headInView ? "animate-reveal-up" : ""}`}
+          className={`mb-12 md:mb-14 text-center opacity-0 ${headInView ? "animate-reveal-up" : ""}`}
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
+          <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4 leading-tight">
             Ofte stilte spørsmål
           </h2>
-          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
             Svar på vanlige spørsmål om gravplate, gravminne, miljø, pris og
             bestilling hos Livstreet.
           </p>
-          <SectionDivider className="mt-5" />
+          <SectionDivider className="mt-6" />
         </header>
 
         <div

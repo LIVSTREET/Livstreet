@@ -2,6 +2,7 @@ import { MessageCircle, FileEdit, CheckCircle, Hammer, Truck, ArrowRight, type L
 import { Link } from "react-router-dom";
 import { useInView } from "@/hooks/useInView";
 import { SectionDivider } from "./SectionDivider";
+import benefitsBg from "@/assets/benefits-oak-bg.jpg";
 
 const steps = [
   {
@@ -52,9 +53,9 @@ function StepCard({
       className={`relative group h-full opacity-0 ${inView ? "animate-reveal-up" : ""}`}
     >
       {!isLast && (
-        <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-accent/40 to-transparent" />
+        <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-white/40 to-transparent" />
       )}
-      <div className="relative h-full flex flex-col items-center bg-card rounded-2xl p-4 md:p-8 text-center shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-accent/40 transition-all duration-500 border border-border/60 overflow-hidden">
+      <div className="relative h-full flex flex-col items-center bg-background/95 backdrop-blur-sm rounded-2xl p-4 md:p-8 text-center shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:border-accent/60 transition-all duration-500 border border-white/20 overflow-hidden">
         <span className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 mb-3 md:mb-6 rounded-full bg-accent/15 text-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:scale-110 transition-all duration-500 shrink-0">
           <Icon className="h-6 w-6 md:h-7 md:w-7" />
@@ -73,7 +74,20 @@ function StepCard({
 export function StepsSection() {
   const { ref: headRef, inView: headInView } = useInView<HTMLDivElement>();
   return (
-    <section className="relative py-12 md:py-20 bg-background overflow-hidden">
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-cover"
+        style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 40%" }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/75"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.55)_100%)]"
+      />
       <div className="container relative px-4">
         <div
           ref={headRef}
@@ -81,10 +95,10 @@ export function StepsSection() {
             headInView ? "animate-reveal-up" : ""
           }`}
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-white drop-shadow-lg">
             Fra bestilling til montering
           </h2>
-          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+          <p className="text-white/85 text-lg md:text-xl leading-relaxed drop-shadow">
             En enkel prosess som ivaretar deg hele veien.
           </p>
           <SectionDivider className="mt-5" />
@@ -104,12 +118,12 @@ export function StepsSection() {
         </div>
 
         <div className="text-center mt-10 md:mt-12">
-          <p className="text-muted-foreground text-base md:text-lg mb-2">
+          <p className="text-white/80 text-base md:text-lg mb-2 drop-shadow">
             Vil du vite mer om hva som skjer videre?
           </p>
           <Link
             to="/informasjon/hva-skjer-etterpa"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-base md:text-lg"
+            className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all text-base md:text-lg drop-shadow"
           >
             Les mer om prosessen
             <ArrowRight className="h-5 w-5" />
