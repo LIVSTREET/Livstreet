@@ -98,13 +98,14 @@ export function BenefitsSection() {
           style={{ backgroundImage: `url(${benefitsBg})`, backgroundPosition: "center 30%" }}
         />
         {/* Dark vignette + bottom wash for strong text contrast */}
+        {/* Lighter, warmer wash for uplifting mood while keeping legibility */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/75"
+          className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/70"
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.55)_100%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_45%,_hsl(var(--background)/0.55)_100%)]"
         />
 
         {/* Slides — only text/icon swaps */}
@@ -137,20 +138,18 @@ export function BenefitsSection() {
                 />
 
                 <div className="container relative px-6 text-center max-w-3xl">
-                  <div
-                    className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-black/40 ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
-                  >
+                  <div className="relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
                     <Icon
-                      className={`relative h-12 w-12 md:h-16 md:w-16 ${b.text}`}
+                      className={`relative h-20 w-20 md:h-28 md:w-28 ${b.text} drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]`}
                       strokeWidth={1.5}
                     />
                   </div>
 
-                  <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                  <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
                     {b.title}
                   </h2>
 
-                  <p className="text-xl md:text-2xl text-white/85 leading-relaxed max-w-2xl mx-auto drop-shadow">
+                  <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
                     {b.desc}
                   </p>
                 </div>
@@ -165,7 +164,7 @@ export function BenefitsSection() {
             <span
               key={b.title}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === activeIndex ? `w-8 ${b.dot}` : "w-1.5 bg-foreground/30"
+                i === activeIndex ? `w-8 ${b.dot}` : "w-1.5 bg-foreground/25"
               }`}
             />
           ))}
