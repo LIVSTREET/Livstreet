@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/home/HeroSection";
 import { BenefitsSection } from "@/components/home/BenefitsSection";
-import { PinnedTestimonials } from "@/components/home/PinnedTestimonials";
+import { HomeTestimonialsSection } from "@/components/home/HomeTestimonialsSection";
 import { PeopleBehindSection } from "@/components/home/PeopleBehindSection";
 import { VideoSection } from "@/components/home/VideoSection";
 import { ConfiguratorTeaser } from "@/components/home/ConfiguratorTeaser";
@@ -27,7 +27,7 @@ const Index = () => {
       />
       <HeroSection />
       <BenefitsSection />
-      <PinnedTestimonials />
+      <HomeTestimonialsSection />
       <PeopleBehindSection />
       <VideoSection />
       <StepsSection />
