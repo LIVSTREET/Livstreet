@@ -197,6 +197,36 @@ export default function OmProduktet() {
         </div>
       </section>
 
+      {/* Historien bak Livstreet */}
+      <section className="py-12 md:py-20 bg-secondary/40">
+        <div className="container px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-6 md:mb-10">
+              <span className="text-xs md:text-sm font-medium text-accent uppercase tracking-wider">
+                Vår historie
+              </span>
+              <h2 className="font-display text-2xl md:text-4xl font-bold mt-2 mb-2 md:mb-4">
+                Historien bak Livstreet
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
+                Et kort innblikk i hvorfor vi lager gravplater i tre – og hva som driver oss.
+              </p>
+            </div>
+            <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl ring-1 ring-border bg-muted animate-scale-in">
+              <iframe
+                src={STORY_VIDEO_SRC}
+                title="Historien bak Livstreet"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Nyttig informasjon */}
       <section className="py-10 md:py-20 bg-secondary">
         <div className="container px-4">
