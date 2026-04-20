@@ -133,12 +133,6 @@ export function BenefitsSection() {
 
                 <div className="container relative px-6 text-center max-w-3xl">
                   <div
-                    className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur ring-1 ${b.ring} ${b.text} text-sm md:text-base font-medium tracking-wide mb-8`}
-                  >
-                    {b.eyebrow}
-                  </div>
-
-                  <div
                     className={`relative mx-auto mb-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-background/80 backdrop-blur ring-2 ${b.ring} flex items-center justify-center shadow-2xl`}
                   >
                     <span
