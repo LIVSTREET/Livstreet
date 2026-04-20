@@ -132,6 +132,13 @@ export function VideoSection() {
               </div>
             </button>
           </div>
+
+          {/* Quality stamp under video */}
+          <div className="mt-5 md:mt-6 flex items-center justify-center gap-2 text-sm md:text-base text-muted-foreground">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent" />
+            Gratis design – uforpliktende. Personlig svar innen 24 timer.
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent" />
+          </div>
         </div>
 
         <div className="text-center mt-8 md:mt-10">
