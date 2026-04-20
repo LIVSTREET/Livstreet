@@ -1,21 +1,24 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Player from "@vimeo/player";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Volume2 } from "lucide-react";
 
 interface ProductVideoPlayerProps {
   src: string;
   title: string;
+  /**
+   * Auto-play with sound when scrolled into view, pause when out of view.
+   * Browsers block unmuted autoplay without user gesture, so we show a
+   * subtle "tap for sound" overlay as fallback when that happens.
+   */
+  autoPlayInView?: boolean;
 }
 
-/**
- * Vertical product video with a custom "play again from start" overlay
- * shown when the video ends. Uses Vimeo Player API to detect end + restart,
- * which avoids relying on Vimeo's own end-screen UI (which shows
- * "more videos from author" recommendations).
- */
-export function ProductVideoPlayer({ src, title }: ProductVideoPlayerProps) {
+export function ProductVideoPlayer({ src, title, autoPlayInView = true }: ProductVideoPlayerProps) {
   const playerRef = useRef<Player | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [ended, setEnded] = useState(false);
+  const [needsTapForSound, setNeedsTapForSound] = useState(false);
+  const inViewRef = useRef(false);
 
   const setIframeRef = useCallback((node: HTMLIFrameElement | null) => {
     if (!node) {
@@ -26,22 +29,94 @@ export function ProductVideoPlayer({ src, title }: ProductVideoPlayerProps) {
     playerRef.current = player;
     player.on("ended", () => setEnded(true));
     player.on("play", () => setEnded(false));
+    player.on("volumechange", async () => {
+      try {
+        const muted = await player.getMuted();
+        if (!muted) setNeedsTapForSound(false);
+      } catch {
+        /* noop */
+      }
+    });
   }, []);
+
+  // Auto play/pause based on viewport visibility
+  useEffect(() => {
+    if (!autoPlayInView) return;
+    const node = containerRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        const player = playerRef.current;
+        if (!player) return;
+
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          inViewRef.current = true;
+          try {
+            await player.setMuted(false);
+            await player.setVolume(1);
+            await player.play();
+            setNeedsTapForSound(false);
+          } catch {
+            // Autoplay with sound was blocked – fall back to muted autoplay
+            try {
+              await player.setMuted(true);
+              await player.play();
+              setNeedsTapForSound(true);
+            } catch {
+              /* noop */
+            }
+          }
+        } else {
+          inViewRef.current = false;
+          try {
+            await player.pause();
+          } catch {
+            /* noop */
+          }
+        }
+      },
+      { threshold: [0, 0.5, 1] },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [autoPlayInView]);
 
   const handleReplay = async () => {
     const player = playerRef.current;
     if (!player) return;
     try {
       await player.setCurrentTime(0);
+      await player.setMuted(false);
+      await player.setVolume(1);
       await player.play();
       setEnded(false);
+      setNeedsTapForSound(false);
+    } catch {
+      /* noop */
+    }
+  };
+
+  const handleEnableSound = async () => {
+    const player = playerRef.current;
+    if (!player) return;
+    try {
+      await player.setMuted(false);
+      await player.setVolume(1);
+      await player.play();
+      setNeedsTapForSound(false);
     } catch {
       /* noop */
     }
   };
 
   return (
-    <div className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in">
+    <div
+      ref={containerRef}
+      className="relative aspect-[9/16] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl ring-2 ring-primary/30 bg-muted animate-scale-in"
+    >
       <iframe
         ref={setIframeRef}
         src={src}
@@ -52,6 +127,18 @@ export function ProductVideoPlayer({ src, title }: ProductVideoPlayerProps) {
         loading="lazy"
         className="absolute inset-0 w-full h-full border-0"
       />
+
+      {needsTapForSound && !ended && (
+        <button
+          type="button"
+          onClick={handleEnableSound}
+          className="absolute bottom-3 right-3 md:bottom-4 md:right-4 inline-flex items-center gap-2 rounded-full bg-background/85 backdrop-blur px-3 py-2 md:px-4 md:py-2.5 text-foreground shadow-lg hover:bg-background transition-all animate-fade-in"
+          aria-label="Slå på lyd"
+        >
+          <Volume2 className="w-4 h-4 md:w-5 md:h-5" />
+          <span className="text-xs md:text-sm font-medium">Trykk for lyd</span>
+        </button>
+      )}
 
       {ended && (
         <button
